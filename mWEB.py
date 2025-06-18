@@ -261,7 +261,7 @@ elif pagina == "📈 Visualização Gráfica":
             with col2:
                 fig, ax = plt.subplots()
                 n_amostras = range(0, len(veloc), 1)
-                ax.plot(n_amostras, veloc, linewidth=0.8, color='black')
+                ax.plot(n_amostras/100, veloc, linewidth=0.8, color='black')
 
                 ax.set_xlabel('Tempo (s)')
                 ax.set_ylabel('Velocidade vertical (m/s)')
