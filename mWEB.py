@@ -260,7 +260,7 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig)
             with col2:
                 fig, ax = plt.subplots()
-                n_amostras = range(0, len(veloc), 1)
+                n_amostras = np.arange(0, len(veloc), 1)
                 ax.plot(n_amostras/100, veloc, linewidth=0.8, color='black')
 
                 ax.set_xlabel('Tempo (s)')
