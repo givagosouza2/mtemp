@@ -8,7 +8,7 @@ import matplotlib.gridspec as gridspec
 from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
 
-st.set_page_config(page_title="App Multipágina", layout="wide")
+st.set_page_config(page_title="App teste", layout="wide")
 
 # Função genérica para carregar dados de arquivos com 4 ou 5 colunas
 
