@@ -273,7 +273,7 @@ elif pagina == "📈 Visualização Gráfica":
                 fig, ax = plt.subplots()
                 n_amostras = np.arange(0, len(desloc), 1)
                 desloc = desloc - desloc[1]
-                ax.plot(n_amostras/100, desloc, linewidth=0.8, color='red')
+                ax.plot(n_amostras/100, desloc, linewidth=0.8, color='black')
 
                 ax.set_xlabel('Tempo (s)')
                 ax.set_ylabel('Deslocamento vertical (m)')
