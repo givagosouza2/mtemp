@@ -94,7 +94,7 @@ elif pagina == "📁 Importar Dados":
             st.info("Selecione um tipo de teste para continuar.")
     with col3:
         if tipo_teste == "Equilíbrio":
-            st.title('Equilíbrio')
+            st.title('Equilíbrio estático. ')
         elif tipo_teste == 'Salto':
             st.title('Salto')
         else:
