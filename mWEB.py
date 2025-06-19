@@ -49,20 +49,6 @@ if pagina == "🏠 Página Inicial":
 elif pagina == "📁 Importar Dados":
     st.title("📁 Importar Dados")
 
-    st.markdown("""
-    <style>
-    div[data-baseweb="select"] > div {
-        background-color: #f9f9f9;
-        border: 2px solid #4CAF50;
-        border-radius: 8px;
-        padding: 5px;
-    }
-    div[data-baseweb="select"] span {
-        color: #333333;
-        font-weight: 500;
-    }
-    </style>
-    """, unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 0.2, 1])
     with col1:
         tipo_teste = st.selectbox(
