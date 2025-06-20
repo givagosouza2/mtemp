@@ -102,6 +102,7 @@ def processar_salto(df, filter_cutoff):
         # Estimar altura via fórmula balística
         g = 9.81
         altura = (g * (tempo_voo / 2)**2) / 2
+        velocidade_saida = (9.81*tempo_voo)/2
 
         # Cálculo da velocidade
         _, velocidade = calcular_velocidade(
@@ -111,4 +112,4 @@ def processar_salto(df, filter_cutoff):
         deslocamento = cumulative_trapezoid(velocidade, dx=dt_novo, initial=0)
         deslocamento = highpass_filter(deslocamento, fc=0.1, fs=fs_novo)
 
-    return t_novo, v_filtrado, inicio_voo_time, fim_voo_time, altura, tempo_voo, max_dec, max_takeoff, velocidade, deslocamento, inicio_voo_idx, fim_voo_idx
+    return t_novo, v_filtrado, inicio_voo_time, fim_voo_time, altura, tempo_voo, max_dec, max_takeoff, velocidade_saida, deslocamento, inicio_voo_idx, fim_voo_idx
