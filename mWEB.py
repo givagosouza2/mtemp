@@ -355,10 +355,8 @@ elif pagina == "📤 Exportar Resultados":
             with col1:
                 st.metric(label="Tempo de vôo (s)", value=round(tempo_voo, 4))
                 st.metric(label="Altura (m)", value=round(altura, 4))
-                st.metric(label="Altura 2 (m)", value=round(
-                    np.max(desloc)-np.min(desloc), 4))
+                
             with col2:
                 st.metric(
-                    label=r"Máxima aceleração de decolagem (m/s$^2$)", value=round(m1, 4))
-                st.metric(
-                    label=r"Máxima aceleração de aterrisagem (m/s$^2$)", value=round(m2, 4))
+                    label="Velocidade de decolagem (m/s)", value=round(veloc, 4))
+                
