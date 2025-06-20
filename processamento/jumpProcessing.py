@@ -56,13 +56,13 @@ def processar_salto(df, filter_cutoff):
     v_interp = interp_v(t_novo)
 
     # Remover tendência
-    v_detrended = detrend(v_interp)
+    #v_detrended = detrend(v_interp)
 
     # Filtragem passa-baixa
     nyquist = fs_novo / 2
     normal_cutoff = filter_cutoff / nyquist
     b, a = butter(4, normal_cutoff, btype='low', analog=False)
-    v_filtrado = filtfilt(b, a, v_detrended)
+    v_filtrado = filtfilt(b, a, v_interp)
 
     # Detecção do tempo de voo
     limiar_vel = 0.5
