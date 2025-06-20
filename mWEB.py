@@ -228,11 +228,11 @@ elif pagina == "📈 Visualização Gráfica":
                     st.pyplot(fig)
 
         if tipo_teste == "Salto":
-            col1, col2, col3 = st.columns([1, 0.2, 1])
+            col1, col2, col3 = st.columns([0.4, 1, 0.4])
             dados = st.session_state["dados"]
             tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = jumpProcessing.processar_salto(
                 dados, 8)
-            with col1:
+            with col2:
                 fig, ax = plt.subplots()
                 ax.plot(tempo[istart-100:iend+100], salto[istart -
                         100:iend+100], linewidth=0.8, color='black')
@@ -244,18 +244,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax.set_ylabel('Aceleração vertical (m/s²)')
                 ax.legend()
                 st.pyplot(fig)
-            with col3:
-                fig, ax = plt.subplots()
-                ax.plot(tempo[istart-100:iend+100], 70*salto[istart -
-                        100:iend+100], linewidth=0.8, color='black')
-                ax.axvline(startJump, color='green',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
-                ax.axvline(endJump, color='red',
-                           linestyle='--', label='Fim Voo', linewidth=0.8)
-                ax.set_xlabel('Tempo (s)')
-                ax.set_ylabel('Força vertilcal (N)')
-                ax.legend()
-                st.pyplot(fig)
+            
             
         else:
             st.markdown("### Sinais brutos de X, Y e Z ao longo do Tempo")
