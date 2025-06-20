@@ -82,7 +82,7 @@ def processar_salto(df, filter_cutoff):
         # Buscar início do voo (antes de min_mov)
         try:
             inicio_voo_idx = next(i for i in range(
-                min_mov-1, -1, -1) if v_filtrado[i] > 0)
+                min_mov-1, -1, -1) if v_filtrado[i] > 9.81)
         except StopIteration:
             inicio_voo_idx = 0
         inicio_voo_time = t_novo[inicio_voo_idx]
@@ -91,7 +91,7 @@ def processar_salto(df, filter_cutoff):
         # Buscar fim do voo (antes de max_mov)
         try:
             fim_voo_idx = next(i for i in range(
-                max_mov-1, -1, -1) if v_filtrado[i] < 0)
+                max_mov-1, -1, -1) if v_filtrado[i] < 9.81)
         except StopIteration:
             fim_voo_idx = len(v_filtrado) - 1
         fim_voo_time = t_novo[fim_voo_idx]
