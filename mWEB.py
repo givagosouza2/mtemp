@@ -244,7 +244,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax.set_ylabel('Aceleração vertical (m/s²)')
                 ax.legend()
                 st.pyplot(fig)
-            with col2:
+            with col3:
                 fig, ax = plt.subplots()
                 ax.plot(tempo[istart-100:iend+100], 70*salto[istart -
                         100:iend+100], linewidth=0.8, color='black')
@@ -253,7 +253,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax.axvline(endJump, color='red',
                            linestyle='--', label='Fim Voo', linewidth=0.8)
                 ax.set_xlabel('Tempo (s)')
-                ax.set_ylabel('Aceleração vertical (m/s²)')
+                ax.set_ylabel('Força vertilcal (N)')
                 ax.legend()
                 st.pyplot(fig)
             
