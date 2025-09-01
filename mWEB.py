@@ -84,11 +84,18 @@ elif pagina == "📁 Importar Dados":
             arquivo = st.file_uploader(
                 "Selecione o arquivo do acelerômetro (CSV ou TXT)", type=["csv", "txt"])
             if arquivo is not None:
-                dados = carregar_dados_generico(arquivo)
-                if dados is not None:
+                dados_acc = carregar_dados_generico(arquivo)
+                if dados_acc is not None:
                     st.success("Arquivo carregado com sucesso!")
-                    st.dataframe(dados.head())
-                    st.session_state["dados"] = dados
+                    st.dataframe(dados_acc.head())
+                    st.session_state["dados_acc"] = dados
+                    arquivo = st.file_uploader("Selecione o arquivo do giroscópico (CSV ou TXT)", type=["csv", "txt"])
+                    if arquivo is not None:
+                        dados_gyro = carregar_dados_generico(arquivo)
+                        if dados_gyro is not None:
+                            st.success("Arquivo carregado com sucesso!")
+                            st.dataframe(dados_gyro.head())
+                            st.session_state["dados_gyro"] = dados_gyro
 
         elif tipo_teste == "Selecione...":
             st.info("Selecione um tipo de teste para continuar.")
@@ -360,4 +367,5 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(
                     label="Velocidade de decolagem (m/s)", value=round(veloc, 4))
                 
+
 
