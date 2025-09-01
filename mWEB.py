@@ -258,7 +258,7 @@ elif pagina == "📈 Visualização Gráfica":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, x_gyro_filtrado, y_gyro_filtrado, z_gyro_filtrado, norma_gyro_filtrado = jumpProcessing.processar_tug(
-                dados_acc,dados_gyro 8)
+                dados_acc,dados_gyro,4)
             with col2:
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
@@ -393,6 +393,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
