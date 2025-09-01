@@ -53,7 +53,7 @@ elif pagina == "📁 Importar Dados":
     with col1:
         tipo_teste = st.selectbox(
             "Qual teste você deseja analisar?",
-            ["Selecione...", "Equilíbrio", "Salto", "Next"]
+            ["Selecione...", "Equilíbrio", "Salto", "TUG"]
         )
 
         if tipo_teste != "Selecione...":
@@ -79,10 +79,10 @@ elif pagina == "📁 Importar Dados":
                     st.success('Dados carregados com sucesso')
                     st.session_state["dados"] = dados
 
-        elif tipo_teste == "Toque na Tela":
-            st.subheader("📱 Importar dados de Toque na Tela")
+        elif tipo_teste == "TUG":
+            st.subheader("📱 Importar dados dos sensores")
             arquivo = st.file_uploader(
-                "Selecione o arquivo de toques (CSV ou TXT)", type=["csv", "txt"])
+                "Selecione o arquivo do acelerômetro (CSV ou TXT)", type=["csv", "txt"])
             if arquivo is not None:
                 dados = carregar_dados_generico(arquivo)
                 if dados is not None:
@@ -360,3 +360,4 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(
                     label="Velocidade de decolagem (m/s)", value=round(veloc, 4))
                 
+
