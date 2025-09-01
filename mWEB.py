@@ -252,6 +252,25 @@ elif pagina == "📈 Visualização Gráfica":
                 ax.set_ylabel('Aceleração vertical (m/s²)')
                 ax.legend()
                 st.pyplot(fig)
+        
+        if tipo_teste == "TUG":
+            col1, col2, col3 = st.columns([0.4, 1, 0.4])
+            dados_acc = st.session_state["dados_acc"]
+            dados_gyro = st.session_state["dados_gyro"]
+            tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = jumpProcessing.processar_tug(
+                dados_acc,dados_gyro 8)
+            with col2:
+                fig, ax = plt.subplots()
+                ax.plot(tempo[istart-100:iend+100], salto[istart -
+                        100:iend+100], linewidth=0.8, color='black')
+                ax.axvline(startJump, color='green',
+                           linestyle='--', label='Início Voo', linewidth=0.8)
+                ax.axvline(endJump, color='red',
+                           linestyle='--', label='Fim Voo', linewidth=0.8)
+                ax.set_xlabel('Tempo (s)')
+                ax.set_ylabel('Aceleração vertical (m/s²)')
+                ax.legend()
+                st.pyplot(fig)        
             
             
         else:
@@ -372,6 +391,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
