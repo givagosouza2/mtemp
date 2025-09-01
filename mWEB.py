@@ -90,6 +90,7 @@ elif pagina == "📁 Importar Dados":
                     st.success("Arquivo carregado com sucesso!")
                     st.dataframe(dados_acc.head())
                     st.session_state["dados_acc"] = dados_acc
+                    st.session_state["dados"] = dados_acc
                     arquivo = st.file_uploader("Selecione o arquivo do giroscópico (CSV ou TXT)", type=["csv", "txt"])
                     if arquivo is not None:
                         dados_gyro = carregar_dados_generico(arquivo)
@@ -393,6 +394,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
