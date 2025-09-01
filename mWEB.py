@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from processamento import balanceProcessing
 from processamento import jumpProcessing
+from processamento import tugProcessing
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
@@ -367,5 +368,10 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(
                     label="Velocidade de decolagem (m/s)", value=round(veloc, 4))
                 
+        if tipo_teste == "TUG":
+            dados_acc = st.session_state["dados_acc"]
+            dados_gyro = st.session_state["dados_gyro"]
+            
+
 
 
