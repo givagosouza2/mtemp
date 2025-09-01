@@ -257,20 +257,22 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns([0.4, 1, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
-            tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = jumpProcessing.processar_tug(
+            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, x_gyro_filtrado, y_gyro_filtrado, z_gyro_filtrado, norma_gyro_filtrado = jumpProcessing.processar_tug(
                 dados_acc,dados_gyro 8)
             with col2:
-                fig, ax = plt.subplots()
-                ax.plot(tempo[istart-100:iend+100], salto[istart -
-                        100:iend+100], linewidth=0.8, color='black')
-                ax.axvline(startJump, color='green',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
-                ax.axvline(endJump, color='red',
-                           linestyle='--', label='Fim Voo', linewidth=0.8)
-                ax.set_xlabel('Tempo (s)')
-                ax.set_ylabel('Aceleração vertical (m/s²)')
-                ax.legend()
-                st.pyplot(fig)        
+                fig1, ax1 = plt.subplots()
+                ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
+                ax1.set_xlabel('Tempo (s)')
+                ax1.set_ylabel('Aceleração vertical (m/s²)')
+                ax1.legend()
+                st.pyplot(fig1)
+
+                fig2, ax2 = plt.subplots()
+                ax2.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black')
+                ax2.set_xlabel('Tempo (s)')
+                ax2.set_ylabel('Velocidade angular (rad/s)')
+                ax2.legend()
+                st.pyplot(fig2)
             
             
         else:
@@ -391,6 +393,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
