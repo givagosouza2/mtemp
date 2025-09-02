@@ -258,13 +258,13 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns([0.4, 1, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
-            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test, stop_test = tugProcessing.processar_tug(dados_acc,dados_gyro,4,2)
+            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test = tugProcessing.processar_tug(dados_acc,dados_gyro,4,2)
             with col2:
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
                 ax1.axvline(start_test, color='green',
                            linestyle='--', label='Início Voo', linewidth=0.8)
-                ax1.axvline(stop_test, color='green',
+                ax1.axvline(stop_test, color='red',
                            linestyle='--', label='Início Voo', linewidth=0.8)
                 ax1.set_xlabel('Tempo (s)')
                 ax1.set_ylabel('Aceleração vertical (m/s²)')
@@ -275,7 +275,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black')
                 ax2.axvline(start_test, color='green',
                            linestyle='--', label='Início Voo', linewidth=0.8)
-                ax2.axvline(stop_test, color='green',
+                ax2.axvline(stop_test, color='red',
                            linestyle='--', label='Início Voo', linewidth=0.8)
                 ax2.set_xlabel('Tempo (s)')
                 ax2.set_ylabel('Velocidade angular (rad/s)')
@@ -286,7 +286,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax3.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
                 ax3.axvline(start_test, color='green',
                            linestyle='--', label='Início Voo', linewidth=0.8)
-                ax3.axvline(stop_test, color='green',
+                ax3.axvline(stop_test, color='red',
                            linestyle='--', label='Início Voo', linewidth=0.8)
                 ax3.set_xlabel('Tempo (s)')
                 ax3.set_ylabel('Velocidade angular Vertical (rad/s)')
@@ -297,7 +297,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax4.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
                 ax4.axvline(start_test, color='green',
                            linestyle='--', label='Início Voo', linewidth=0.8)
-                ax4.axvline(stop_test, color='green',
+                ax4.axvline(stop_test, color='red',
                            linestyle='--', label='Início Voo', linewidth=0.8)
                 ax4.set_xlabel('Tempo (s)')
                 ax4.set_ylabel('Velocidade angular ML (rad/s)')
@@ -423,6 +423,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
