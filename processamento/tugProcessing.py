@@ -85,13 +85,13 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
         v_gyro = y_gyro_filtrado
 
     for index, valor in enumerate(np.sqrt(ml_gyro**2)):
-        if valor > 0.5:
+        if valor > 0.25:
             start_test = t_novo_gyro[index]
             break
             
     for index in range(len(ml_gyro) - 1, -1, -1):
         valor = np.sqrt(ml_gyro[index]**2)
-        if valor > 0.5:
+        if valor > 0.25:
             stop_test = t_novo_gyro[index]
             break
     return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test
