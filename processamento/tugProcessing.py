@@ -2,6 +2,27 @@ import numpy as np
 from scipy.interpolate import interp1d, UnivariateSpline
 from scipy.signal import butter, filtfilt, detrend, savgol_filter
 from scipy.integrate import cumulative_trapezoid
+from scipy.signal import find_peaks
+
+def top2_peaks(y, x=None, distance=None, prominence=None, abs_peaks=False):
+    """
+    Retorna índices (e opcionalmente tempos) dos dois maiores picos locais.
+    - distance: mínima separação entre picos (em pontos)
+    - prominence: 'altura' mínima relativa (ajuda a filtrar ruído)
+    - abs_peaks: se True, encontra picos em |y| (para considerar negativos)
+    """
+    y_use = np.abs(y) if abs_peaks else y
+    idx, props = find_peaks(y_use, distance=distance, prominence=prominence)
+    if idx.size == 0:
+        return [], [] if x is not None else []
+    # ordenar por altura do pico (valor em y_use)
+    order = np.argsort(y_use[idx])[::-1]  # decrescente
+    idx_top = idx[order[:2]].tolist()
+    # ordenar pelo tempo se quiser (opcional)
+    if x is not None:
+        t_top = [x[i] for i in idx_top]
+        return idx_top, t_top
+    return idx_top
 
 def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
     df_acc = df1.copy()
@@ -94,4 +115,7 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
         if valor > 0.25:
             stop_test = t_novo_gyro[index]
             break
-    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test
+    idx_tops = top2_peaks(v_gyro, x=t_novo_gyro, distance=50, prominence=0.3, abs_peaks=False)
+    G1_t = t_novo_gyro[idx_tops[0]]
+    G2_t = t_novo_gyro[idx_tops[1]]
+    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test, G1_t, G2_t
