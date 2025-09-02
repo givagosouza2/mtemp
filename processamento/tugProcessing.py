@@ -110,10 +110,10 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
     norma_gyro_filtrado = np.sqrt(x_gyro_filtrado**2+y_gyro_filtrado**2+z_gyro_filtrado**2)
 
     if smartphone == 0:
-        ml_gyro = x_gyro_filtrado
-        ap_gyro = y_gyro_filtrado
-    else:
-        ap_gyro = x_gyro_filtrado
+        v_gyro = x_gyro_filtrado
         ml_gyro = y_gyro_filtrado
+    else:
+        ml_gyro = x_gyro_filtrado
+        v_gyro = y_gyro_filtrado
     
-    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, ap_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado
+    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado
