@@ -102,6 +102,6 @@ def processar_tug(df1,df2, filter_cutoff):
     x_gyro_filtrado = filtfilt(b, a, x_gyro_detrended)
     y_gyro_filtrado = filtfilt(b, a, y_gyro_detrended)
     z_gyro_filtrado = filtfilt(b, a, z_gyro_detrended)
-    norma_gyro_filtrado = np.sqrt(x_gyro_filtrado^2+y_gyro_filtrado^2+z_gyro_filtrado^2)
+    norma_gyro_filtrado = np.sqrt(x_gyro_filtrado**2+y_gyro_filtrado**2+z_gyro_filtrado**2)
     
     return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, x_gyro_filtrado, y_gyro_filtrado, z_gyro_filtrado, norma_gyro_filtrado
