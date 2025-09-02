@@ -263,9 +263,9 @@ elif pagina == "📈 Visualização Gráfica":
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
                 ax1.axvline(start_test, color='green',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
+                           linestyle='--', label='Início', linewidth=0.8)
                 ax1.axvline(stop_test, color='red',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
+                           linestyle='--', label='Final', linewidth=0.8)
                 ax1.set_xlabel('Tempo (s)')
                 ax1.set_ylabel('Aceleração vertical (m/s²)')
                 ax1.legend()
@@ -274,9 +274,9 @@ elif pagina == "📈 Visualização Gráfica":
                 fig2, ax2 = plt.subplots()
                 ax2.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black')
                 ax2.axvline(start_test, color='green',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
+                           linestyle='--', label='Início', linewidth=0.8)
                 ax2.axvline(stop_test, color='red',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
+                           linestyle='--', label='Final', linewidth=0.8)
                 ax2.set_xlabel('Tempo (s)')
                 ax2.set_ylabel('Velocidade angular (rad/s)')
                 ax2.legend()
@@ -285,9 +285,9 @@ elif pagina == "📈 Visualização Gráfica":
                 fig3, ax3 = plt.subplots()
                 ax3.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
                 ax3.axvline(start_test, color='green',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
+                           linestyle='--', label='Início', linewidth=0.8)
                 ax3.axvline(stop_test, color='red',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
+                           linestyle='--', label='Final', linewidth=0.8)
                 ax3.set_xlabel('Tempo (s)')
                 ax3.set_ylabel('Velocidade angular Vertical (rad/s)')
                 ax3.legend()
@@ -296,9 +296,9 @@ elif pagina == "📈 Visualização Gráfica":
                 fig4, ax4 = plt.subplots()
                 ax4.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
                 ax4.axvline(start_test, color='green',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
+                           linestyle='--', label='Início', linewidth=0.8)
                 ax4.axvline(stop_test, color='red',
-                           linestyle='--', label='Início Voo', linewidth=0.8)
+                           linestyle='--', label='Final', linewidth=0.8)
                 ax4.set_xlabel('Tempo (s)')
                 ax4.set_ylabel('Velocidade angular ML (rad/s)')
                 ax4.legend()
@@ -423,6 +423,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
