@@ -258,7 +258,7 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns([0.4, 1, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
-            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, ap_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado = tugProcessing.processar_tug(dados_acc,dados_gyro,4,2)
+            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado = tugProcessing.processar_tug(dados_acc,dados_gyro,4,2)
             with col2:
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
@@ -275,9 +275,9 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig2)
                 
                 fig3, ax3 = plt.subplots()
-                ax3.plot(t_novo_gyro, ap_gyro**2, linewidth=0.8, color='black')
+                ax3.plot(t_novo_gyro, v_gyro**2, linewidth=0.8, color='black')
                 ax3.set_xlabel('Tempo (s)')
-                ax3.set_ylabel('Velocidade angular AP (rad/s)')
+                ax3.set_ylabel('Velocidade angular Vertical (rad/s)')
                 ax3.legend()
                 st.pyplot(fig3)
 
@@ -407,6 +407,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
