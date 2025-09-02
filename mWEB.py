@@ -273,6 +273,20 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2.set_ylabel('Velocidade angular (rad/s)')
                 ax2.legend()
                 st.pyplot(fig2)
+                
+                fig3, ax3 = plt.subplots()
+                ax3.plot(t_novo_gyro, x_gyro_filtrado, linewidth=0.8, color='black')
+                ax3.set_xlabel('Tempo (s)')
+                ax3.set_ylabel('Velocidade angular (rad/s)')
+                ax3.legend()
+                st.pyplot(fig3)
+
+                fig4, ax4 = plt.subplots()
+                ax4.plot(t_novo_gyro, y_gyro_filtrado, linewidth=0.8, color='black')
+                ax4.set_xlabel('Tempo (s)')
+                ax4.set_ylabel('Velocidade angular (rad/s)')
+                ax4.legend()
+                st.pyplot(fig4)
             
             
         else:
@@ -393,6 +407,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
