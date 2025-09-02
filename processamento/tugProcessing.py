@@ -3,38 +3,6 @@ from scipy.interpolate import interp1d, UnivariateSpline
 from scipy.signal import butter, filtfilt, detrend, savgol_filter
 from scipy.integrate import cumulative_trapezoid
 
-
-def highpass_filter(signal, fc, fs, order=4):
-    w = fc / (fs / 2)
-    b, a = butter(order, w, btype='high')
-    return filtfilt(b, a, signal)
-
-
-def calcular_velocidade(acc, fs, metodo='savitzky', cutoff=5, ordem=3, janela=21):
-    dt = 1 / fs
-    tempo = np.arange(len(acc)) * dt
-
-    # Filtragem da aceleração antes da integração
-    if metodo == 'savitzky':
-        acc_filtrado = savgol_filter(acc, janela, ordem)
-    elif metodo == 'butterworth':
-        b, a = butter(ordem, cutoff / (fs / 2), btype='low')
-        acc_filtrado = filtfilt(b, a, acc)
-    elif metodo == 'spline':
-        spl = UnivariateSpline(tempo, acc, k=ordem)
-        acc_filtrado = spl(tempo)
-    else:
-        raise ValueError("Método de filtragem desconhecido.")
-
-    # Integração para velocidade
-    velocidade = cumulative_trapezoid(acc_filtrado, dx=dt, initial=0)
-
-    # Remover drift da velocidade
-    velocidade = highpass_filter(velocidade, fc=0.1, fs=fs)
-
-    return tempo, velocidade
-
-
 def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
     df_acc = df1.copy()
     time_vec_acc = df_acc["Tempo"]
@@ -115,5 +83,15 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
     else:
         ml_gyro = x_gyro_filtrado
         v_gyro = y_gyro_filtrado
-    
-    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado
+
+    for index, valor in enumerate(ml_gyro):
+        if valor > 0.5:
+            start_test = t_novo_gyro[index]
+            break
+            
+    for index in range(len(ml_gyro) - 1, -1, -1):
+        valor = ml_gyro[index]
+        if valor > 0.5:
+            stop_test = t_novo_gyro[index]
+            break
+    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test
