@@ -35,7 +35,7 @@ def calcular_velocidade(acc, fs, metodo='savitzky', cutoff=5, ordem=3, janela=21
     return tempo, velocidade
 
 
-def processar_tug(df1,df2, filter_cutoff):
+def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
     df_acc = df1.copy()
     time_vec_acc = df_acc["Tempo"]
     x_acc = df_acc["X"]
@@ -63,7 +63,7 @@ def processar_tug(df1,df2, filter_cutoff):
 
     # Filtragem passa-baixa
     nyquist = fs_novo / 2
-    normal_cutoff = filter_cutoff / nyquist
+    normal_cutoff = filter_cutoff1 / nyquist
     b, a = butter(4, normal_cutoff, btype='low', analog=False)
     x_acc_filtrado = filtfilt(b, a, x_acc_detrended)
     y_acc_filtrado = filtfilt(b, a, y_acc_detrended)
@@ -97,7 +97,7 @@ def processar_tug(df1,df2, filter_cutoff):
 
     # Filtragem passa-baixa
     nyquist = fs_novo / 2
-    normal_cutoff = filter_cutoff / nyquist
+    normal_cutoff = filter_cutoff2 / nyquist
     b, a = butter(4, normal_cutoff, btype='low', analog=False)
     x_gyro_filtrado = filtfilt(b, a, x_gyro_detrended)
     y_gyro_filtrado = filtfilt(b, a, y_gyro_detrended)
