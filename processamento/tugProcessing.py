@@ -71,7 +71,7 @@ def processar_tug(df1,df2, filter_cutoff):
     norma_acc_filtrado = np.sqrt(x_acc_filtrado**2+y_acc_filtrado**2+z_acc_filtrado**2)
 
     df_gyro = df2.copy()
-    time_vec_gyro = df_acc["Tempo"]
+    time_vec_gyro = df_gyro["Tempo"]
     x_gyro = df_gyro["X"]
     y_gyro = df_gyro["Y"]
     z_gyro = df_gyro["Z"]
