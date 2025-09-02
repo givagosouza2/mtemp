@@ -52,8 +52,8 @@ def processar_tug(df1,df2, filter_cutoff):
     interp_x_acc = interp1d(t_original, x_acc, kind='linear', fill_value="extrapolate")
     interp_y_acc = interp1d(t_original, y_acc, kind='linear', fill_value="extrapolate")
     interp_z_acc = interp1d(t_original, z_acc, kind='linear', fill_value="extrapolate")
-    z_acc_interp = interp_x_acc(t_novo_acc)
-    z_acc_interp = interp_y_acc(t_novo_acc)
+    x_acc_interp = interp_x_acc(t_novo_acc)
+    y_acc_interp = interp_y_acc(t_novo_acc)
     z_acc_interp = interp_z_acc(t_novo_acc)
 
     # Remover tendência
