@@ -65,9 +65,9 @@ def processar_tug(df1,df2, filter_cutoff):
     nyquist = fs_novo / 2
     normal_cutoff = filter_cutoff / nyquist
     b, a = butter(4, normal_cutoff, btype='low', analog=False)
-    x_acc_filtrado = filtfilt(b, a, x_acc_detrend)
-    y_acc_filtrado = filtfilt(b, a, y_acc_detrend)
-    z_acc_filtrado = filtfilt(b, a, z_acc_detrend)
+    x_acc_filtrado = filtfilt(b, a, x_acc_detrended)
+    y_acc_filtrado = filtfilt(b, a, y_acc_detrended)
+    z_acc_filtrado = filtfilt(b, a, z_acc_detrended)
     norma_acc_filtrado = np.sqrt(x_acc_filtrado^2+y_acc_filtrado^2+z_acc_filtrado^2)
 
     df_gyro = df2.copy()
