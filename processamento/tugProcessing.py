@@ -86,9 +86,9 @@ def processar_tug(df1,df2, filter_cutoff):
     interp_x_gyro = interp1d(t_original, x_gyro, kind='linear', fill_value="extrapolate")
     interp_y_gyro = interp1d(t_original, y_gyro, kind='linear', fill_value="extrapolate")
     interp_z_gyro = interp1d(t_original, z_gyro, kind='linear', fill_value="extrapolate")
-    x_gyro_interp = interp_x_acc(t_novo_gyro)
-    y_gyro_interp = interp_y_acc(t_novo_gyro)
-    z_gyro_interp = interp_z_acc(t_novo_gyro)
+    x_gyro_interp = interp_x_gyro(t_novo_gyro)
+    y_gyro_interp = interp_y_gyro(t_novo_gyro)
+    z_gyro_interp = interp_z_gyro(t_novo_gyro)
 
     # Remover tendência
     x_gyro_detrended = detrend(x_gyro_interp)
