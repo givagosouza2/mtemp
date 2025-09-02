@@ -258,7 +258,7 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns([0.4, 1, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
-            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test = tugProcessing.processar_tug(dados_acc,dados_gyro,4,2)
+            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,G1_t,G2_t = tugProcessing.processar_tug(dados_acc,dados_gyro,4,2)
             with col2:
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
@@ -288,6 +288,10 @@ elif pagina == "📈 Visualização Gráfica":
                            linestyle='--', label='Início', linewidth=0.8)
                 ax3.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
+                ax3.axvline(G1_t, color='black',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax3.axvline(G2_t, color='black',
+                           linestyle='--', label='Início', linewidth=0.8)
                 ax3.set_xlabel('Tempo (s)')
                 ax3.set_ylabel('Velocidade angular Vertical (rad/s)')
                 ax3.legend()
@@ -423,6 +427,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
