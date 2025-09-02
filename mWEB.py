@@ -275,14 +275,14 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig2)
                 
                 fig3, ax3 = plt.subplots()
-                ax3.plot(t_novo_gyro, v_gyro**2, linewidth=0.8, color='black')
+                ax3.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
                 ax3.set_xlabel('Tempo (s)')
                 ax3.set_ylabel('Velocidade angular Vertical (rad/s)')
                 ax3.legend()
                 st.pyplot(fig3)
 
                 fig4, ax4 = plt.subplots()
-                ax4.plot(t_novo_gyro, ml_gyro**2, linewidth=0.8, color='black')
+                ax4.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
                 ax4.set_xlabel('Tempo (s)')
                 ax4.set_ylabel('Velocidade angular ML (rad/s)')
                 ax4.legend()
@@ -407,6 +407,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
