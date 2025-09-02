@@ -56,7 +56,7 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
     y_acc_interp = interp_y_acc(t_novo_acc)
     z_acc_interp = interp_z_acc(t_novo_acc)
 
-    if np.mean(x_acc_interp) > y_acc_interp:
+    if np.mean(x_acc_interp) > np.mean(y_acc_interp):
         smartphone = 0
     else:
         smartphone = 1
