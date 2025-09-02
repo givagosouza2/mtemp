@@ -86,8 +86,8 @@ def processar_tug(df1,df2, filter_cutoff):
     interp_x_gyro = interp1d(t_original, x_gyro, kind='linear', fill_value="extrapolate")
     interp_y_gyro = interp1d(t_original, y_gyro, kind='linear', fill_value="extrapolate")
     interp_z_gyro = interp1d(t_original, z_acc, kind='linear', fill_value="extrapolate")
-    z_gyro_interp = interp_x_acc(t_novo_gyro)
-    z_gyro_interp = interp_y_acc(t_novo_gyro)
+    x_gyro_interp = interp_x_acc(t_novo_gyro)
+    y_gyro_interp = interp_y_acc(t_novo_gyro)
     z_gyro_interp = interp_z_acc(t_novo_gyro)
 
     # Remover tendência
@@ -99,9 +99,9 @@ def processar_tug(df1,df2, filter_cutoff):
     nyquist = fs_novo / 2
     normal_cutoff = filter_cutoff / nyquist
     b, a = butter(4, normal_cutoff, btype='low', analog=False)
-    x_gyro_filtrado = filtfilt(b, a, x_gyro_detrend)
-    y_gyro_filtrado = filtfilt(b, a, y_gyro_detrend)
-    z_gyro_filtrado = filtfilt(b, a, z_gyro_detrend)
+    x_gyro_filtrado = filtfilt(b, a, x_gyro_detrended)
+    y_gyro_filtrado = filtfilt(b, a, y_gyro_detrended)
+    z_gyro_filtrado = filtfilt(b, a, z_gyro_detrended)
     norma_gyro_filtrado = np.sqrt(x_gyro_filtrado^2+y_gyro_filtrado^2+z_gyro_filtrado^2)
     
     return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, x_gyro_filtrado, y_gyro_filtrado, z_gyro_filtrado, norma_gyro_filtrado
