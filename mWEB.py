@@ -288,10 +288,7 @@ elif pagina == "📈 Visualização Gráfica":
                            linestyle='--', label='Início', linewidth=0.8)
                 ax3.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
-                ax3.axvline(G1_t, color='black',
-                           linestyle='--', label='Início', linewidth=0.8)
-                ax3.axvline(G2_t, color='black',
-                           linestyle='--', label='Início', linewidth=0.8)
+                
                 ax3.set_xlabel('Tempo (s)')
                 ax3.set_ylabel('Velocidade angular Vertical (rad/s)')
                 ax3.legend()
@@ -427,6 +424,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
