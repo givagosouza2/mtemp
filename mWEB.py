@@ -272,7 +272,7 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig1)
 
                 fig2, ax2 = plt.subplots()
-                ax2.plot(t_novo_acc, x_acc_filtrado, linewidth=0.8, color='black')
+                ax2.plot(t_novo_acc, np.sqrt(x_acc_filtrado**2), linewidth=0.8, color='black')
                 ax2.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax2.axvline(stop_test, color='red',
@@ -283,7 +283,7 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig2)
 
                 fig3, ax3 = plt.subplots()
-                ax3.plot(t_novo_acc, y_acc_filtrado, linewidth=0.8, color='black')
+                ax3.plot(t_novo_acc, np.sqrt(y_acc_filtrado**2), linewidth=0.8, color='black')
                 ax3.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax3.axvline(stop_test, color='red',
@@ -294,7 +294,7 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig3)
 
                 fig4, ax4 = plt.subplots()
-                ax4.plot(t_novo_acc, z_acc_filtrado, linewidth=0.8, color='black')
+                ax4.plot(t_novo_acc, np.sqrt(z_acc_filtrado**2), linewidth=0.8, color='black')
                 ax4.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax4.axvline(stop_test, color='red',
@@ -468,6 +468,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
