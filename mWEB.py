@@ -616,8 +616,9 @@ elif pagina == "📤 Exportar Resultados":
                 A2v_amp = amp2
 
             with col1:
-                st.metric(label=r"Duração do teste (s)", value=round(stop-start, 4))
+                st.metric(label=r"Duração do teste (s)", value=round(stop_test-start_test, 4))
             
+
 
 
 
