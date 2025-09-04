@@ -116,7 +116,8 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
             stop_test = t_novo_gyro[index]
             break
     idx_top = top2_peaks(np.sqrt(v_gyro**2), x=t_novo_gyro, distance=None, prominence=None, abs_peaks=False)
+    idx_top_ml = top2_peaks(np.sqrt(ml_gyro**2), x=t_novo_gyro, distance=None, prominence=None, abs_peaks=False)
         
     duration = stop_test - start_test
     
-    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test,idx_top,duration
+    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test,idx_top,idx_top_ml,duration
