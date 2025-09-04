@@ -258,7 +258,7 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns([0.4, 0.4, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
-            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25)
+            t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25)
             vertical_squared = np.sqrt(v_gyro**2)
             lat1 = idx[1][0]
             lat2 = idx[1][1]
@@ -310,7 +310,7 @@ elif pagina == "📈 Visualização Gráfica":
                 A2_lat = lat2
                 A2_amp = amp2
 
-            acc_v_squared = np.sqrt(y_acc_filtrado**2)
+            acc_v_squared = np.sqrt(v_acc**2)
             lat1 = idx_acc_v[1][0]
             lat2 = idx_acc_v[1][1]
             amp1 = acc_v_squared[idx_acc_v[0][0]]
@@ -326,7 +326,8 @@ elif pagina == "📈 Visualização Gráfica":
                 A1v_amp = amp1
                 A2v_lat = lat2
                 A2v_amp = amp2
-                
+
+                           
             with col1:
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
@@ -335,23 +336,23 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax1.set_xlabel('Tempo (s)')
-                ax1.set_ylabel('Aceleração vertical (m/s²)')
+                ax1.set_ylabel('Aceleração norma (m/s²)')
                 ax1.legend()
                 st.pyplot(fig1)
 
                 fig2, ax2 = plt.subplots()
-                ax2.plot(t_novo_acc, np.sqrt(x_acc_filtrado**2), linewidth=0.8, color='black')
+                ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black')
                 ax2.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax2.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax2.set_xlabel('Tempo (s)')
-                ax2.set_ylabel('Aceleração vertical (m/s²)')
+                ax2.set_ylabel('Aceleração ML (m/s²)')
                 ax2.legend()
                 st.pyplot(fig2)
 
                 fig3, ax3 = plt.subplots()
-                ax3.plot(t_novo_acc, np.sqrt(y_acc_filtrado**2), linewidth=0.8, color='black')
+                ax3.plot(t_novo_acc, np.sqrt(v_acc**2), linewidth=0.8, color='black')
                 ax3.plot(A1v_lat,A1v_amp,'ro')
                 ax3.plot(A2v_lat,A2v_amp,'ro')
                 ax3.axvline(start_test, color='green',
@@ -372,7 +373,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax4.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax4.set_xlabel('Tempo (s)')
-                ax4.set_ylabel('Aceleração vertical (m/s²)')
+                ax4.set_ylabel('Aceleração AP (m/s²)')
                 ax4.legend()
                 st.pyplot(fig4)
                                     
@@ -384,7 +385,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax5.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax5.set_xlabel('Tempo (s)')
-                ax5.set_ylabel('Velocidade angular (rad/s)')
+                ax5.set_ylabel('Velocidade angular norma (rad/s)')
                 ax5.legend()
                 st.pyplot(fig5)
                 
@@ -421,7 +422,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax8.set_xlabel('Tempo (s)')
-                ax8.set_ylabel('Velocidade angular ML (rad/s)')
+                ax8.set_ylabel('Velocidade angular AP (rad/s)')
                 ax8.legend()
                 st.pyplot(fig8)
             
@@ -545,6 +546,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
