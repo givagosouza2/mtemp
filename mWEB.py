@@ -277,10 +277,10 @@ elif pagina == "📈 Visualização Gráfica":
                 G2_amp = amp2
 
             ml_squared = np.sqrt(ml_gyro**2)
-            lat1 = idx[1][0]
-            lat2 = idx[1][1]
-            amp1 = vertical_squared[idx[0][0]]
-            amp2 = vertical_squared[idx[0][1]]
+            lat1 = idx_ml[1][0]
+            lat2 = idx_ml[1][1]
+            amp1 = vertical_squared[idx_ml[0][0]]
+            amp2 = vertical_squared[idx_ml[0][1]]
             
             if lat1 > lat2:
                 G0_lat = lat2
@@ -509,6 +509,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
