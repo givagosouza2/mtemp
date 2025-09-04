@@ -398,8 +398,7 @@ elif pagina == "📈 Visualização Gráfica":
                            linestyle='--', label='A2 AP', linewidth=0.8)
                 ax5.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
-                ax5.axvline(stop_test, color='red',
-                           linestyle='--', label='Final', linewidth=0.8)
+                
                 ax5.set_xlabel('Tempo (s)')
                 ax5.set_ylabel('Velocidade angular norma (rad/s)')
                 ax5.legend()
@@ -435,6 +434,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
                 ax8.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(stop_test, color='red',
+                           linestyle='--', label='Final', linewidth=0.8)
                 ax8.set_xlabel('Tempo (s)')
                 ax8.set_ylabel('Velocidade angular AP (rad/s)')
                 ax8.legend()
@@ -639,6 +640,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
