@@ -545,7 +545,79 @@ elif pagina == "📤 Exportar Resultados":
         if tipo_teste == "TUG":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
+            t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25)
+            vertical_squared = np.sqrt(v_gyro**2)
+            lat1 = idx[1][0]
+            lat2 = idx[1][1]
+            amp1 = vertical_squared[idx[0][0]]
+            amp2 = vertical_squared[idx[0][1]]
             
+            if lat1 > lat2:
+                G1_lat = lat2
+                G1_amp = amp2
+                G2_lat = lat1
+                G2_amp = amp1
+            else:
+                G1_lat = lat1
+                G1_amp = amp1
+                G2_lat = lat2
+                G2_amp = amp2
+
+            ml_squared = np.sqrt(ml_gyro**2)
+            lat1 = idx_ml[1][0]
+            lat2 = idx_ml[1][1]
+            amp1 = ml_squared[idx_ml[0][0]]
+            amp2 = ml_squared[idx_ml[0][1]]
+            
+            if lat1 > lat2:
+                G0_lat = lat2
+                G0_amp = amp2
+                G4_lat = lat1
+                G4_amp = amp1
+            else:
+                G0_lat = lat1
+                G0_amp = amp1
+                G4_lat = lat2
+                G4_amp = amp2
+
+            acc_ap_squared = np.sqrt(z_acc_filtrado**2)
+            lat1 = idx_acc_ap[1][0]
+            lat2 = idx_acc_ap[1][1]
+            amp1 = acc_ap_squared[idx_acc_ap[0][0]]
+            amp2 = acc_ap_squared[idx_acc_ap[0][1]]
+            
+            if lat1 > lat2:
+                A1_lat = lat2
+                A1_amp = amp2
+                A2_lat = lat1
+                A2_amp = amp1
+            else:
+                A1_lat = lat1
+                A1_amp = amp1
+                A2_lat = lat2
+                A2_amp = amp2
+
+            acc_v_squared = np.sqrt(v_acc**2)
+            lat1 = idx_acc_v[1][0]
+            lat2 = idx_acc_v[1][1]
+            amp1 = acc_v_squared[idx_acc_v[0][0]]
+            amp2 = acc_v_squared[idx_acc_v[0][1]]
+            
+            if lat1 > lat2:
+                A1v_lat = lat2
+                A1v_amp = amp2
+                A2v_lat = lat1
+                A2v_amp = amp1
+            else:
+                A1v_lat = lat1
+                A1v_amp = amp1
+                A2v_lat = lat2
+                A2v_amp = amp2
+
+            with col1:
+                st.metric(label=r"Duração do teste (s)", value=round(stop-start, 4))
+            
+
 
 
 
