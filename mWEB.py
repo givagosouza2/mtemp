@@ -420,17 +420,19 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax8.axvline(A1v_lat, color='blue',
-                           linestyle='--', label='Início', linewidth=0.8)
+                           linestyle='--', label='A1 v', linewidth=0.8)
                 ax8.axvline(A1_lat, color='orange',
-                           linestyle='--', label='Início', linewidth=0.8)
+                           linestyle='--', label='A1 AP', linewidth=0.8)
                 ax8.axvline(G1_lat, color='black',
-                           linestyle='--', label='Início', linewidth=0.8)
+                           linestyle='--', label='G1', linewidth=0.8)
                 ax8.axvline(G2_lat, color='black',
-                           linestyle='--', label='Início', linewidth=0.8)
+                           linestyle='--', label='G2', linewidth=0.8)
                 ax8.axvline(G4_lat, color='cyan',
-                           linestyle='--', label='Início', linewidth=0.8)
-                ax8.axvline(A2_lat, color='yellow',
-                           linestyle='--', label='Início', linewidth=0.8)
+                           linestyle='--', label='G4', linewidth=0.8)
+                ax8.axvline(A2v_lat, color='yellow',
+                           linestyle='--', label='A2 v', linewidth=0.8)
+                ax8.axvline(A2_lat, color='gray',
+                           linestyle='--', label='A2 AP', linewidth=0.8)
                 ax8.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax8.set_xlabel('Tempo (s)')
@@ -637,6 +639,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
