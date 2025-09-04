@@ -115,7 +115,7 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
         if valor > 0.25:
             stop_test = t_novo_gyro[index]
             break
-    idx_top = top2_peaks(v_gyro, x=t_novo_gyro, distance=None, prominence=None, abs_peaks=False)
+    idx_top = top2_peaks(np.sqrt(v_gyro**2), x=t_novo_gyro, distance=None, prominence=None, abs_peaks=False)
         
     duration = stop_test - start_test
     
