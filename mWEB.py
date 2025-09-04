@@ -259,6 +259,22 @@ elif pagina == "📈 Visualização Gráfica":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,4,1.25)
+            lat1 = idx[1][1]
+            lat2 = idx[1][2]
+            amp1 = idx[2][1]
+            amp2 = idx[2][2]
+            if lat1 > lat2
+                G1_lat = lat2
+                G1_amp = amp2
+                G2_lat = lat1
+                G2_amp = amp1
+            else:
+                G1_lat = lat1
+                G1_amp = amp1
+                G2_lat = lat2
+                G2_amp = amp2
+            
+                
             with col1:
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
@@ -340,6 +356,8 @@ elif pagina == "📈 Visualização Gráfica":
 
                 fig8, ax8 = plt.subplots()
                 ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
+                ax8.plot(G1_lat,G1,amp,'ro')
+                ax8.plot(G2_lat,G2,amp,'ro')
                 ax8.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax8.axvline(stop_test, color='red',
@@ -470,6 +488,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
