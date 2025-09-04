@@ -543,6 +543,7 @@ elif pagina == "📤 Exportar Resultados":
                     label="Velocidade de decolagem (m/s)", value=round(veloc, 4))
                 
         if tipo_teste == "TUG":
+            col1, col2, col3, col4 = st.columns(4)
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25)
@@ -617,6 +618,7 @@ elif pagina == "📤 Exportar Resultados":
             with col1:
                 st.metric(label=r"Duração do teste (s)", value=round(stop-start, 4))
             
+
 
 
 
