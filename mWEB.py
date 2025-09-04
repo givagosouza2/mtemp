@@ -263,7 +263,8 @@ elif pagina == "📈 Visualização Gráfica":
             lat2 = idx[1][2]
             amp1 = idx[2][1]
             amp2 = idx[2][2]
-            if lat1 > lat2
+            
+            if lat1 > lat2:
                 G1_lat = lat2
                 G1_amp = amp2
                 G2_lat = lat1
@@ -488,6 +489,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
