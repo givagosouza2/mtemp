@@ -348,6 +348,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.set_ylabel('Velocidade angular ML (rad/s)')
                 ax8.legend()
                 st.pyplot(fig8)
+            with col3:
+                st.text(idx)
             
             
         else:
@@ -468,6 +470,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
