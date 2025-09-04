@@ -115,5 +115,6 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
         if valor > 0.25:
             stop_test = t_novo_gyro[index]
             break
+    duration = stop_test - start_test
     
     return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test
