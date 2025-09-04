@@ -419,6 +419,18 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
                 ax8.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(A1v_lat, color='blue',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(A1_lat, color='orange',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(G1_lat, color='black',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(G2_lat, color='black',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(G4_lat, color='cyan',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(A2_lat, color='yellow',
+                           linestyle='--', label='Início', linewidth=0.8)
                 ax8.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax8.set_xlabel('Tempo (s)')
@@ -621,10 +633,11 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Tempo para o pico de aceleração V (s)", value=round(A1v_lat-start_test, 4))
                 st.metric(label=r"Tempo para a caminhada de ida (s)", value=round(G1_lat-A1v_lat, 4))
                 st.metric(label=r"Tempo para a caminhada de volta (s)", value=round(G2_lat-G1_lat, 4))
-                st.metric(label=r"Tempo para entre A2 e G2 (s)", value=round(G4_lat-G2_lat, 4))
-                st.metric(label=r"Diferença de G4 e A2  (s)", value=round(A2_lat-G4_lat, 4))
+                st.metric(label=r"Tempo para entre G4 e G2 (s)", value=round(G4_lat-G2_lat, 4))
+                st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
