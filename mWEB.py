@@ -260,7 +260,9 @@ elif pagina == "📈 Visualização Gráfica":
             dados_gyro = st.session_state["dados_gyro"]
             t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,4,1.25)
             lat1 = idx[1][1]
+            st.text(lat1)
             lat2 = idx[1][2]
+            st.text(lat2)
             amp1 = idx[2][1]
             amp2 = idx[2][2]
             
@@ -489,6 +491,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
