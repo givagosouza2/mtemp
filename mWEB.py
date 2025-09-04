@@ -258,7 +258,7 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns([0.4, 0.4, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
-            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,4,1.25)
+            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,4,1.25)
             vertical_squared = np.sqrt(v_gyro**2)
             lat1 = idx[1][0]
             lat2 = idx[1][1]
@@ -309,6 +309,23 @@ elif pagina == "📈 Visualização Gráfica":
                 A1_amp = amp1
                 A2_lat = lat2
                 A2_amp = amp2
+
+            acc_v_squared = np.sqrt(y_acc_filtrado**2)
+            lat1 = idx_acc_v[1][0]
+            lat2 = idx_acc_v[1][1]
+            amp1 = acc_v_squared[idx_acc_v[0][0]]
+            amp2 = acc_v_squared[idx_acc_v[0][1]]
+            
+            if lat1 > lat2:
+                A1v_lat = lat2
+                A1v_amp = amp2
+                A2v_lat = lat1
+                A2v_amp = amp1
+            else:
+                A1v_lat = lat1
+                A1v_amp = amp1
+                A2v_lat = lat2
+                A2v_amp = amp2
                 
             with col1:
                 fig1, ax1 = plt.subplots()
@@ -335,6 +352,8 @@ elif pagina == "📈 Visualização Gráfica":
 
                 fig3, ax3 = plt.subplots()
                 ax3.plot(t_novo_acc, np.sqrt(y_acc_filtrado**2), linewidth=0.8, color='black')
+                ax3.plot(A1v_lat,A1v_amp,'ro')
+                ax3.plot(A2v_lat,A2v_amp,'ro')
                 ax3.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax3.axvline(stop_test, color='red',
@@ -526,6 +545,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
