@@ -101,9 +101,13 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
     if smartphone == 0:
         v_gyro = x_gyro_filtrado
         ml_gyro = y_gyro_filtrado
+        v_acc = x_acc_filtrado
+        ml_acc = y_acc_filtrado
     else:
         ml_gyro = x_gyro_filtrado
         v_gyro = y_gyro_filtrado
+        v_acc = y_acc_filtrado
+        ml_acc = x_acc_filtrado
 
     for index, valor in enumerate(np.sqrt(ml_gyro**2)):
         if valor > 0.25:
@@ -122,4 +126,4 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
         
     duration = stop_test - start_test
     
-    return t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test,idx_top,idx_top_ml,idx_top_acc_ap,idx_top_acc_v,duration
+    return t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado, start_test, stop_test,idx_top,idx_top_ml,idx_top_acc_ap,idx_top_acc_v,duration
