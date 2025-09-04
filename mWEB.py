@@ -258,7 +258,7 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns([0.4, 0.4, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
-            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test = tugProcessing.processar_tug(dados_acc,dados_gyro,4,1.25)
+            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,4,1.25)
             with col1:
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
@@ -468,6 +468,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
