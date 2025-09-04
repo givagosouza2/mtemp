@@ -619,8 +619,10 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Duração do teste (s)", value=round(stop_test-start_test, 4))
                 st.metric(label=r"Tempo para o pico de aceleração AP (s)", value=round(A1_lat-start_test, 4))
                 st.metric(label=r"Tempo para o pico de aceleração V (s)", value=round(A1v_lat-start_test, 4))
+                st.metric(label=r"Tempo para a caminhada de ida (s)", value=round(G1_lat-A1v_lat, 4))
                 
             
+
 
 
 
