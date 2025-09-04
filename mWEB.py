@@ -255,11 +255,11 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig)
         
         if tipo_teste == "TUG":
-            col1, col2, col3 = st.columns([0.4, 1, 0.4])
+            col1, col2, col3 = st.columns([0.4, 0.4, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test = tugProcessing.processar_tug(dados_acc,dados_gyro,4,2)
-            with col2:
+            with col1:
                 fig1, ax1 = plt.subplots()
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
                 ax1.axvline(start_test, color='green',
@@ -272,37 +272,82 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig1)
 
                 fig2, ax2 = plt.subplots()
-                ax2.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black')
+                ax2.plot(t_novo_acc, x_acc_filtrado, linewidth=0.8, color='black')
                 ax2.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax2.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax2.set_xlabel('Tempo (s)')
-                ax2.set_ylabel('Velocidade angular (rad/s)')
+                ax2.set_ylabel('Aceleração vertical (m/s²)')
                 ax2.legend()
                 st.pyplot(fig2)
-                
+
                 fig3, ax3 = plt.subplots()
-                ax3.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
+                ax3.plot(t_novo_acc, y_acc_filtrado, linewidth=0.8, color='black')
                 ax3.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax3.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax3.set_xlabel('Tempo (s)')
-                ax3.set_ylabel('Velocidade angular Vertical (rad/s)')
+                ax3.set_ylabel('Aceleração vertical (m/s²)')
                 ax3.legend()
                 st.pyplot(fig3)
 
                 fig4, ax4 = plt.subplots()
-                ax4.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
+                ax4.plot(t_novo_acc, z_acc_filtrado, linewidth=0.8, color='black')
                 ax4.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax4.axvline(stop_test, color='red',
                            linestyle='--', label='Final', linewidth=0.8)
                 ax4.set_xlabel('Tempo (s)')
-                ax4.set_ylabel('Velocidade angular ML (rad/s)')
+                ax4.set_ylabel('Aceleração vertical (m/s²)')
                 ax4.legend()
                 st.pyplot(fig4)
+                                    
+            with col2:
+                fig5, ax5 = plt.subplots()
+                ax5.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black')
+                ax5.axvline(start_test, color='green',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax5.axvline(stop_test, color='red',
+                           linestyle='--', label='Final', linewidth=0.8)
+                ax5.set_xlabel('Tempo (s)')
+                ax5.set_ylabel('Velocidade angular (rad/s)')
+                ax5.legend()
+                st.pyplot(fig5)
+                
+                fig6, ax6 = plt.subplots()
+                ax6.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
+                ax6.axvline(start_test, color='green',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax6.axvline(stop_test, color='red',
+                           linestyle='--', label='Final', linewidth=0.8)
+                ax6.set_xlabel('Tempo (s)')
+                ax6.set_ylabel('Velocidade angular Vertical (rad/s)')
+                ax6.legend()
+                st.pyplot(fig6)
+
+                fig7, ax7 = plt.subplots()
+                ax7.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
+                ax7.axvline(start_test, color='green',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax7.axvline(stop_test, color='red',
+                           linestyle='--', label='Final', linewidth=0.8)
+                ax7.set_xlabel('Tempo (s)')
+                ax7.set_ylabel('Velocidade angular ML (rad/s)')
+                ax7.legend()
+                st.pyplot(fig7)
+
+                fig8, ax8 = plt.subplots()
+                ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
+                ax8.axvline(start_test, color='green',
+                           linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(stop_test, color='red',
+                           linestyle='--', label='Final', linewidth=0.8)
+                ax8.set_xlabel('Tempo (s)')
+                ax8.set_ylabel('Velocidade angular ML (rad/s)')
+                ax8.legend()
+                st.pyplot(fig8)
             
             
         else:
@@ -423,6 +468,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
