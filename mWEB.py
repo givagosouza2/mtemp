@@ -258,7 +258,7 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns([0.4, 0.4, 0.4])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
-            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,4,1.25)
+            t_novo_acc, x_acc_filtrado, y_acc_filtrado, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_mlduration = tugProcessing.processar_tug(dados_acc,dados_gyro,4,1.25)
             vertical_squared = np.sqrt(v_gyro**2)
             lat1 = idx[1][0]
             lat2 = idx[1][1]
@@ -275,6 +275,23 @@ elif pagina == "📈 Visualização Gráfica":
                 G1_amp = amp1
                 G2_lat = lat2
                 G2_amp = amp2
+
+            ml_squared = np.sqrt(ml_gyro**2)
+            lat1 = idx[1][0]
+            lat2 = idx[1][1]
+            amp1 = vertical_squared[idx[0][0]]
+            amp2 = vertical_squared[idx[0][1]]
+            
+            if lat1 > lat2:
+                G0_lat = lat2
+                G0_amp = amp2
+                G4_lat = lat1
+                G4_amp = amp1
+            else:
+                G0_lat = lat1
+                G0_amp = amp1
+                G4_lat = lat2
+                G4_amp = amp2
             
                 
             with col1:
@@ -349,6 +366,8 @@ elif pagina == "📈 Visualização Gráfica":
 
                 fig7, ax7 = plt.subplots()
                 ax7.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
+                ax7.plot(G0_lat,G0_amp,'ro')
+                ax7.plot(G4_lat,G4_amp,'ro')
                 ax7.axvline(start_test, color='green',
                            linestyle='--', label='Início', linewidth=0.8)
                 ax7.axvline(stop_test, color='red',
@@ -490,6 +509,7 @@ elif pagina == "📤 Exportar Resultados":
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             
+
 
 
 
