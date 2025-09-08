@@ -505,50 +505,50 @@ elif pagina == "📈 Visualização Gráfica":
                         limite = 10
                     else:
                         limite = 50
-
-                    # Cria figura com GridSpec personalizado
-                    # Cria uma figura com 3 subplots verticais
-                    fig = plt.figure(figsize=(12, 10))
-                    gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
+                    with col1:
+                        # Cria figura com GridSpec personalizado
+                        # Cria uma figura com 3 subplots verticais
+                        fig = plt.figure(figsize=(12, 10))
+                        gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
                     
-                    ax1 = fig.add_subplot(gs[0, 0])
-                    if showRec:
-                        ax1.plot(tempo, ap, color='tomato', linewidth=0.5)
-                        ax1.plot(
-                        tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
-                        ax1.set_xlabel(r'Tempo (s)', fontsize=8)
-                        ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                        ax1.set_xlim(0, max(tempo))
-                        ax1.set_ylim(-limite, limite)
-                        ax1.tick_params(axis='both', labelsize=8)
+                        ax1 = fig.add_subplot(gs[0, 0])
+                        if showRec:
+                            ax1.plot(tempo, ap, color='tomato', linewidth=0.5)
+                            ax1.plot(
+                            tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                            ax1.set_xlabel(r'Tempo (s)', fontsize=8)
+                            ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                            ax1.set_xlim(0, max(tempo))
+                            ax1.set_ylim(-limite, limite)
+                            ax1.tick_params(axis='both', labelsize=8)
 
-                    # Gráfico 2: ocupa linha superior direita (metade superior)
-                    ax2 = fig.add_subplot(gs[1, 0])
-                    if showRec:
-                        ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
-                        ax2.plot(
-                        tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
-                        ax2.set_xlabel('Tempo (s)', fontsize=8)
-                        ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                        ax2.set_xlim(0, max(tempo))
-                        ax2.set_ylim(-limite, limite)
-                        ax2.tick_params(axis='both', labelsize=8)
+                        # Gráfico 2: ocupa linha superior direita (metade superior)
+                        ax2 = fig.add_subplot(gs[1, 0])
+                        if showRec:
+                            ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
+                            ax2.plot(
+                            tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
+                            ax2.set_xlabel('Tempo (s)', fontsize=8)
+                            ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                            ax2.set_xlim(0, max(tempo))
+                            ax2.set_ylim(-limite, limite)
+                            ax2.tick_params(axis='both', labelsize=8)
 
-                    # Gráfico 2: ocupa linha superior direita (metade superior)
-                    axv = fig.add_subplot(gs[2, 0])
-                    if showRec:
-                        axv.plot(tempo, v, color='tomato', linewidth=0.5)
-                        axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
-                        axv.set_xlabel('Tempo (s)', fontsize=8)
-                        axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                        axv.set_xlim(0, max(tempo))
-                        axv.set_ylim(-limite, limite)
-                        axv.tick_params(axis='both', labelsize=8)
+                        # Gráfico 2: ocupa linha superior direita (metade superior)
+                        axv = fig.add_subplot(gs[2, 0])
+                        if showRec:
+                            axv.plot(tempo, v, color='tomato', linewidth=0.5)
+                            axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
+                            axv.set_xlabel('Tempo (s)', fontsize=8)
+                            axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                            axv.set_xlim(0, max(tempo))
+                            axv.set_ylim(-limite, limite)
+                            axv.tick_params(axis='both', labelsize=8)
                         
                     
                     
-                    # Exibe no Streamlit
-                    st.pyplot(fig) 
+                        # Exibe no Streamlit
+                        st.pyplot(fig) 
              
             
             
@@ -749,6 +749,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
