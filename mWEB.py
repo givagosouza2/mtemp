@@ -507,10 +507,10 @@ elif pagina == "📈 Visualização Gráfica":
                         limite = 50
 
                     # Cria figura com GridSpec personalizado
-                    fig = plt.figure(figsize=(8, 10))
-                    gs = gridspec.GridSpec(
-                        5, 4, figure=fig, hspace=0.8, wspace=0.6)
-
+                    # Cria uma figura com 3 subplots verticais
+                    fig = plt.figure(figsize=(12, 8))
+                    gs = gridspec.GridSpec(3, 2, figure=fig, width_ratios=[2, 1], height_ratios=[1, 1, 1], wspace=0.3)
+                    
                     # Gráfico 1: ocupa 2x2 blocos (esquerda acima)
 
                     rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction = ytestProcessing.processar_ytest(
@@ -518,8 +518,7 @@ elif pagina == "📈 Visualização Gráfica":
 
                     ellipse = Ellipse(xy=(avg_x, avg_y), width=width, height=height,
                                       angle=angle, alpha=0.5, color='blue', zorder=10)
-                    ax1 = fig.add_subplot(gs[0:2, 0:2])
-
+                    ax1 = fig.add_subplot(gs[0, 1])
                     if showRec:
                         ax1.plot(ml, ap, color='tomato', linewidth=0.5)
                         ax1.plot(
@@ -532,7 +531,7 @@ elif pagina == "📈 Visualização Gráfica":
                         ax1.add_patch(ellipse)
 
                     # Gráfico 2: ocupa linha superior direita (metade superior)
-                    ax2 = fig.add_subplot(gs[0, 2:])
+                    ax2 = fig.add_subplot(gs[1, 1])
                     if showRec:
                         ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
                         ax2.plot(
@@ -544,7 +543,7 @@ elif pagina == "📈 Visualização Gráfica":
                         ax2.tick_params(axis='both', labelsize=8)
 
                     # Gráfico 2: ocupa linha superior direita (metade superior)
-                    axv = fig.add_subplot(gs[0, 2:])
+                    axv = fig.add_subplot(gs[2, 1])
                     if showRec:
                         axv.plot(tempo, v, color='tomato', linewidth=0.5)
                         axv.plot(
@@ -791,6 +790,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
