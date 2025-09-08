@@ -548,7 +548,7 @@ elif pagina == "📈 Visualização Gráfica":
                     if showRec:
                         axv.plot(tempo, v, color='tomato', linewidth=0.5)
                         axv.plot(
-                        tempo_sel[startRec:endRec], ml_v[startRec:endRec], color='black', linewidth=0.8)
+                        tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
                         axv.set_xlabel('Tempo (s)', fontsize=8)
                         axv.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
                         axv.set_xlim(0, max(tempo))
@@ -791,6 +791,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
