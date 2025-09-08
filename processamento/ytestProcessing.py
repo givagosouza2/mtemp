@@ -50,7 +50,7 @@ def spectrum_plot(ml, ap, fs):
     positive_freqs = positive_freqs[1:]
 
     return positive_freqs, psd_ml, psd_ap
-
+ 
 def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     # Aqui você pode aplicar filtros, normalizações, cálculo de deslocamentos etc.
     df_proc = df.copy()
