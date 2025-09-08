@@ -462,9 +462,10 @@ elif pagina == "📈 Visualização Gráfica":
         if tipo_teste == "Y test":
             col1, col2, col3 = st.columns([0.4, 1, 0.4])
             dados = st.session_state["dados_acc_coluna"]
+            dados2 = st.session_state["dados_acc_joelho"]
             
             tempo, ml, ap, v, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(
-                dados, 0, 0, 0, 0, 8)
+                dados,dados2, 0, 0, 0, 0, 8)
             max_val = len(tempo)
 
             col1, col2, col3 = st.columns(3)
@@ -480,9 +481,9 @@ elif pagina == "📈 Visualização Gráfica":
             st.session_state["intervalo"] = startRec, endRec, filter
             showRec = st.checkbox('Mostrar o dado original', value=True)
             tempo, ml, ap, v, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(
-                dados, 0, 0, 0, 0, 49)
+                dados, dados2, 0, 0, 0, 0, 49)
             tempo_sel, ml_sel, ap_sel, v_sel, freqs_sel, psd_ml_sel, psd_ap_sel = ytestProcessing.processar_ytest(
-                dados, startRec, endRec, 1, 0, filter)
+                dados, dados2, startRec, endRec, 1, 0, filter)
             if startRec > endRec:
                 st.error(
                     'Valor do início do registro não pode ser maior que o do final do registro')
@@ -791,6 +792,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
