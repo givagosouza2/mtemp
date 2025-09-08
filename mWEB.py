@@ -459,7 +459,11 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.set_ylabel('Velocidade angular AP (rad/s)')
                 ax8.legend()
                 st.pyplot(fig8)
-            
+         if tipo_teste == "Y test":
+            col1, col2, col3 = st.columns([0.4, 1, 0.4])
+            dados = st.session_state["dados_acc_cintura"]
+            tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = ytestProcessing.processar_ytest(
+                dados, 8)    
             
             
         else:
@@ -659,6 +663,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
