@@ -523,9 +523,9 @@ elif pagina == "📈 Visualização Gráfica":
                         ax1.plot(tempo, ap, color='tomato', linewidth=0.5)
                         ax1.plot(
                         tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
-                        ax1.set_xlabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                        ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                         ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                        ax1.set_xlim(-limite, limite)
+                        ax1.set_xlim(0, max(tempo))
                         ax1.set_ylim(-limite, limite)
                         ax1.tick_params(axis='both', labelsize=8)
 
@@ -547,22 +547,12 @@ elif pagina == "📈 Visualização Gráfica":
                         axv.plot(tempo, v, color='tomato', linewidth=0.5)
                         axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
                         axv.set_xlabel('Tempo (s)', fontsize=8)
-                        axv.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                        axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
                         axv.set_xlim(0, max(tempo))
                         axv.set_ylim(-limite, limite)
                         axv.tick_params(axis='both', labelsize=8)
                         
-                    # Gráfico 3: linha do meio à direita
-                    ax3 = fig.add_subplot(gs[1, 0])
-                    if showRec:
-                        ax3.plot(ml, ap, color='tomato', linewidth=0.5)
-                        ax3.plot(ml_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
-                        ax3.set_xlabel('Tempo (s)', fontsize=8)
-                        ax3.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                        ax3.set_xlim(0, max(tempo))
-                        ax3.set_ylim(-limite, limite)
-                        ax3.tick_params(axis='both', labelsize=8)
-
+                    
                     
                     # Exibe no Streamlit
                     st.pyplot(fig) 
@@ -766,6 +756,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
