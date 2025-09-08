@@ -514,7 +514,7 @@ elif pagina == "📈 Visualização Gráfica":
                     # Gráfico 1: ocupa 2x2 blocos (esquerda acima)
 
                     rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction = ytestProcessing.processar_ytest(
-                        dados, startRec, endRec, 1, 1, filter)
+                        dados, dados2, startRec, endRec, 1, 1, filter)
 
                     ellipse = Ellipse(xy=(avg_x, avg_y), width=width, height=height,
                                       angle=angle, alpha=0.5, color='blue', zorder=10)
@@ -791,6 +791,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
