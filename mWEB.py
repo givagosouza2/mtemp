@@ -520,7 +520,7 @@ elif pagina == "📈 Visualização Gráfica":
                                       angle=angle, alpha=0.5, color='blue', zorder=10)
                     ax1 = fig.add_subplot(gs[0, 0])
                     if showRec:
-                        ax1.plot(ml, ap, color='tomato', linewidth=0.5)
+                        ax1.plot(tempo, ap, color='tomato', linewidth=0.5)
                         ax1.plot(
                         ml_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
                         ax1.set_xlabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
@@ -769,6 +769,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
