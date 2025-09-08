@@ -51,7 +51,7 @@ def spectrum_plot(ml, ap, fs):
 
     return positive_freqs, psd_ml, psd_ap
 
-def processar_ytest(df, startRec, endRec, sel, output, filter):
+def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     # Aqui você pode aplicar filtros, normalizações, cálculo de deslocamentos etc.
     df_proc = df.copy()
     time_vec = df_proc["Tempo"]
@@ -62,9 +62,11 @@ def processar_ytest(df, startRec, endRec, sel, output, filter):
     ap = z
     if np.mean(x) > np.mean(y):
         ml = y
+        v = x
 
     else:
         ml = x
+        v = y
 
     # Converter tempo para segundos
     t_original = time_vec / 1000  # ms para s
@@ -79,14 +81,18 @@ def processar_ytest(df, startRec, endRec, sel, output, filter):
                          fill_value="extrapolate")
     interp_ml = interp1d(t_original, ml, kind='linear',
                          fill_value="extrapolate")
+    interp_v = interp1d(t_original, v, kind='linear',
+                         fill_value="extrapolate")
 
     # Sinais reamostrados
     ap_interp_100Hz = interp_ap(t_novo)
     ml_interp_100Hz = interp_ml(t_novo)
+    v_interp_100Hz = interp_ml(t_novo)
 
     # 1. Remover tendência
     ap_detrended = detrend(ap_interp_100Hz)
     ml_detrended = detrend(ml_interp_100Hz)
+    v_detrended = detrend(v_interp_100Hz)
 
     # 2. Filtro Butterworth passa-baixa com parâmetros da sidebar
     fs = 100  # Hz
@@ -103,6 +109,8 @@ def processar_ytest(df, startRec, endRec, sel, output, filter):
     # Aplicando o filtro com zero-phase (filtfilt)
     ap_filtrado = filtfilt(b, a, ap_detrended)
     ml_filtrado = filtfilt(b, a, ml_detrended)
+    v_filtrado = filtfilt(b, a, v_detrended)
+        
     if sel == 1:
         positive_freqs, psd_ml, psd_ap = spectrum_plot(
             ml_filtrado[startRec:endRec], ap_filtrado[startRec:endRec], fs)
@@ -113,6 +121,6 @@ def processar_ytest(df, startRec, endRec, sel, output, filter):
             ml_filtrado, ap_filtrado, fs)
 
     if output == 0:
-        return t_novo, ml_filtrado, ap_filtrado, positive_freqs, psd_ml, psd_ap
+        return t_novo, ml_filtrado, ap_filtrado, v_filtrado, positive_freqs, psd_ml, psd_ap
     else:
         return rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction
