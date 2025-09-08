@@ -566,28 +566,7 @@ elif pagina == "📈 Visualização Gráfica":
                         ax3.set_ylim(-limite, limite)
                         ax3.tick_params(axis='both', labelsize=8)
 
-                    # Gráfico 4: canto inferior esquerdo
-                    ax4 = fig.add_subplot(gs[2:4, 0:2])
-                    if showRec:
-                        ax4.plot(freqs, psd_ml, color='tomato', linewidth=0.5)
-                        ax4.plot(freqs_sel, psd_ml_sel, 'k')
-                        ax4.set_xlim(-0.1, 8)
-                        ax4.set_ylim(0, limite*0.025)
-                        ax4.set_xlabel('Frequência temporal (Hz)', fontsize=8)
-                        ax4.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                        ax4.tick_params(axis='both', labelsize=8)
-
-                    # Gráfico 5: canto inferior direito
-                    ax5 = fig.add_subplot(gs[2:4, 2:])
-                    if showRec:
-                        ax5.plot(freqs, psd_ap, color='tomato', linewidth=0.5)
-                        ax5.plot(freqs_sel, psd_ap_sel, 'k')
-                        ax5.set_xlim(-0.1, 8)
-                        ax5.set_ylim(0, limite*0.025)
-                        ax5.set_xlabel('Frequência temporal (Hz)', fontsize=8)
-                        ax5.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                        ax5.tick_params(axis='both', labelsize=8)
-
+                    
                     # Exibe no Streamlit
                     st.pyplot(fig) 
              
@@ -790,6 +769,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
