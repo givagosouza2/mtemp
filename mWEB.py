@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from processamento import balanceProcessing
 from processamento import jumpProcessing
 from processamento import tugProcessing
+from processamento import ytestProcessing
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
@@ -790,6 +791,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
