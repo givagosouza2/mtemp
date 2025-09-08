@@ -88,7 +88,7 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     # Sinais reamostrados
     ap_interp_100Hz = interp_ap(t_novo)
     ml_interp_100Hz = interp_ml(t_novo)
-    v_interp_100Hz = interp_ml(t_novo)
+    v_interp_100Hz = interp_v(t_novo)
 
     # 1. Remover tendência
     ap_detrended = detrend(ap_interp_100Hz)
