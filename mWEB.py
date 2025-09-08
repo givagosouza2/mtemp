@@ -462,8 +462,135 @@ elif pagina == "📈 Visualização Gráfica":
          if tipo_teste == "Y test":
             col1, col2, col3 = st.columns([0.4, 1, 0.4])
             dados = st.session_state["dados_acc_cintura"]
-            tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = ytestProcessing.processar_ytest(
-                dados, 8)    
+            tempo, ml, ap, v, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(
+                dados, 0, 0, 0, 0, 8)
+            max_val = len(tempo)
+
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                startRec = st.number_input(
+                    'Indique o início do registro', value=0, step=1, max_value=max_val)
+            with col2:
+                endRec = st.number_input(
+                    'Indique o final do registro', value=max_val, step=1, max_value=max_val)
+            with col3:
+                filter = st.number_input(
+                    'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
+            st.session_state["intervalo"] = startRec, endRec, filter
+            showRec = st.checkbox('Mostrar o dado original', value=True)
+            tempo, ml, ap, v, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(
+                dados, 0, 0, 0, 0, 49)
+            tempo_sel, ml_sel, ap_sel, v_sel, freqs_sel, psd_ml_sel, psd_ap_sel = ytestProcessing.processar_ytest(
+                dados, startRec, endRec, 1, 0, filter)
+            if startRec > endRec:
+                st.error(
+                    'Valor do início do registro não pode ser maior que o do final do registro')
+            else:
+                if endRec > max_val:
+                    st.error(
+                        'Valor do início do registro não pode ser maior que o do final do registro')
+                else:
+                    min_ml = np.min(ml)
+                    max_ml = np.max(ml)
+                    min_ap = np.min(ap)
+                    max_ap = np.max(ap)
+                    limite = max(np.abs(min_ml), np.abs(
+                        max_ml), np.abs(min_ap), np.abs(max_ap))
+                    if limite < 0.5:
+                        limite = 0.5
+                    elif limite >= 0.5 and limite < 5:
+                        limite = 5
+                    elif limite >= 5 and limite < 10:
+                        limite = 10
+                    else:
+                        limite = 50
+
+                    # Cria figura com GridSpec personalizado
+                    fig = plt.figure(figsize=(8, 10))
+                    gs = gridspec.GridSpec(
+                        5, 4, figure=fig, hspace=0.8, wspace=0.6)
+
+                    # Gráfico 1: ocupa 2x2 blocos (esquerda acima)
+
+                    rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction = ytestProcessing.processar_equilibrio(
+                        dados, startRec, endRec, 1, 1, filter)
+
+                    ellipse = Ellipse(xy=(avg_x, avg_y), width=width, height=height,
+                                      angle=angle, alpha=0.5, color='blue', zorder=10)
+                    ax1 = fig.add_subplot(gs[0:2, 0:2])
+
+                    if showRec:
+                        ax1.plot(ml, ap, color='tomato', linewidth=0.5)
+                        ax1.plot(
+                        ml_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                        ax1.set_xlabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                        ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                        ax1.set_xlim(-limite, limite)
+                        ax1.set_ylim(-limite, limite)
+                        ax1.tick_params(axis='both', labelsize=8)
+                        ax1.add_patch(ellipse)
+
+                    # Gráfico 2: ocupa linha superior direita (metade superior)
+                    ax2 = fig.add_subplot(gs[0, 2:])
+                    if showRec:
+                        ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
+                        ax2.plot(
+                        tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
+                        ax2.set_xlabel('Tempo (s)', fontsize=8)
+                        ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                        ax2.set_xlim(0, max(tempo))
+                        ax2.set_ylim(-limite, limite)
+                        ax2.tick_params(axis='both', labelsize=8)
+
+                    # Gráfico 2: ocupa linha superior direita (metade superior)
+                    axv = fig.add_subplot(gs[0, 2:])
+                    if showRec:
+                        axv.plot(tempo, v, color='tomato', linewidth=0.5)
+                        axv.plot(
+                        tempo_sel[startRec:endRec], ml_v[startRec:endRec], color='black', linewidth=0.8)
+                        axv.set_xlabel('Tempo (s)', fontsize=8)
+                        axv.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                        axv.set_xlim(0, max(tempo))
+                        axv.set_ylim(-limite, limite)
+                        axv.tick_params(axis='both', labelsize=8)
+                        
+                    # Gráfico 3: linha do meio à direita
+                    ax3 = fig.add_subplot(gs[1, 2:])
+                    if showRec:
+                        ax3.plot(tempo, ap, color='tomato', linewidth=0.5)
+                        ax3.plot(
+                        tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                        ax3.set_xlabel('Tempo (s)', fontsize=8)
+                        ax3.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                        ax3.set_xlim(0, max(tempo))
+                        ax3.set_ylim(-limite, limite)
+                        ax3.tick_params(axis='both', labelsize=8)
+
+                    # Gráfico 4: canto inferior esquerdo
+                    ax4 = fig.add_subplot(gs[2:4, 0:2])
+                    if showRec:
+                        ax4.plot(freqs, psd_ml, color='tomato', linewidth=0.5)
+                        ax4.plot(freqs_sel, psd_ml_sel, 'k')
+                        ax4.set_xlim(-0.1, 8)
+                        ax4.set_ylim(0, limite*0.025)
+                        ax4.set_xlabel('Frequência temporal (Hz)', fontsize=8)
+                        ax4.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                        ax4.tick_params(axis='both', labelsize=8)
+
+                    # Gráfico 5: canto inferior direito
+                    ax5 = fig.add_subplot(gs[2:4, 2:])
+                    if showRec:
+                        ax5.plot(freqs, psd_ap, color='tomato', linewidth=0.5)
+                        ax5.plot(freqs_sel, psd_ap_sel, 'k')
+                        ax5.set_xlim(-0.1, 8)
+                        ax5.set_ylim(0, limite*0.025)
+                        ax5.set_xlabel('Frequência temporal (Hz)', fontsize=8)
+                        ax5.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                        ax5.tick_params(axis='both', labelsize=8)
+
+                    # Exibe no Streamlit
+                    st.pyplot(fig) 
+             
             
             
         else:
@@ -663,6 +790,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
