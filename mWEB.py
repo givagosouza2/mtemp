@@ -555,7 +555,7 @@ elif pagina == "📈 Visualização Gráfica":
                         axv.tick_params(axis='both', labelsize=8)
                         
                     # Gráfico 3: linha do meio à direita
-                    ax3 = fig.add_subplot(gs[1, 2:])
+                    ax3 = fig.add_subplot(gs[:, 0])
                     if showRec:
                         ax3.plot(tempo, ap, color='tomato', linewidth=0.5)
                         ax3.plot(
@@ -790,6 +790,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
