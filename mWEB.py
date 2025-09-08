@@ -461,7 +461,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.legend()
                 st.pyplot(fig8)
         if tipo_teste == "Y test":
-            col1, col2, col3 = st.columns([0.4, 1, 0.4])
+            col1, col2 = st.columns([0.5,0.5])
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
             tempo, ml, ap, v, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(dados,dados2, 0, 0, 0, 0, 8)
@@ -749,6 +749,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
