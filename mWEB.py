@@ -511,13 +511,6 @@ elif pagina == "📈 Visualização Gráfica":
                     fig = plt.figure(figsize=(12, 10))
                     gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
                     
-                    # Gráfico 1: ocupa 2x2 blocos (esquerda acima)
-
-                    rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction = ytestProcessing.processar_ytest(
-                        dados, dados2, startRec, endRec, 1, 1, filter)
-
-                    ellipse = Ellipse(xy=(avg_x, avg_y), width=width, height=height,
-                                      angle=angle, alpha=0.5, color='blue', zorder=10)
                     ax1 = fig.add_subplot(gs[0, 0])
                     if showRec:
                         ax1.plot(tempo, ap, color='tomato', linewidth=0.5)
@@ -756,6 +749,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
