@@ -54,7 +54,7 @@ elif pagina == "📁 Importar Dados":
     with col1:
         tipo_teste = st.selectbox(
             "Qual teste você deseja analisar?",
-            ["Selecione...", "Equilíbrio", "Salto", "TUG"]
+            ["Selecione...", "Equilíbrio", "Salto", "TUG", "Y test"]
         )
 
         if tipo_teste != "Selecione...":
@@ -98,7 +98,26 @@ elif pagina == "📁 Importar Dados":
                             st.success("Arquivo carregado com sucesso!")
                             st.dataframe(dados_gyro.head())
                             st.session_state["dados_gyro"] = dados_gyro
-
+        
+        elif tipo_teste == "Y test":
+            st.subheader("📱 Importar dados dos sensores")
+            arquivo = st.file_uploader(
+                "Selecione o arquivo da coluna vertebral (CSV ou TXT)", type=["csv", "txt"])
+            if arquivo is not None:
+                dados_acc_coluna = carregar_dados_generico(arquivo)
+                if dados_acc_coluna is not None:
+                    st.success("Arquivo carregado com sucesso!")
+                    st.dataframe(dados_acc.head())
+                    st.session_state["dados_acc_coluna"] = dados_acc_coluna
+                    st.session_state["dados"] = dados_acc_coluna
+                    arquivo = st.file_uploader("Selecione o arquivo do joelho (CSV ou TXT)", type=["csv", "txt"])
+                    if arquivo is not None:
+                        dados_acc_joelho = carregar_dados_generico(arquivo)
+                        if dados_acc_joelho is not None:
+                            st.success("Arquivo carregado com sucesso!")
+                            st.dataframe(dados_acc_joelho.head())
+                            st.session_state["dados_acc_joelho"] = dados_acc_joelho
+    
         elif tipo_teste == "Selecione...":
             st.info("Selecione um tipo de teste para continuar.")
     with col3:
@@ -640,6 +659,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
