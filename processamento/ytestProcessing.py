@@ -55,6 +55,7 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     # Aqui você pode aplicar filtros, normalizações, cálculo de deslocamentos etc.
     df_proc = df.copy()
     df2_proc = df2.copy()
+    
     time_vec = df_proc["Tempo"]
     x = df_proc["X"]
     y = df_proc["Y"]
@@ -111,6 +112,59 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     ap_filtrado = filtfilt(b, a, ap_detrended)
     ml_filtrado = filtfilt(b, a, ml_detrended)
     v_filtrado = filtfilt(b, a, v_detrended)
+    
+    #joelho
+    time_vec_2 = df2_proc["Tempo"]
+    x_2 = df2_proc["X"]
+    y_2 = df2_proc["Y"]
+    z_2 = df2_proc["Z"]
+
+    ap2 = x
+    v2 = y
+    ml2 = x
+
+    # Converter tempo para segundos
+    t_original_2 = time_vec_2 / 1000  # ms para s
+
+    # Criar vetor de tempo para 100 Hz
+    fs_novo = 100  # Hz
+    dt_novo = 1 / fs_novo
+    t_novo2 = np.arange(t_original_2.iloc[0], t_original_2.iloc[-1], dt_novo)
+
+    # Interpoladores
+    interp_ap2 = interp1d(t_original_2, ap2, kind='linear',
+                         fill_value="extrapolate")
+    interp_ml2 = interp1d(t_original_2, ml2, kind='linear',
+                         fill_value="extrapolate")
+    interp_v2 = interp1d(t_original, v2, kind='linear',
+                         fill_value="extrapolate")
+
+    # Sinais reamostrados
+    ap2_interp_100Hz = interp_ap(t_novo2)
+    ml2_interp_100Hz = interp_ml(t_novo2)
+    v2_interp_100Hz = interp_v(t_novo2)
+
+    # 1. Remover tendência
+    ap2_detrended = detrend(ap2_interp_100Hz)
+    ml2_detrended = detrend(ml2_interp_100Hz)
+    v2_detrended = detrend(v2_interp_100Hz)
+
+    # 2. Filtro Butterworth passa-baixa com parâmetros da sidebar
+    fs = 100  # Hz
+    cutoff = filter  # Usando valor da sidebar
+    order = 4  # Usando valor da sidebar
+
+    # Normaliza a frequência de corte (Nyquist = fs/2)
+    nyquist = fs / 2
+    normal_cutoff = cutoff / nyquist
+
+    # Coeficientes do filtro
+    b, a = butter(order, normal_cutoff, btype='low', analog=False)
+
+    # Aplicando o filtro com zero-phase (filtfilt)
+    ap2_filtrado = filtfilt(b, a, ap2_detrended)
+    ml2_filtrado = filtfilt(b, a, ml2_detrended)
+    v2_filtrado = filtfilt(b, a, v2_detrended)
         
     if sel == 1:
         positive_freqs, psd_ml, psd_ap = spectrum_plot(
@@ -122,6 +176,6 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
             ml_filtrado, ap_filtrado, fs)
 
     if output == 0:
-        return t_novo, ml_filtrado, ap_filtrado, v_filtrado, positive_freqs, psd_ml, psd_ap
+        return t_novo, ml_filtrado, ap_filtrado, v_filtrado,ml2_filtrado, ap2_filtrado, v2_filtrado, positive_freqs, psd_ml, psd_ap
     else:
         return rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction
