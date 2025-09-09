@@ -55,6 +55,9 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     # Aqui você pode aplicar filtros, normalizações, cálculo de deslocamentos etc.
     df_proc = df.copy()
     df2_proc = df2.copy()
+
+    st.dataframe(df_proc)
+    st.dataframe(df2_proc)
     
     time_vec = df_proc["Tempo"]
     x = df_proc["X"]
