@@ -111,9 +111,9 @@ elif pagina == "📁 Importar Dados":
                     st.dataframe(dados_acc_coluna.head())
                     st.session_state["dados_acc_coluna"] = dados_acc_coluna
                     st.session_state["dados"] = dados_acc_coluna
-                    arquivo = st.file_uploader("Selecione o arquivo do joelho (CSV ou TXT)", type=["csv", "txt"])
-                    if arquivo is not None:
-                        dados_acc_joelho = carregar_dados_generico(arquivo)
+                    arquivo_2 = st.file_uploader("Selecione o arquivo do joelho (CSV ou TXT)", type=["csv", "txt"])
+                    if arquivo_2 is not None:
+                        dados_acc_joelho = carregar_dados_generico(arquivo_2)
                         if dados_acc_joelho is not None:
                             st.success("Arquivo carregado com sucesso!")
                             st.dataframe(dados_acc_joelho.head())
@@ -804,6 +804,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
