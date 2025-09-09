@@ -557,7 +557,7 @@ elif pagina == "📈 Visualização Gráfica":
                         if showRec:
                             ax1_2.plot(tempo_2, ap_2, color='tomato', linewidth=0.5)
                             ax1_2.plot(
-                            tempo_sel_2[startRec:endRec], ap_sel_2[startRec:endRec], color='black', linewidth=0.8)
+                            tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
                             ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
                             ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                             ax1_2.set_xlim(0, max(tempo_2))
@@ -569,7 +569,7 @@ elif pagina == "📈 Visualização Gráfica":
                         if showRec:
                             ax2_2.plot(tempo_2, ml_2, color='tomato', linewidth=0.5)
                             ax2_2.plot(
-                            tempo_sel_2[startRec:endRec], ml_sel_2[startRec:endRec], color='black', linewidth=0.8)
+                            tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
                             ax2_2.set_xlabel('Tempo (s)', fontsize=8)
                             ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
                             ax2_2.set_xlim(0, max(tempo_2))
@@ -580,7 +580,7 @@ elif pagina == "📈 Visualização Gráfica":
                         axv_2 = fig.add_subplot(gs[2, 0])
                         if showRec:
                             axv_2.plot(tempo_2, v_2, color='tomato', linewidth=0.5)
-                            axv_2.plot(tempo_sel_2[startRec:endRec], v_sel_2[startRec:endRec], color='black', linewidth=0.8)
+                            axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
                             axv_2.set_xlabel('Tempo (s)', fontsize=8)
                             axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
                             axv_2.set_xlim(0, max(tempo))
@@ -790,6 +790,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
