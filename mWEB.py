@@ -492,7 +492,7 @@ elif pagina == "📈 Visualização Gráfica":
                     break
 
             picoSaltoJoelho = np.max(v_2)
-            for index,valor in enumerate(v2):
+            for index,valor in enumerate(v_2):
                 if valor == picoSaltoJoelho:
                     onsetJoelho = index
                     tempo_2 = tempo_2 - tempo_2[onsetJoelho] 
@@ -810,6 +810,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
