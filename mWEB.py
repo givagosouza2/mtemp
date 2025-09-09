@@ -464,7 +464,7 @@ elif pagina == "📈 Visualização Gráfica":
             
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
-            tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(dados,dados2, 0, 0, 0, 0, 8)
+            tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(dados[0:len(dados)-1],dados2[0:len(dados)-1], 0, 0, 0, 0, 8)
             max_val = len(tempo)
 
             col1, col2, col3 = st.columns(3)
@@ -480,10 +480,10 @@ elif pagina == "📈 Visualização Gráfica":
             st.session_state["intervalo"] = startRec, endRec, filter
             showRec = st.checkbox('Mostrar o dado original', value=True)
             tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(
-                dados, dados2, 0, 0, 0, 0, 49)
+                dados[0:len(dados)-1], dados2[0:len(dados)-1], 0, 0, 0, 0, 49)
             col1, col2 = st.columns(2)
             tempo_sel, ml_sel, ap_sel, v_sel, tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel, freqs_sel, psd_ml_sel, psd_ap_sel = ytestProcessing.processar_ytest(
-                dados, dados2, startRec, endRec, 1, 0, filter)
+                dados[0:len(dados)-1], dados2[0:len(dados)-1], startRec, endRec, 1, 0, filter)
             
             picoSaltoCintura = np.max(v[0:500])
             for index,valor in enumerate(v):
@@ -804,6 +804,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
