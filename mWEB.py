@@ -484,7 +484,9 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2 = st.columns(2)
             tempo_sel, ml_sel, ap_sel, v_sel, tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel, freqs_sel, psd_ml_sel, psd_ap_sel = ytestProcessing.processar_ytest(
                 dados[0:len(dados)-1], dados2[0:len(dados2)-1], startRec, endRec, 1, 0, filter)
-            
+
+            st.dataframe(ap_2_sel)
+            st.dataframe(ap_sel)
             picoSaltoCintura = np.max(v[0:500])
             for index,valor in enumerate(v):
                 if valor == picoSaltoCintura:
@@ -804,6 +806,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
