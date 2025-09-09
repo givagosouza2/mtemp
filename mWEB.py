@@ -464,7 +464,7 @@ elif pagina == "📈 Visualização Gráfica":
             
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
-            tempo, ml, ap, v, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(dados,dados2, 0, 0, 0, 0, 8)
+            tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(dados,dados2, 0, 0, 0, 0, 8)
             max_val = len(tempo)
 
             col1, col2, col3 = st.columns(3)
@@ -479,10 +479,10 @@ elif pagina == "📈 Visualização Gráfica":
                     'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
             st.session_state["intervalo"] = startRec, endRec, filter
             showRec = st.checkbox('Mostrar o dado original', value=True)
-            tempo, ml, ap, v, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(
+            tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(
                 dados, dados2, 0, 0, 0, 0, 49)
             col1, col2 = st.columns(2)
-            tempo_sel, ml_sel, ap_sel, v_sel, freqs_sel, psd_ml_sel, psd_ap_sel = ytestProcessing.processar_ytest(
+            tempo_sel, ml_sel, ap_sel, v_sel, tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel, freqs_sel, psd_ml_sel, psd_ap_sel = ytestProcessing.processar_ytest(
                 dados, dados2, startRec, endRec, 1, 0, filter)
             if startRec > endRec:
                 st.error(
@@ -545,11 +545,51 @@ elif pagina == "📈 Visualização Gráfica":
                             axv.set_xlim(0, max(tempo))
                             axv.set_ylim(-limite, limite)
                             axv.tick_params(axis='both', labelsize=8)
-                        
-                    
-                    
                         # Exibe no Streamlit
-                        st.pyplot(fig) 
+                        st.pyplot(fig)
+                    with col2:
+                        # Cria figura com GridSpec personalizado
+                        # Cria uma figura com 3 subplots verticais
+                        fig = plt.figure(figsize=(12, 10))
+                        gs_2 = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
+                    
+                        ax1_2 = fig.add_subplot(gs_2[0, 0])
+                        if showRec:
+                            ax1_2.plot(tempo, ap, color='tomato', linewidth=0.5)
+                            ax1_2.plot(
+                            tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                            ax1.set_xlabel(r'Tempo (s)', fontsize=8)
+                            ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                            ax1.set_xlim(0, max(tempo))
+                            ax1.set_ylim(-limite, limite)
+                            ax1.tick_params(axis='both', labelsize=8)
+
+                        # Gráfico 2: ocupa linha superior direita (metade superior)
+                        ax2 = fig.add_subplot(gs[1, 0])
+                        if showRec:
+                            ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
+                            ax2.plot(
+                            tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
+                            ax2.set_xlabel('Tempo (s)', fontsize=8)
+                            ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                            ax2.set_xlim(0, max(tempo))
+                            ax2.set_ylim(-limite, limite)
+                            ax2.tick_params(axis='both', labelsize=8)
+
+                        # Gráfico 2: ocupa linha superior direita (metade superior)
+                        axv = fig.add_subplot(gs[2, 0])
+                        if showRec:
+                            axv.plot(tempo, v, color='tomato', linewidth=0.5)
+                            axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
+                            axv.set_xlabel('Tempo (s)', fontsize=8)
+                            axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                            axv.set_xlim(0, max(tempo))
+                            axv.set_ylim(-limite, limite)
+                            axv.tick_params(axis='both', labelsize=8)
+                        # Exibe no Streamlit
+                        st.pyplot(fig)
+
+        
              
             
             
@@ -750,6 +790,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
