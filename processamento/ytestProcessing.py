@@ -119,9 +119,9 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     y_2 = df2_proc["Y"]
     z_2 = df2_proc["Z"]
 
-    ap2 = x
-    v2 = y
-    ml2 = x
+    ap2 = x_2
+    v2 = y_2
+    ml2 = z_2
 
     # Converter tempo para segundos
     t_original_2 = time_vec_2 / 1000  # ms para s
