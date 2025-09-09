@@ -561,8 +561,8 @@ elif pagina == "📈 Visualização Gráfica":
                             ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
                             ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                             ax1_2.set_xlim(0, max(tempo_2))
-                            ax1.set_ylim(-limite, limite)
-                            ax1.tick_params(axis='both', labelsize=8)
+                            ax1_2.set_ylim(-limite, limite)
+                            ax1_2.tick_params(axis='both', labelsize=8)
 
                         # Gráfico 2: ocupa linha superior direita (metade superior)
                         ax2_2 = fig.add_subplot(gs[1, 0])
@@ -790,6 +790,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
