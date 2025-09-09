@@ -176,6 +176,6 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
             ml_filtrado, ap_filtrado, fs)
 
     if output == 0:
-        return t_novo, ml_filtrado, ap_filtrado, v_filtrado,ml2_filtrado, ap2_filtrado, v2_filtrado, positive_freqs, psd_ml, psd_ap
+        return t_novo, ml_filtrado, ap_filtrado, v_filtrado, t_novo2, ml2_filtrado, ap2_filtrado, v2_filtrado, positive_freqs, psd_ml, psd_ap
     else:
         return rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction
