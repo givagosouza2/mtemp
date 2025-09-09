@@ -555,37 +555,37 @@ elif pagina == "📈 Visualização Gráfica":
                     
                         ax1_2 = fig.add_subplot(gs_2[0, 0])
                         if showRec:
-                            ax1_2.plot(tempo, ap, color='tomato', linewidth=0.5)
+                            ax1_2.plot(tempo_2, ap_2, color='tomato', linewidth=0.5)
                             ax1_2.plot(
-                            tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
-                            ax1.set_xlabel(r'Tempo (s)', fontsize=8)
-                            ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                            ax1.set_xlim(0, max(tempo))
+                            tempo_sel_2[startRec:endRec], ap_sel_2[startRec:endRec], color='black', linewidth=0.8)
+                            ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
+                            ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                            ax1_2.set_xlim(0, max(tempo_2))
                             ax1.set_ylim(-limite, limite)
                             ax1.tick_params(axis='both', labelsize=8)
 
                         # Gráfico 2: ocupa linha superior direita (metade superior)
-                        ax2 = fig.add_subplot(gs[1, 0])
+                        ax2_2 = fig.add_subplot(gs[1, 0])
                         if showRec:
-                            ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
-                            ax2.plot(
-                            tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
-                            ax2.set_xlabel('Tempo (s)', fontsize=8)
-                            ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                            ax2.set_xlim(0, max(tempo))
-                            ax2.set_ylim(-limite, limite)
-                            ax2.tick_params(axis='both', labelsize=8)
+                            ax2_2.plot(tempo_2, ml_2, color='tomato', linewidth=0.5)
+                            ax2_2.plot(
+                            tempo_sel_2[startRec:endRec], ml_sel_2[startRec:endRec], color='black', linewidth=0.8)
+                            ax2_2.set_xlabel('Tempo (s)', fontsize=8)
+                            ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                            ax2_2.set_xlim(0, max(tempo_2))
+                            ax2_2.set_ylim(-limite, limite)
+                            ax2_2.tick_params(axis='both', labelsize=8)
 
                         # Gráfico 2: ocupa linha superior direita (metade superior)
-                        axv = fig.add_subplot(gs[2, 0])
+                        axv_2 = fig.add_subplot(gs[2, 0])
                         if showRec:
-                            axv.plot(tempo, v, color='tomato', linewidth=0.5)
-                            axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
-                            axv.set_xlabel('Tempo (s)', fontsize=8)
-                            axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                            axv.set_xlim(0, max(tempo))
-                            axv.set_ylim(-limite, limite)
-                            axv.tick_params(axis='both', labelsize=8)
+                            axv_2.plot(tempo_2, v_2, color='tomato', linewidth=0.5)
+                            axv_2.plot(tempo_sel_2[startRec:endRec], v_sel_2[startRec:endRec], color='black', linewidth=0.8)
+                            axv_2.set_xlabel('Tempo (s)', fontsize=8)
+                            axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                            axv_2.set_xlim(0, max(tempo))
+                            axv_2.set_ylim(-limite, limite)
+                            axv_2.tick_params(axis='both', labelsize=8)
                         # Exibe no Streamlit
                         st.pyplot(fig)
 
@@ -790,6 +790,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
