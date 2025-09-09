@@ -565,10 +565,10 @@ elif pagina == "📈 Visualização Gráfica":
                     with col2:
                         # Cria figura com GridSpec personalizado
                         # Cria uma figura com 3 subplots verticais
-                        fig = plt.figure(figsize=(12, 10))
-                        gs_2 = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
+                        fig_2 = plt.figure(figsize=(12, 10))
+                        gs_2 = gridspec.GridSpec(3, 2, figure=fig_2, wspace=0.3, hspace=0.6)
                     
-                        ax1_2 = fig.add_subplot(gs_2[0, 0])
+                        ax1_2 = fig_2.add_subplot(gs_2[0, 0])
                         if showRec:
                             ax1_2.plot(tempo_2, ap_2, color='tomato', linewidth=0.5)
                             ax1_2.plot(
@@ -580,7 +580,7 @@ elif pagina == "📈 Visualização Gráfica":
                             ax1_2.tick_params(axis='both', labelsize=8)
 
                         # Gráfico 2: ocupa linha superior direita (metade superior)
-                        ax2_2 = fig.add_subplot(gs_2[1, 0])
+                        ax2_2 = fig_2.add_subplot(gs_2[1, 0])
                         if showRec:
                             ax2_2.plot(tempo_2, ml_2, color='tomato', linewidth=0.5)
                             ax2_2.plot(
@@ -592,7 +592,7 @@ elif pagina == "📈 Visualização Gráfica":
                             ax2_2.tick_params(axis='both', labelsize=8)
 
                         # Gráfico 2: ocupa linha superior direita (metade superior)
-                        axv_2 = fig.add_subplot(gs_2[2, 0])
+                        axv_2 = fig_2.add_subplot(gs_2[2, 0])
                         if showRec:
                             axv_2.plot(tempo_2, v_2, color='tomato', linewidth=0.5)
                             axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
@@ -602,7 +602,7 @@ elif pagina == "📈 Visualização Gráfica":
                             axv_2.set_ylim(-limite, limite)
                             axv_2.tick_params(axis='both', labelsize=8)
                         # Exibe no Streamlit
-                        st.pyplot(fig)
+                        st.pyplot(fig_2)
 
         
              
@@ -805,6 +805,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
