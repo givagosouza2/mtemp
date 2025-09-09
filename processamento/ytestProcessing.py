@@ -136,7 +136,7 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
                          fill_value="extrapolate")
     interp_ml2 = interp1d(t_original_2, ml2, kind='linear',
                          fill_value="extrapolate")
-    interp_v2 = interp1d(t_original, v2, kind='linear',
+    interp_v2 = interp1d(t_original_2, v2, kind='linear',
                          fill_value="extrapolate")
 
     # Sinais reamostrados
