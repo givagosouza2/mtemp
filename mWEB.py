@@ -510,7 +510,7 @@ elif pagina == "📈 Visualização Gráfica":
             for index,valor in enumerate(v_2_sel):
                 if valor == picoSaltoJoelho_sel:
                     onsetJoelho_sel = index
-                    tempo_2_sel = tempo_2_sel - tempo_2_se[onsetJoelho_sel] 
+                    tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel] 
                     break        
 
                 
@@ -798,6 +798,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
