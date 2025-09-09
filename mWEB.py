@@ -497,12 +497,7 @@ elif pagina == "📈 Visualização Gráfica":
                     onsetJoelho = index
                     tempo_2 = tempo_2 - tempo_2[onsetJoelho] 
                     break
-                    
-            for index,valor in enumerate(v):
-                if valor == picoSaltoCintura:
-                    onsetCintura = index
-                    tempo = tempo - tempo[onsetCintura] 
-                    break
+
                 
             if startRec > endRec:
                 st.error(
@@ -603,7 +598,7 @@ elif pagina == "📈 Visualização Gráfica":
                             axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
                             axv_2.set_xlabel('Tempo (s)', fontsize=8)
                             axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                            axv_2.set_xlim(0, max(tempo))
+                            axv_2.set_xlim(0, max(tempo_2))
                             axv_2.set_ylim(-limite, limite)
                             axv_2.tick_params(axis='both', labelsize=8)
                         # Exibe no Streamlit
@@ -810,6 +805,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
