@@ -565,7 +565,7 @@ elif pagina == "📈 Visualização Gráfica":
                             ax1_2.tick_params(axis='both', labelsize=8)
 
                         # Gráfico 2: ocupa linha superior direita (metade superior)
-                        ax2_2 = fig.add_subplot(gs[1, 0])
+                        ax2_2 = fig.add_subplot(gs_2[1, 0])
                         if showRec:
                             ax2_2.plot(tempo_2, ml_2, color='tomato', linewidth=0.5)
                             ax2_2.plot(
@@ -577,7 +577,7 @@ elif pagina == "📈 Visualização Gráfica":
                             ax2_2.tick_params(axis='both', labelsize=8)
 
                         # Gráfico 2: ocupa linha superior direita (metade superior)
-                        axv_2 = fig.add_subplot(gs[2, 0])
+                        axv_2 = fig.add_subplot(gs_2[2, 0])
                         if showRec:
                             axv_2.plot(tempo_2, v_2, color='tomato', linewidth=0.5)
                             axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
@@ -790,6 +790,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
