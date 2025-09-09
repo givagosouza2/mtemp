@@ -484,6 +484,7 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2 = st.columns(2)
             tempo_sel, ml_sel, ap_sel, v_sel, tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel, freqs_sel, psd_ml_sel, psd_ap_sel = ytestProcessing.processar_ytest(
                 dados, dados2, startRec, endRec, 1, 0, filter)
+            
             picoSaltoCintura = np.max(v)
             for index,valor in enumerate(v):
                 if valor == picoSaltoCintura:
@@ -497,6 +498,20 @@ elif pagina == "📈 Visualização Gráfica":
                     onsetJoelho = index
                     tempo_2 = tempo_2 - tempo_2[onsetJoelho] 
                     break
+            
+            picoSaltoCintura_sel = np.max(v_sel)
+            for index,valor in enumerate(v_sel):
+                if valor == picoSaltoCintura_sel:
+                    onsetCintura_sel = index
+                    tempo_sel = tempo_sel - tempo_sel[onsetCintura_sel] 
+                    break
+
+            picoSaltoJoelho_sel = np.max(v_2_sel)
+            for index,valor in enumerate(v_2_sel):
+                if valor == picoSaltoJoelho_sel:
+                    onsetJoelho_sel = index
+                    tempo_2_sel = tempo_2_sel - tempo_2_se[onsetJoelho_sel] 
+                    break        
 
                 
             with col1:
@@ -783,6 +798,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
