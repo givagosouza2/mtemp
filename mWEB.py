@@ -499,110 +499,88 @@ elif pagina == "📈 Visualização Gráfica":
                     break
 
                 
-            if startRec > endRec:
-                st.error(
-                    'Valor do início do registro não pode ser maior que o do final do registro')
-            else:
-                if endRec > max_val:
-                    st.error(
-                        'Valor do início do registro não pode ser maior que o do final do registro')
-                else:
-                    min_ml = np.min(ml)
-                    max_ml = np.max(ml)
-                    min_ap = np.min(ap)
-                    max_ap = np.max(ap)
-                    limite = max(np.abs(min_ml), np.abs(
-                        max_ml), np.abs(min_ap), np.abs(max_ap))
-                    if limite < 0.5:
-                        limite = 0.5
-                    elif limite >= 0.5 and limite < 5:
-                        limite = 5
-                    elif limite >= 5 and limite < 10:
-                        limite = 10
-                    else:
-                        limite = 50
-                    with col1:
-                        # Cria figura com GridSpec personalizado
-                        # Cria uma figura com 3 subplots verticais
-                        fig = plt.figure(figsize=(12, 10))
-                        gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
-                    
-                        ax1 = fig.add_subplot(gs[0, 0])
-                        if showRec:
-                            ax1.plot(tempo, ap, color='tomato', linewidth=0.5)
-                            ax1.plot(
-                            tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
-                            ax1.set_xlabel(r'Tempo (s)', fontsize=8)
-                            ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                            ax1.set_xlim(0, max(tempo))
-                            ax1.set_ylim(-limite, limite)
-                            ax1.tick_params(axis='both', labelsize=8)
+            with col1:
+                # Cria figura com GridSpec personalizado
+                # Cria uma figura com 3 subplots verticais
+                fig = plt.figure(figsize=(12, 10))
+                gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
+            
+                ax1 = fig.add_subplot(gs[0, 0])
+                if showRec:
+                    ax1.plot(tempo, ap, color='tomato', linewidth=0.5)
+                    ax1.plot(
+                    tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                    ax1.set_xlabel(r'Tempo (s)', fontsize=8)
+                    ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                    ax1.set_xlim(0, max(tempo))
+                    ax1.set_ylim(-limite, limite)
+                    ax1.tick_params(axis='both', labelsize=8)
 
-                        # Gráfico 2: ocupa linha superior direita (metade superior)
-                        ax2 = fig.add_subplot(gs[1, 0])
-                        if showRec:
-                            ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
-                            ax2.plot(
-                            tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
-                            ax2.set_xlabel('Tempo (s)', fontsize=8)
-                            ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                            ax2.set_xlim(0, max(tempo))
-                            ax2.set_ylim(-limite, limite)
-                            ax2.tick_params(axis='both', labelsize=8)
+                # Gráfico 2: ocupa linha superior direita (metade superior)
+                ax2 = fig.add_subplot(gs[1, 0])
+                if showRec:
+                    ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
+                    ax2.plot(
+                    tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
+                    ax2.set_xlabel('Tempo (s)', fontsize=8)
+                    ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                    ax2.set_xlim(0, max(tempo))
+                    ax2.set_ylim(-limite, limite)
+                    ax2.tick_params(axis='both', labelsize=8)
 
-                        # Gráfico 2: ocupa linha superior direita (metade superior)
-                        axv = fig.add_subplot(gs[2, 0])
-                        if showRec:
-                            axv.plot(tempo, v, color='tomato', linewidth=0.5)
-                            axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
-                            axv.set_xlabel('Tempo (s)', fontsize=8)
-                            axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                            axv.set_xlim(0, max(tempo))
-                            axv.set_ylim(-limite, limite)
-                            axv.tick_params(axis='both', labelsize=8)
-                        # Exibe no Streamlit
-                        st.pyplot(fig)
-                    with col2:
-                        # Cria figura com GridSpec personalizado
-                        # Cria uma figura com 3 subplots verticais
-                        fig_2 = plt.figure(figsize=(12, 10))
-                        gs_2 = gridspec.GridSpec(3, 2, figure=fig_2, wspace=0.3, hspace=0.6)
-                    
-                        ax1_2 = fig_2.add_subplot(gs_2[0, 0])
-                        if showRec:
-                            ax1_2.plot(tempo_2, ap_2, color='tomato', linewidth=0.5)
-                            ax1_2.plot(
-                            tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
-                            ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
-                            ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                            ax1_2.set_xlim(0, max(tempo_2))
-                            ax1_2.set_ylim(-limite, limite)
-                            ax1_2.tick_params(axis='both', labelsize=8)
+                # Gráfico 2: ocupa linha superior direita (metade superior)
+                axv = fig.add_subplot(gs[2, 0])
+                if showRec:
+                    axv.plot(tempo, v, color='tomato', linewidth=0.5)
+                    axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
+                    axv.set_xlabel('Tempo (s)', fontsize=8)
+                    axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                    axv.set_xlim(0, max(tempo))
+                    axv.set_ylim(-limite, limite)
+                    axv.tick_params(axis='both', labelsize=8)
+                # Exibe no Streamlit
+                st.pyplot(fig)
+            with col2:
+                # Cria figura com GridSpec personalizado
+                # Cria uma figura com 3 subplots verticais
+                fig_2 = plt.figure(figsize=(12, 10))
+                gs_2 = gridspec.GridSpec(3, 2, figure=fig_2, wspace=0.3, hspace=0.6)
+            
+                ax1_2 = fig_2.add_subplot(gs_2[0, 0])
+                if showRec:
+                    ax1_2.plot(tempo_2, ap_2, color='tomato', linewidth=0.5)
+                    ax1_2.plot(
+                    tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                    ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
+                    ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                    ax1_2.set_xlim(0, max(tempo_2))
+                    ax1_2.set_ylim(-limite, limite)
+                    ax1_2.tick_params(axis='both', labelsize=8)
 
-                        # Gráfico 2: ocupa linha superior direita (metade superior)
-                        ax2_2 = fig_2.add_subplot(gs_2[1, 0])
-                        if showRec:
-                            ax2_2.plot(tempo_2, ml_2, color='tomato', linewidth=0.5)
-                            ax2_2.plot(
-                            tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
-                            ax2_2.set_xlabel('Tempo (s)', fontsize=8)
-                            ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                            ax2_2.set_xlim(0, max(tempo_2))
-                            ax2_2.set_ylim(-limite, limite)
-                            ax2_2.tick_params(axis='both', labelsize=8)
+                # Gráfico 2: ocupa linha superior direita (metade superior)
+                ax2_2 = fig_2.add_subplot(gs_2[1, 0])
+                if showRec:
+                    ax2_2.plot(tempo_2, ml_2, color='tomato', linewidth=0.5)
+                    ax2_2.plot(
+                    tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                    ax2_2.set_xlabel('Tempo (s)', fontsize=8)
+                    ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                    ax2_2.set_xlim(0, max(tempo_2))
+                    ax2_2.set_ylim(-limite, limite)
+                    ax2_2.tick_params(axis='both', labelsize=8)
 
-                        # Gráfico 2: ocupa linha superior direita (metade superior)
-                        axv_2 = fig_2.add_subplot(gs_2[2, 0])
-                        if showRec:
-                            axv_2.plot(tempo_2, v_2, color='tomato', linewidth=0.5)
-                            axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
-                            axv_2.set_xlabel('Tempo (s)', fontsize=8)
-                            axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                            axv_2.set_xlim(0, max(tempo_2))
-                            axv_2.set_ylim(-limite, limite)
-                            axv_2.tick_params(axis='both', labelsize=8)
-                        # Exibe no Streamlit
-                        st.pyplot(fig_2)
+                # Gráfico 2: ocupa linha superior direita (metade superior)
+                axv_2 = fig_2.add_subplot(gs_2[2, 0])
+                if showRec:
+                    axv_2.plot(tempo_2, v_2, color='tomato', linewidth=0.5)
+                    axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                    axv_2.set_xlabel('Tempo (s)', fontsize=8)
+                    axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                    axv_2.set_xlim(0, max(tempo_2))
+                    axv_2.set_ylim(-limite, limite)
+                    axv_2.tick_params(axis='both', labelsize=8)
+                # Exibe no Streamlit
+                st.pyplot(fig_2)
 
         
              
@@ -805,6 +783,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
