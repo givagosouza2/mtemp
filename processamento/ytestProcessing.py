@@ -61,11 +61,16 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     y = df_proc["Y"]
     z = df_proc["Z"]
 
+    #joelho
+    time_vec_2 = df2_proc["Tempo"]
+    x_2 = df2_proc["X"]
+    y_2 = df2_proc["Y"]
+    z_2 = df2_proc["Z"]
+
     ap = z
     if np.mean(x) > np.mean(y):
         ml = y
         v = x
-
     else:
         ml = x
         v = y
@@ -113,12 +118,6 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     ml_filtrado = filtfilt(b, a, ml_detrended)
     v_filtrado = filtfilt(b, a, v_detrended)
     
-    #joelho
-    time_vec_2 = df2_proc["Tempo"]
-    x_2 = df2_proc["X"]
-    y_2 = df2_proc["Y"]
-    z_2 = df2_proc["Z"]
-
     ap2 = x_2
     v2 = y_2
     ml2 = z_2
