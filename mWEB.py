@@ -9,6 +9,7 @@ from processamento import ytestProcessing
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
+from scipy.ndimage import uniform_filter1d
 
 st.set_page_config(page_title="App teste", layout="wide")
 
@@ -518,7 +519,8 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel] 
                     break        
 
-            ap_sel_media = ap_sel.rolling(window=3).mean()    
+            ap_sel_movel = uniform_filter1d(ap_sel, size=3)
+    
             with col1:
                 # Cria figura com GridSpec personalizado
                 # Cria uma figura com 3 subplots verticais
@@ -811,6 +813,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
