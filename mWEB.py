@@ -526,6 +526,14 @@ elif pagina == "📈 Visualização Gráfica":
             ap_2_sel_media = uniform_filter1d(ap_2_sel, size=30)
             ml_2_sel_media = uniform_filter1d(ml_2_sel, size=30)
             v_2_sel_media = uniform_filter1d(v_2_sel, size=30)
+            n1 = np.max(tempo_sel)
+            n2 = np.max(tempo_sel_2)
+            if n1 > n2:
+                limite_tempo = n1
+            else:
+                limite_tempo = n2
+            
+                
     
             with col1:
                 # Cria figura com GridSpec personalizado
@@ -543,7 +551,7 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel[startRec:endRec], ap_sel_media[startRec:endRec], color='red', linewidth=0.8)
                     ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                     ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                    ax1.set_xlim(-5, max(tempo))
+                    ax1.set_xlim(-5, limite_tempo)
                     ax1.set_ylim(-limite, limite)
                     ax1.tick_params(axis='both', labelsize=8)
 
@@ -557,7 +565,7 @@ elif pagina == "📈 Visualização Gráfica":
                     ax2.plot(tempo_sel[startRec:endRec], ml_sel_media[startRec:endRec], color='red', linewidth=0.8)
                     ax2.set_xlabel('Tempo (s)', fontsize=8)
                     ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                    ax2.set_xlim(-5, max(tempo))
+                    ax2.set_xlim(-5, limite_tempo)
                     ax2.set_ylim(-limite, limite)
                     ax2.tick_params(axis='both', labelsize=8)
 
@@ -570,7 +578,7 @@ elif pagina == "📈 Visualização Gráfica":
                     axv.plot(tempo_sel[startRec:endRec], v_sel_media[startRec:endRec], color='red', linewidth=0.8)
                     axv.set_xlabel('Tempo (s)', fontsize=8)
                     axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                    axv.set_xlim(-5, max(tempo))
+                    axv.set_xlim(-5, limite_tempo)
                     axv.set_ylim(-limite, limite)
                     axv.tick_params(axis='both', labelsize=8)
                 # Exibe no Streamlit
@@ -591,7 +599,7 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel_2[startRec:endRec], ap_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
                     ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
                     ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                    ax1_2.set_xlim(-5, max(tempo))
+                    ax1_2.set_xlim(-5, limite_tempo)
                     ax1_2.set_ylim(-limite, limite)
                     ax1_2.tick_params(axis='both', labelsize=8)
 
@@ -605,7 +613,7 @@ elif pagina == "📈 Visualização Gráfica":
                     ax2_2.plot(tempo_sel_2[startRec:endRec], ml_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
                     ax2_2.set_xlabel('Tempo (s)', fontsize=8)
                     ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                    ax2_2.set_xlim(-5, max(tempo))
+                    ax2_2.set_xlim(-5, limite_tempo)
                     ax2_2.set_ylim(-limite, limite)
                     ax2_2.tick_params(axis='both', labelsize=8)
 
@@ -618,7 +626,7 @@ elif pagina == "📈 Visualização Gráfica":
                     axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
                     axv_2.set_xlabel('Tempo (s)', fontsize=8)
                     axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                    axv_2.set_xlim(-5, max(tempo))
+                    axv_2.set_xlim(-5, limite_tempo)
                     axv_2.set_ylim(-limite, limite)
                     axv_2.tick_params(axis='both', labelsize=8)
                 # Exibe no Streamlit
@@ -825,6 +833,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
