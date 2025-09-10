@@ -574,7 +574,7 @@ elif pagina == "📈 Visualização Gráfica":
                     ax1_2.plot(tempo_2, ap_2, color='tomato', linewidth=0.5)
                 else:
                     ax1_2.plot(
-                    tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='blue', linewidth=0.8)
+                    tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
                     ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
                     ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                     ax1_2.set_xlim(0, max(tempo))
@@ -809,6 +809,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
