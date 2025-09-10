@@ -482,7 +482,7 @@ elif pagina == "📈 Visualização Gráfica":
             st.session_state["intervalo"] = startRec, endRec, filter
             showRec = st.checkbox('Mostrar o dado original', value=True)
             tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2, freqs, psd_ml, psd_ap = ytestProcessing.processar_ytest(
-                dados[0:len(dados)-1], dados2[0:len(dados2)-1], 0, 0, 0, 0, 49)
+                dados[0:len(dados)-1], dados2[0:len(dados2)-1], 0, 0, 0, 0, filter)
             col1, col2 = st.columns(2)
             tempo_sel, ml_sel, ap_sel, v_sel, tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel, freqs_sel, psd_ml_sel, psd_ap_sel = ytestProcessing.processar_ytest(
                 dados[0:len(dados)-1], dados2[0:len(dados2)-1], startRec, endRec, 1, 0, filter)
@@ -807,6 +807,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
