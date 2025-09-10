@@ -528,10 +528,10 @@ elif pagina == "📈 Visualização Gráfica":
                 limite = 5
                 ax1 = fig.add_subplot(gs[0, 0])
                 if showRec:
-                    ax1.plot(tempo, ap, color='tomato', linewidth=0.5)
+                    ax1.plot(tempo_2, ap_2, color='tomato', linewidth=0.5)
                 else:
                     ax1.plot(
-                    tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                    tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
                     ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                     ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                     ax1.set_xlim(0, max(tempo))
@@ -810,6 +810,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
