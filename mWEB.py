@@ -533,7 +533,7 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
                     ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                     ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                    ax1.set_xlim(0, max(tempo))
+                    ax1.set_xlim(-5, max(tempo))
                     ax1.set_ylim(-limite, limite)
                     ax1.tick_params(axis='both', labelsize=8)
 
@@ -546,7 +546,7 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
                     ax2.set_xlabel('Tempo (s)', fontsize=8)
                     ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                    ax2.set_xlim(0, max(tempo))
+                    ax2.set_xlim(-5, max(tempo))
                     ax2.set_ylim(-limite, limite)
                     ax2.tick_params(axis='both', labelsize=8)
 
@@ -558,7 +558,7 @@ elif pagina == "📈 Visualização Gráfica":
                     axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
                     axv.set_xlabel('Tempo (s)', fontsize=8)
                     axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                    axv.set_xlim(0, max(tempo))
+                    axv.set_xlim(-5, max(tempo))
                     axv.set_ylim(-limite, limite)
                     axv.tick_params(axis='both', labelsize=8)
                 # Exibe no Streamlit
@@ -577,7 +577,7 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
                     ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
                     ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                    ax1_2.set_xlim(0, max(tempo))
+                    ax1_2.set_xlim(-5, max(tempo))
                     ax1_2.set_ylim(-limite, limite)
                     ax1_2.tick_params(axis='both', labelsize=8)
 
@@ -590,7 +590,7 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
                     ax2_2.set_xlabel('Tempo (s)', fontsize=8)
                     ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                    ax2_2.set_xlim(0, max(tempo))
+                    ax2_2.set_xlim(-5, max(tempo))
                     ax2_2.set_ylim(-limite, limite)
                     ax2_2.tick_params(axis='both', labelsize=8)
 
@@ -602,7 +602,7 @@ elif pagina == "📈 Visualização Gráfica":
                     axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
                     axv_2.set_xlabel('Tempo (s)', fontsize=8)
                     axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                    axv_2.set_xlim(0, max(tempo))
+                    axv_2.set_xlim(-5, max(tempo))
                     axv_2.set_ylim(-limite, limite)
                     axv_2.tick_params(axis='both', labelsize=8)
                 # Exibe no Streamlit
@@ -809,6 +809,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
