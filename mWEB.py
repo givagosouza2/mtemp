@@ -519,7 +519,7 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel] 
                     break        
 
-            ap_sel_media = uniform_filter1d(ap_sel, size=3)
+            ap_sel_media = uniform_filter1d(ap_sel, size=20)
     
             with col1:
                 # Cria figura com GridSpec personalizado
@@ -813,6 +813,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
