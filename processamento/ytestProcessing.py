@@ -166,16 +166,5 @@ def processar_ytest(df, df2, startRec, endRec, sel, output, filter):
     ml2_filtrado = filtfilt(b, a, ml2_detrended)
     v2_filtrado = filtfilt(b, a, v2_detrended)
         
-    if sel == 1:
-        positive_freqs, psd_ml, psd_ap = spectrum_plot(
-            ml_filtrado[startRec:endRec], ap_filtrado[startRec:endRec], fs)
-        rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction = calculate_metrics(
-            ml_filtrado[startRec:endRec], ap_filtrado[startRec:endRec])
-    else:
-        positive_freqs, psd_ml, psd_ap = spectrum_plot(
-            ml_filtrado, ap_filtrado, fs)
-
-    if output == 0:
-        return t_novo, ml_filtrado, ap_filtrado, v_filtrado, t_novo2, ml2_filtrado, ap2_filtrado, v2_filtrado, positive_freqs, psd_ml, psd_ap
-    else:
-        return rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction
+    return t_novo, ml_filtrado, ap_filtrado, v_filtrado, t_novo2, ml2_filtrado, ap2_filtrado, v2_filtrado
+    
