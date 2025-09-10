@@ -465,7 +465,7 @@ elif pagina == "📈 Visualização Gráfica":
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
             
-            tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2 = ytestProcessing.processar_ytest(dados[0:len(dados)-1],dados2[0:len(dados2)-1], 0, 0, 0, 0, 8)
+            #tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2 = ytestProcessing.processar_ytest(dados[0:len(dados)-10],dados2[0:len(dados2)-10], 0, 0, 0, 0, 8)
             max_val = len(tempo)
             
             col1, col2, col3 = st.columns(3)
@@ -481,10 +481,10 @@ elif pagina == "📈 Visualização Gráfica":
             
             showRec = st.checkbox('Mostrar o dado original', value=True)
             tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2 = ytestProcessing.processar_ytest(
-                dados[0:len(dados)-1], dados2[0:len(dados2)-1], 0, 0, 0, 0, filter)
+                dados[0:len(dados)-10], dados2[0:len(dados2)-10], 0, 0, 0, 0, filter)
             col1, col2 = st.columns(2)
             tempo_sel, ml_sel, ap_sel, v_sel, tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest(
-                dados[0:len(dados)-1], dados2[0:len(dados2)-1], startRec, endRec, 0, 0, 8)
+                dados[0:len(dados)-10], dados2[0:len(dados2)-10], startRec, endRec, 0, 0, 8)
 
             c = np.corrcoef(ap_sel, ap_2_sel)[0,1]
             st.text(c)
@@ -810,6 +810,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
