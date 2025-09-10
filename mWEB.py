@@ -518,7 +518,7 @@ elif pagina == "📈 Visualização Gráfica":
                     tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel] 
                     break        
 
-                
+            ap_sel_media = ap_sel.rolling(window=3).mean()    
             with col1:
                 # Cria figura com GridSpec personalizado
                 # Cria uma figura com 3 subplots verticais
@@ -531,6 +531,8 @@ elif pagina == "📈 Visualização Gráfica":
                 else:
                     ax1.plot(
                     tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                    ax1.plot(
+                    tempo_sel[startRec:endRec], ap_sel_media[startRec:endRec], color='red', linewidth=0.8)
                     ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                     ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                     ax1.set_xlim(-5, max(tempo))
@@ -809,6 +811,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
