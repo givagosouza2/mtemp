@@ -466,7 +466,7 @@ elif pagina == "📈 Visualização Gráfica":
             dados2 = st.session_state["dados_acc_joelho"]
             
             tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados,8)
-            max_val = len(tempo)
+            max_val = 5000
             
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -809,6 +809,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
