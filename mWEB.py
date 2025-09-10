@@ -487,7 +487,7 @@ elif pagina == "📈 Visualização Gráfica":
             tempo_sel, ml_sel, ap_sel, v_sel, tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest(
                 dados[0:len(dados)-1], dados2[0:len(dados2)-1], startRec, endRec, 0, 0, 8)
 
-            c = np.corrcoef(ap_sel, ap_s2_el)[0,1]
+            c = np.corrcoef(ap_sel, ap_2_sel)[0,1]
             st.text(c)
             
             picoSaltoCintura = np.max(v[0:500])
@@ -809,6 +809,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
