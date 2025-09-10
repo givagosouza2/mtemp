@@ -536,6 +536,7 @@ elif pagina == "📈 Visualização Gráfica":
                 
     
             with col1:
+                st.title("Coluna vertebral")
                 # Cria figura com GridSpec personalizado
                 # Cria uma figura com 3 subplots verticais
                 fig = plt.figure(figsize=(12, 10))
@@ -584,6 +585,7 @@ elif pagina == "📈 Visualização Gráfica":
                 # Exibe no Streamlit
                 st.pyplot(fig)
             with col2:
+                st.title("Joelho")
                 # Cria figura com GridSpec personalizado
                 # Cria uma figura com 3 subplots verticais
                 fig_2 = plt.figure(figsize=(12, 10))
@@ -833,6 +835,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
