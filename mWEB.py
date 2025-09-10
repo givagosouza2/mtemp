@@ -464,11 +464,10 @@ elif pagina == "📈 Visualização Gráfica":
             
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
-            st.dataframe(dados.head())
-            st.dataframe(dados2.head())
+            
             tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2 = ytestProcessing.processar_ytest(dados[0:len(dados)-1],dados2[0:len(dados2)-1], 0, 0, 0, 0, 8)
             max_val = len(tempo)
-
+            
             col1, col2, col3 = st.columns(3)
             with col1:
                 startRec = st.number_input(
@@ -479,7 +478,7 @@ elif pagina == "📈 Visualização Gráfica":
             with col3:
                 filter = st.number_input(
                     'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
-            st.session_state["intervalo"] = startRec, endRec, filter
+            
             showRec = st.checkbox('Mostrar o dado original', value=True)
             tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2 = ytestProcessing.processar_ytest(
                 dados[0:len(dados)-1], dados2[0:len(dados2)-1], 0, 0, 0, 0, filter)
@@ -488,6 +487,8 @@ elif pagina == "📈 Visualização Gráfica":
                 dados[0:len(dados)-1], dados2[0:len(dados2)-1], startRec, endRec, 0, 0, 8)
 
             c = np.corrcoef(ap_sel, ap_2_sel)[0,1]
+            st.text(c)
+            c = np.corrcoef(ml_sel, ap_2_sel)[0,1]
             st.text(c)
             
             picoSaltoCintura = np.max(v[0:500])
@@ -809,6 +810,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
