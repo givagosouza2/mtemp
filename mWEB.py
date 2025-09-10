@@ -465,7 +465,7 @@ elif pagina == "📈 Visualização Gráfica":
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
             
-            tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2 = ytestProcessing.processar_ytest(dados[0:len(dados)-10],dados2[0:len(dados2)-10], 0, 0, 0, 0, 8)
+            tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados[0:len(dados)-10],8)
             max_val = len(tempo)
             
             col1, col2, col3 = st.columns(3)
@@ -480,11 +480,13 @@ elif pagina == "📈 Visualização Gráfica":
                     'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
             
             showRec = st.checkbox('Mostrar o dado original', value=True)
-            tempo, ml, ap, v, tempo_2, ml_2, ap_2, v_2 = ytestProcessing.processar_ytest(
-                dados[0:len(dados)-10], dados2[0:len(dados2)-10], 0, 0, 0, 0, filter)
+            tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
+            tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter)
             col1, col2 = st.columns(2)
-            tempo_sel, ml_sel, ap_sel, v_sel, tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest(
-                dados[0:len(dados)-10], dados2[0:len(dados2)-10], startRec, endRec, 0, 0, filter)
+            tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1(
+                dados[startRec:endRec], filter)
+            tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2(
+                dados2[startRec:endRec], filter)
 
             picoSaltoCintura = np.max(v[0:500])
             for index,valor in enumerate(v):
@@ -805,6 +807,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
             
+
 
 
 
