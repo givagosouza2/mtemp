@@ -535,8 +535,8 @@ elif pagina == "📈 Visualização Gráfica":
             
                 
             min_c1 = np.min(ap_sel_media[startRec:endRec])
-            for index,valor in enumerate(ap_sel_media)
-                if valor == min_c1
+            for index,valor in enumerate(ap_sel_media):
+                if valor == min_c1:
                     t_min_c1 = tempo_sel[index]
                     break
             
@@ -823,6 +823,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
                  
+
 
 
 
