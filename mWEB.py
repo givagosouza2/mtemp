@@ -534,7 +534,12 @@ elif pagina == "📈 Visualização Gráfica":
                 limite_tempo = n2
             
                 
-    
+            min_c1 = np.min(ap_sel_media[startRec:endRec])
+            for index,valor in enumerate(ap_sel_media)
+                if valor == min_c1
+                    t_min_c1 = tempo_sel[index]
+                    break
+            
             with col1:
                 st.title("Coluna vertebral")
                 # Cria figura com GridSpec personalizado
@@ -547,6 +552,7 @@ elif pagina == "📈 Visualização Gráfica":
                 tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
                 ax1.plot(
                 tempo_sel[startRec:endRec], ap_sel_media[startRec:endRec], color='red', linewidth=0.8)
+                ax1.plot([t_min_c1,t_min_c1],[-4,4],"--r")
                 ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                 ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                 ax1.set_xlim(-5, limite_tempo)
@@ -816,7 +822,8 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Tempo para entre G4 e G2 (s)", value=round(G4_lat-G2_lat, 4))
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
-            
+        if tipo_teste == "Y test":            
+
 
 
 
