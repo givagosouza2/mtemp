@@ -549,6 +549,12 @@ elif pagina == "📈 Visualização Gráfica":
                 if valor == min_c2:
                     t_min_c2 = tempo_sel[index]
                     break        
+
+            max_c2 = np.max(ap_sel_media[index:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == max_c2:
+                    t_max_c2 = tempo_sel[index]
+                    break        
             
             with col1:
                 st.title("Coluna vertebral")
@@ -565,6 +571,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.plot([t_min_c1,t_min_c1],[-4,4],"--r")
                 ax1.plot([t_max_c1,t_max_c1],[-4,4],"--r")
                 ax1.plot([t_min_c2,t_min_c2],[-4,4],"--r")
+                ax1.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                 ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                 ax1.set_xlim(-5, limite_tempo)
@@ -835,6 +842,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
                  
+
 
 
 
