@@ -822,7 +822,8 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Tempo para entre G4 e G2 (s)", value=round(G4_lat-G2_lat, 4))
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
-        if tipo_teste == "Y test":            
+                 
+
 
 
 
