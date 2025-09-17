@@ -841,7 +841,114 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Tempo para entre G4 e G2 (s)", value=round(G4_lat-G2_lat, 4))
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
-                 
+        if tipo_teste == "Y test":
+            
+            dados = st.session_state["dados_acc_coluna"]
+            dados2 = st.session_state["dados_acc_joelho"]
+            
+            tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados,8)
+            max_val = 5000
+            
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                startRec = st.number_input(
+                    'Indique o início do registro', value=0, step=1, max_value=max_val)
+            with col2:
+                endRec = st.number_input(
+                    'Indique o final do registro', value=max_val, step=1, max_value=max_val)
+            with col3:
+                filter = st.number_input(
+                    'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
+            
+            showRec = st.checkbox('Mostrar o dado original', value=True)
+            
+            tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
+            tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter)
+            
+            col1, col2 = st.columns(2)
+            tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1(
+                dados[startRec:endRec], filter)
+            tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2(
+                dados2[startRec:endRec], filter)
+
+            picoSaltoCintura = np.max(v[0:1000])
+            for index,valor in enumerate(v):
+                if valor == picoSaltoCintura:
+                    onsetCintura = index
+                    tempo = tempo - tempo[onsetCintura] 
+                    break
+
+            picoSaltoJoelho = np.max(v_2[0:1000])
+            for index,valor in enumerate(v_2):
+                if valor == picoSaltoJoelho:
+                    onsetJoelho = index
+                    tempo_2 = tempo_2 - tempo_2[onsetJoelho] 
+                    break
+            
+            picoSaltoCintura_sel = np.max(v_sel[0:1000])
+            for index,valor in enumerate(v_sel):
+                if valor == picoSaltoCintura_sel:
+                    onsetCintura_sel = index
+                    tempo_sel = tempo_sel - tempo_sel[onsetCintura_sel] 
+                    break
+
+            picoSaltoJoelho_sel = np.max(v_2_sel[0:1000])
+            for index,valor in enumerate(v_2_sel):
+                if valor == picoSaltoJoelho_sel:
+                    onsetJoelho_sel = index
+                    tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel] 
+                    break        
+
+            ap_sel_media = uniform_filter1d(ap_sel, size=30)
+            ml_sel_media = uniform_filter1d(ml_sel, size=30)
+            v_sel_media = uniform_filter1d(v_sel, size=30)
+
+            ap_2_sel_media = uniform_filter1d(ap_2_sel, size=30)
+            ml_2_sel_media = uniform_filter1d(ml_2_sel, size=30)
+            v_2_sel_media = uniform_filter1d(v_2_sel, size=30)
+            n1 = np.max(tempo_sel)
+            n2 = np.max(tempo_sel_2)
+            if n1 > n2:
+                limite_tempo = n1
+            else:
+                limite_tempo = n2
+            
+                
+            min_c1 = np.min(ap_sel_media[startRec:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == min_c1:
+                    t_min_c1 = tempo_sel[index]
+                    break
+            max_c1 = np.max(ap_sel_media[startRec:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == max_c1:
+                    t_max_c1 = tempo_sel[index]
+                    break
+            min_c2 = np.min(ap_sel_media[index:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == min_c2:
+                    t_min_c2 = tempo_sel[index]
+                    break        
+
+            max_c2 = np.max(ap_sel_media[index:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == max_c2:
+                    t_max_c2 = tempo_sel[index]
+                    break          
+            col1,col2,col3,col4 = st.columns(4)
+            with col1:
+                st.metric(label=r"Amplitude de C1 (m/s2)", value=round(min_c1, 4))
+                st.metric(label=r"Tempo de C1 (s)", value=round(t_min_c1, 4))
+            with col2:
+                st.metric(label=r"Amplitude de C2 (m/s2)", value=round(max_c1, 4))
+                st.metric(label=r"Tempo de C2 (s)", value=round(t_max_c1, 4))
+            with col3:
+                st.metric(label=r"Amplitude de C3 (m/s2)", value=round(min_c2, 4))
+                st.metric(label=r"Tempo de C3 (s)", value=round(t_min_c2, 4))
+            with col4:
+                st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4))
+                st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4))
+
 
 
 
