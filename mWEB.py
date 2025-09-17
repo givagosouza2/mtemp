@@ -948,6 +948,32 @@ elif pagina == "📤 Exportar Resultados":
             with col4:
                 st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4))
                 st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4))
+            resultado_txt = "Variável\tValor\n"  # Cabeçalho com tabulação
+
+            # Lista de pares (nome, valor)
+            variaveis = [
+                ("Amplitude de C1 (m/s2)", round(min_c1, 4)),
+                ("Tempo de C1 (s)", round(t_min_c1, 4)),
+                ("Amplitude de C2 (m/s2)", round(max_c1, 4)),
+                ("Tempo de C2 (s)", round(t_max_c1, 4)),
+                ("Amplitude de C3 (m/s2)", round(min_c2, 4)),
+                ("Tempo de C3 (s)", round(t_min_c2, 4)),
+                ("Amplitude de C4 (m/s2)", round(max_c2, 4)),
+                ("Tempo de C4 (s)", round(t_max_c2, 4)),
+
+            ]
+
+            # Adiciona linha por linha
+            for nome, valor in variaveis:
+                resultado_txt += f"{nome}\t{valor}\n"
+
+            st.download_button(
+                label="📄 Exportar resultados (.txt)",
+                data=resultado_txt,
+                file_name="resultados_analise_postural.txt",
+                mime="text/plain"
+            )    
+
 
 
 
