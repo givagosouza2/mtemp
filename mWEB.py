@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import math
 import matplotlib.pyplot as plt
 from processamento import balanceProcessing
 from processamento import jumpProcessing
@@ -1009,6 +1010,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
