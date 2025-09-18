@@ -41,5 +41,5 @@ def processar_jps(df, filter):
     z_vf = butter_lowpass_filter(z, cutoff_frequency, sample_rate)
   
             
-    return t_novo, x_vf, y_vf e z_vf
+    return t_novo, x_vf, y_vf, z_vf
     
