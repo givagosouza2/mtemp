@@ -1,10 +1,13 @@
-import pandas as pd
-import numpy as np
-from scipy.interpolate import interp1d
-from scipy.signal import butter, filtfilt, welch, detrend, savgol_filter
-from typing import Tuple
-
 def processar_ytest1(df, filter):
+    # === Função de filtro passa-baixa ===
+    def butter_lowpass_filter(data, cutoff_freq, sample_rate, order=4):
+        nyquist_freq = 0.5 * sample_rate
+        normal_cutoff = cutoff_freq / nyquist_freq
+        b, a = butter(order, normal_cutoff, btype='low', analog=False)
+        filtered_data = filtfilt(b, a, data)
+        return filtered_data
+
+
     # Aqui você pode aplicar filtros, normalizações, cálculo de deslocamentos etc.
     df_proc = df.copy()
    
@@ -13,114 +16,22 @@ def processar_ytest1(df, filter):
     y = df_proc["Y"]
     z = df_proc["Z"]
 
-    ap = z
-    if np.mean(x) > np.mean(y):
-        ml = y
-        v = x
-    else:
-        ml = x
-        v = y
 
-    # Converter tempo para segundos
-    t_original = time_vec / 1000  # ms para s
+    # Corrigir tempo para segundos se estiver em milissegundos
+    if np.max(tempo) > 1000:
+        tempo = tempo / 1000.0
 
-    # Criar vetor de tempo para 100 Hz
-    fs_novo = 100  # Hz
-    dt_novo = 1 / fs_novo
-    t_novo = np.arange(t_original.iloc[0], t_original.iloc[-1], dt_novo)
-
-    # Interpoladores
-    interp_ap = interp1d(t_original, ap, kind='linear',
-                         fill_value="extrapolate")
-    interp_ml = interp1d(t_original, ml, kind='linear',
-                         fill_value="extrapolate")
-    interp_v = interp1d(t_original, v, kind='linear',
-                         fill_value="extrapolate")
-
-    # Sinais reamostrados
-    ap_interp_100Hz = interp_ap(t_novo)
-    ml_interp_100Hz = interp_ml(t_novo)
-    v_interp_100Hz = interp_v(t_novo)
-
-    # 1. Remover tendência
-    ap_detrended = detrend(ap_interp_100Hz)
-    ml_detrended = detrend(ml_interp_100Hz)
-    v_detrended = detrend(v_interp_100Hz)
-
-    # 2. Filtro Butterworth passa-baixa com parâmetros da sidebar
-    fs = 100  # Hz
-    cutoff = filter  # Usando valor da sidebar
-    order = 4  # Usando valor da sidebar
-
-    # Normaliza a frequência de corte (Nyquist = fs/2)
-    nyquist = fs / 2
-    normal_cutoff = cutoff / nyquist
-
-    # Coeficientes do filtro
-    b, a = butter(order, normal_cutoff, btype='low', analog=False)
-
-    # Aplicando o filtro com zero-phase (filtfilt)
-    ap_filtrado = filtfilt(b, a, ap_detrended)
-    ml_filtrado = filtfilt(b, a, ml_detrended)
-    v_filtrado = filtfilt(b, a, v_detrended)
-            
-    return t_novo, ml_filtrado, ap_filtrado, v_filtrado
+    # Verifica frequência amostral
+    amostras_por_segundo = 1 / np.mean(np.diff(tempo))
     
-def processar_ytest2(df, filter):
-    # Aqui você pode aplicar filtros, normalizações, cálculo de deslocamentos etc.
-    df_proc = df.copy()
-   
-    time_vec = df_proc["Tempo"]
-    x = df_proc["X"]
-    y = df_proc["Y"]
-    z = df_proc["Z"]
-    
-    ap = x
-    v = y
-    ml = z
 
-    # Converter tempo para segundos
-    t_original = time_vec / 1000  # ms para s
-
-    # Criar vetor de tempo para 100 Hz
-    fs_novo = 100  # Hz
-    dt_novo = 1 / fs_novo
-    t_novo = np.arange(t_original.iloc[0], t_original.iloc[-1], dt_novo)
-
-    # Interpoladores
-    interp_ap = interp1d(t_original, ap, kind='linear',
-                         fill_value="extrapolate")
-    interp_ml = interp1d(t_original, ml, kind='linear',
-                         fill_value="extrapolate")
-    interp_v = interp1d(t_original, v, kind='linear',
-                         fill_value="extrapolate")
-
-    # Sinais reamostrados
-    ap_interp_100Hz = interp_ap(t_novo)
-    ml_interp_100Hz = interp_ml(t_novo)
-    v_interp_100Hz = interp_v(t_novo)
-
-    # 1. Remover tendência
-    ap_detrended = detrend(ap_interp_100Hz)
-    ml_detrended = detrend(ml_interp_100Hz)
-    v_detrended = detrend(v_interp_100Hz)
-
-    # 2. Filtro Butterworth passa-baixa com parâmetros da sidebar
-    fs = 100  # Hz
-    cutoff = filter  # Usando valor da sidebar
-    order = 4  # Usando valor da sidebar
-
-    # Normaliza a frequência de corte (Nyquist = fs/2)
-    nyquist = fs / 2
-    normal_cutoff = cutoff / nyquist
-
-    # Coeficientes do filtro
-    b, a = butter(order, normal_cutoff, btype='low', analog=False)
-
-    # Aplicando o filtro com zero-phase (filtfilt)
-    ap_filtrado = filtfilt(b, a, ap_detrended)
-    ml_filtrado = filtfilt(b, a, ml_detrended)
-    v_filtrado = filtfilt(b, a, v_detrended)
+    # Filtros
+    cutoff_frequency = 40  # Hz
+    sample_rate = 100.0    # Hz
+    x_vf = butter_lowpass_filter(x, cutoff_frequency, sample_rate)
+    y_vf = butter_lowpass_filter(y, cutoff_frequency, sample_rate)
+    z_vf = butter_lowpass_filter(z, cutoff_frequency, sample_rate)
+  
             
     return t_novo, ml_filtrado, ap_filtrado, v_filtrado
     
