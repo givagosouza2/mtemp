@@ -19,7 +19,7 @@ def processar_jps(df, filter):
     # Aqui você pode aplicar filtros, normalizações, cálculo de deslocamentos etc.
     df_proc = df.copy()
    
-    time_vec = df_proc["Tempo"]
+    tempo = df_proc["Tempo"]
     x = df_proc["X"]
     y = df_proc["Y"]
     z = df_proc["Z"]
