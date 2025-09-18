@@ -655,7 +655,7 @@ elif pagina == "📈 Visualização Gráfica":
             
         if tipo_teste == "Propriocepção":
             dados = st.session_state["dados"]
-            tempo, ap, ml, z = jointSenseProcessing.processar_jps(dados, 8)
+            tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
             max_val = len(tempo)
             # Cálculo dos ângulos
             accelAngleX = np.arctan(y_vf / np.sqrt(x_vf**2 + z_vf**2)) * 180 / math.pi
@@ -1085,6 +1085,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
