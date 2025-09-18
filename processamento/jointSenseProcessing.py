@@ -1,4 +1,12 @@
-def processar_ytest1(df, filter):
+import pandas as pd
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import butter, filtfilt
+import math
+from scipy.optimize import minimize_scalar
+
+def processar_jps(df, filter):
     # === Função de filtro passa-baixa ===
     def butter_lowpass_filter(data, cutoff_freq, sample_rate, order=4):
         nyquist_freq = 0.5 * sample_rate
