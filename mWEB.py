@@ -6,6 +6,7 @@ from processamento import balanceProcessing
 from processamento import jumpProcessing
 from processamento import tugProcessing
 from processamento import ytestProcessing
+from processamento import jointSenseProcessing
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
@@ -56,7 +57,7 @@ elif pagina == "📁 Importar Dados":
     with col1:
         tipo_teste = st.selectbox(
             "Qual teste você deseja analisar?",
-            ["Selecione...", "Equilíbrio", "Salto", "TUG", "Y test"]
+            ["Selecione...", "Equilíbrio", "Salto", "TUG", "Propriocepção", "Y test"]
         )
 
         if tipo_teste != "Selecione...":
@@ -119,7 +120,15 @@ elif pagina == "📁 Importar Dados":
                             st.success("Arquivo carregado com sucesso!")
                             st.dataframe(dados_acc_joelho.head())
                             st.session_state["dados_acc_joelho"] = dados_acc_joelho
-    
+        elif tipo_teste == "Propriocepção":
+            st.subheader("📦 Importar dados de Propriocepção")
+            arquivo = st.file_uploader(
+                "Selecione o arquivo de propriocepção (CSV ou TXT)", type=["csv", "txt"])
+            if arquivo is not None:
+                dados = carregar_dados_generico(arquivo)
+                if dados is not None:
+                    st.success('Dados carregados com sucesso')
+                    st.session_state["dados"] = dados
         elif tipo_teste == "Selecione...":
             st.info("Selecione um tipo de teste para continuar.")
     with col3:
@@ -644,7 +653,75 @@ elif pagina == "📈 Visualização Gráfica":
         
              
             
-            
+        if tipo_teste == "Propriocepção":
+            dados = st.session_state["dados"]
+            tempo, ml, ap, freqs, psd_ml, psd_ap = jointSenseProcessing.processar_equilibrio(
+                dados, 0, 0, 0, 0, 8)
+            max_val = len(tempo)
+
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                startRec = st.number_input(
+                    'Indique o início do registro', value=0, step=1, max_value=max_val)
+            with col2:
+                endRec = st.number_input(
+                    'Indique o final do registro', value=max_val, step=1, max_value=max_val)
+            with col3:
+                filter = st.number_input(
+                    'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
+            st.session_state["intervalo"] = startRec, endRec, filter
+            showRec = st.checkbox('Mostrar o dado original', value=True)
+            tempo, ml, ap, freqs, psd_ml, psd_ap = balanceProcessing.processar_equilibrio(
+                dados, 0, 0, 0, 0, 49)
+            tempo_sel, ml_sel, ap_sel, freqs_sel, psd_ml_sel, psd_ap_sel = balanceProcessing.processar_equilibrio(
+                dados, startRec, endRec, 1, 0, filter)
+            if startRec > endRec:
+                st.error(
+                    'Valor do início do registro não pode ser maior que o do final do registro')
+            else:
+                if endRec > max_val:
+                    st.error(
+                        'Valor do início do registro não pode ser maior que o do final do registro')
+                else:
+                    min_ml = np.min(ml)
+                    max_ml = np.max(ml)
+                    min_ap = np.min(ap)
+                    max_ap = np.max(ap)
+                    limite = max(np.abs(min_ml), np.abs(
+                        max_ml), np.abs(min_ap), np.abs(max_ap))
+                    if limite < 0.5:
+                        limite = 0.5
+                    elif limite >= 0.5 and limite < 5:
+                        limite = 5
+                    elif limite >= 5 and limite < 10:
+                        limite = 10
+                    else:
+                        limite = 50
+
+                    # Cria figura com GridSpec personalizado
+                    fig = plt.figure(figsize=(8, 10))
+                    gs = gridspec.GridSpec(
+                        5, 4, figure=fig, hspace=0.8, wspace=0.6)
+
+                    # Gráfico 1: ocupa 2x2 blocos (esquerda acima)
+
+                    rms_ml, rms_ap, total_deviation, ellipse_area, avg_x, avg_y, width, height, angle, direction = balanceProcessing.processar_equilibrio(
+                        dados, startRec, endRec, 1, 1, filter)
+
+                    ellipse = Ellipse(xy=(avg_x, avg_y), width=width, height=height,
+                                      angle=angle, alpha=0.5, color='blue', zorder=10)
+                    ax1 = fig.add_subplot(gs[0:2, 0:2])
+
+                    if showRec:
+                        ax1.plot(ml, ap, color='tomato', linewidth=0.5)
+                    ax1.plot(
+                        ml_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                    ax1.set_xlabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                    ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                    ax1.set_xlim(-limite, limite)
+                    ax1.set_ylim(-limite, limite)
+                    ax1.tick_params(axis='both', labelsize=8)
+                    ax1.add_patch(ellipse)    
         else:
             st.markdown("### Sinais brutos de X, Y e Z ao longo do Tempo")
 
@@ -973,6 +1050,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
