@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import math
 import matplotlib.pyplot as plt
+from scipy.optimize import minimize_scalar
 from processamento import balanceProcessing
 from processamento import jumpProcessing
 from processamento import tugProcessing
@@ -1010,6 +1011,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
