@@ -681,6 +681,7 @@ elif pagina == "📈 Visualização Gráfica":
             gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
             ax1 = fig.add_subplot(gs[0:2, 0:2])
             ax1.plot(tempo, angulo, color='tomato', linewidth=0.5)
+            st.pyplot(fig)
             
             
         else:
@@ -1011,6 +1012,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
