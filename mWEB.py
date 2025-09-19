@@ -1242,3 +1242,4 @@ elif pagina == "📤 Exportar Resultados":
 
 
 
+
