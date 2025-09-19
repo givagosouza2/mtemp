@@ -700,10 +700,10 @@ elif pagina == "📈 Visualização Gráfica":
                 gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
                 ax1 = fig.add_subplot(gs[0:2, 0:2])
                 ax1.plot(tempo, angulo, color='tomato', linewidth=0.5)
-                ax1.plot([t1,t1],[0,120],'k--')
-                ax1.plot([t2,t2],[0,120],'k--')
-                ax1.plot([t3,t3],[0,120],'k--')
-                ax1.plot([t4,t4],[0,120],'k--')
+                ax1.plot([tempo[t1],tempo[t1]],[0,120],'k--')
+                ax1.plot([tempo[t2],tempo[t2]],[0,120],'k--')
+                ax1.plot([tempo[t3],tempo[t3]],[0,120],'k--')
+                ax1.plot([tempo[t4],tempo[t4]],[0,120],'k--')
                 st.pyplot(fig)
             
             
@@ -1035,6 +1035,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
