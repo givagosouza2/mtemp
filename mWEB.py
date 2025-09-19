@@ -1112,7 +1112,7 @@ elif pagina == "📤 Exportar Resultados":
             # Lista de pares (nome, valor)
             variaveis = [
                 ("Angulo médio de referência (graus)", round(Angulacao_referencia, 4)),
-                ("Angulo médio de posicionamento (graus)", round(Angulacao_referencia, 4)),
+                ("Angulo médio de posicionamento (graus)", round(Angulacao_posicionamento, 4)),
                 
             ]
 
@@ -1127,6 +1127,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
