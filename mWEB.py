@@ -676,7 +676,7 @@ elif pagina == "📈 Visualização Gráfica":
             else:
                 resultado = type('obj', (object,), {'x': 0})()
 
-            col1,col2,col3 = st.column(3)# Cria figura com GridSpec personalizado
+            col1,col2,col3 = st.columns(3)# Cria figura com GridSpec personalizado
             with col2:
                 fig = plt.figure(figsize=(8, 10))
                 gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
@@ -1013,6 +1013,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
