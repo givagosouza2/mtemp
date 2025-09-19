@@ -694,6 +694,19 @@ elif pagina == "📈 Visualização Gráfica":
                 if valor < 10+calibracao:
                     t4 = index4+t3
                     break
+            ref_max = np.max(angulo[t1:t2])
+            for index,valor in enumerate(angulo[t1:t2]):
+                if valor == ref_max:
+                    t1 = t1 + index
+                    t2 = t2 - index
+                    break
+            pos_max = np.max(angulo[t3:t4])
+            for index,valor in enumerate(angulo[t3:t4]):
+                if valor == pos_max:
+                    t3 = t3 + index
+                    t4 = t4 - index
+                    break        
+                
                     
             col1,col2,col3 = st.columns([0.2,0.8,0.2])# Cria figura com GridSpec personalizado
             with col2:
@@ -1077,6 +1090,18 @@ elif pagina == "📤 Exportar Resultados":
                 if valor < 10+calibracao:
                     t4 = index4+t3
                     break  
+            ref_max = np.max(angulo[t1:t2])
+            for index,valor in enumerate(angulo[t1:t2]):
+                if valor == ref_max:
+                    t1 = t1 + index
+                    t2 = t2 - index
+                    break
+            pos_max = np.max(angulo[t3:t4])
+            for index,valor in enumerate(angulo[t3:t4]):
+                if valor == pos_max:
+                    t3 = t3 + index
+                    t4 = t4 - index
+                    break                            
             Angulacao_referencia = np.mean(angulo[t1:t2])
             Angulacao_posicionamento = np.mean(angulo[t3:t4])
             st.metric(label=r"Ângulo de referências (graus)", value=round(Angulacao_referencia, 4))
@@ -1102,6 +1127,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
