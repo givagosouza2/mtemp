@@ -658,6 +658,7 @@ elif pagina == "📈 Visualização Gráfica":
         if tipo_teste == "Propriocepção":
             calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
             dados = st.session_state["dados"]
+            st.session_state["calibracao"] = calibracao
             tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
             max_val = len(tempo)
             # Cálculo dos ângulos
@@ -694,7 +695,7 @@ elif pagina == "📈 Visualização Gráfica":
                     t4 = index4+t3
                     break
                     
-            col1,col2,col3 = st.columns(3)# Cria figura com GridSpec personalizado
+            col1,col2,col3 = st.columns([0.2,0.8,0.2])# Cria figura com GridSpec personalizado
             with col2:
                 fig = plt.figure(figsize=(8, 10))
                 gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
@@ -778,6 +779,8 @@ elif pagina == "📤 Exportar Resultados":
                           value=round((10**5)*energy_ap[1], 3))
                 st.metric(label=r"Energia AP 2-8 Hz (m/s$^2$)",
                           value=round((10**5)*energy_ap[2], 3))
+            
+            
             resultado_txt = "Variável\tValor\n"  # Cabeçalho com tabulação
 
             # Lista de pares (nome, valor)
@@ -1037,7 +1040,7 @@ elif pagina == "📤 Exportar Resultados":
             )    
             
         if tipo_teste == "Propriocepção":
-            calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
+            calibracao = st.session_state["calibracao"] 
             dados = st.session_state["dados"]
             tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
             max_val = len(tempo)
@@ -1073,11 +1076,33 @@ elif pagina == "📤 Exportar Resultados":
             for index4,valor in enumerate(angulo[t3:-1]):
                 if valor < 10+calibracao:
                     t4 = index4+t3
-                    break            
+                    break  
             Angulacao_referencia = np.mean(angulo[t1:t2])
             Angulacao_posicionamento = np.mean(angulo[t3:t4])
             st.metric(label=r"Ângulo de referências (graus)", value=round(Angulacao_referencia, 4))
-            st.metric(label=r"Ângulo de posicionamento (graus)", value=round(Angulacao_posicionamento, 4))
+            st.metric(label=r"Ângulo de posicionamento (graus)", value=round(Angulacao_posicionamento, 4))        
+            
+            resultado_txt = "Variável\tValor\n"  # Cabeçalho com tabulação
+
+            # Lista de pares (nome, valor)
+            variaveis = [
+                ("Angulo médio de referência (graus)", round(Angulacao_referencia, 4)),
+                ("Angulo médio de posicionamento (graus)", round(Angulacao_referencia, 4)),
+                
+            ]
+
+            # Adiciona linha por linha
+            for nome, valor in variaveis:
+                resultado_txt += f"{nome}\t{valor}\n"
+
+            st.download_button(
+                label="📄 Exportar resultados (.txt)",
+                data=resultado_txt,
+                file_name="resultados_propriocepção.txt",
+                mime="text/plain"
+            )        
+            
+
 
 
 
