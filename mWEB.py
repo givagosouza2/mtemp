@@ -1035,6 +1035,50 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+            
+        if tipo_teste == "Propriocepção":
+            calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
+            dados = st.session_state["dados"]
+            tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
+            max_val = len(tempo)
+            # Cálculo dos ângulos
+            accelAngleX = np.arctan(y_vf / np.sqrt(x_vf**2 + z_vf**2)) * 180 / math.pi
+            angulo = accelAngleX + 90
+
+            # Calibração
+            def objetivo(x):
+                media_ajustada = np.mean(angulo[100:500] + x)
+                return abs(media_ajustada - calibracao)
+
+            media_baseline = np.mean(angulo[100:500])
+            if media_baseline != calibracao:
+                resultado = minimize_scalar(objetivo)
+                angulo = angulo + resultado.x
+            else:
+                resultado = type('obj', (object,), {'x': 0})()
+
+            for index,valor in enumerate(angulo[100:-1]):
+                if valor > 10+calibracao:
+                    t1 = index+100
+                    break
+            for index2,valor in enumerate(angulo[t1:-1]):
+                if valor < 10+calibracao:
+                    t2 = index2+t1
+                    break       
+            for index3,valor in enumerate(angulo[t2:-1]):
+                if valor > 10+calibracao:
+                    t3 = index3+t2
+                    break
+                    
+            for index4,valor in enumerate(angulo[t3:-1]):
+                if valor < 10+calibracao:
+                    t4 = index4+t3
+                    break            
+            Angulacao_referencia = np.mean(angulo[t1:t2])
+            Angulacao_posicionamento = np.mean(angulo[t3:t4])
+            st.metric(label=r"Ângulo de referências (graus)", value=round(Angulacao_referencia, 4))
+            st.metric(label=r"Ângulo de posicionamento (graus)", value=round(Angulacao_posicionamento, 4))
+
 
 
 
