@@ -690,7 +690,7 @@ elif pagina == "📈 Visualização Gráfica":
                     break
                     
             for index4,valor in enumerate(angulo[t3:-1]):
-                if valor > 10+calibracao:
+                if valor < 10+calibracao:
                     t4 = index4+t3
                     break
                     
@@ -1035,6 +1035,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
