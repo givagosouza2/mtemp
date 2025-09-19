@@ -676,12 +676,34 @@ elif pagina == "📈 Visualização Gráfica":
             else:
                 resultado = type('obj', (object,), {'x': 0})()
 
+            for index,valor in enumerate(angulo[100:-1]):
+                if valor > 10+calibracao:
+                    t1 = index+100
+                    break
+             for index2,valor in enumerate(angulo[t1:-1]):
+                if valor < 10+calibracao:
+                    t2 = index2+t1
+                    break       
+             for index3,valor in enumerate(angulo[t2:-1]):
+                if valor > 10+calibracao:
+                    t3 = index3+t2
+                    break
+                    
+              for index4,valor in enumerate(angulo[t3:-1]):
+                if valor > 10+calibracao:
+                    t4 = index4+t3
+                    break
+                    
             col1,col2,col3 = st.columns(3)# Cria figura com GridSpec personalizado
             with col2:
                 fig = plt.figure(figsize=(8, 10))
                 gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
                 ax1 = fig.add_subplot(gs[0:2, 0:2])
                 ax1.plot(tempo, angulo, color='tomato', linewidth=0.5)
+                ax1.plot([t1,t1],[0,120],'k--')
+                ax1.plot([t2,t2],[0,120],'k--')
+                ax1.plot([t3,t3],[0,120],'k--')
+                ax1.plot([t4,t4],[0,120],'k--')
                 st.pyplot(fig)
             
             
@@ -1013,6 +1035,7 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="resultados_analise_postural.txt",
                 mime="text/plain"
             )    
+
 
 
 
