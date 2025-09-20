@@ -93,7 +93,7 @@ if pagina == "🏠 Página Inicial":
             idealizador do Projeto Momentum compostos por pesquisadores da Universidade Federal do Pará, Universidade do Estado do Pará e Instituto Federal de São Paulo. 
             O projeto representa uma iniciativa de <b>desenvolvimento científico e tecnológico</b> com o objetivo de propor métodos confiáveis de 
             avaliação sensório-motora usando sensores presentes em smartphones.</p>
-            <p>Alguns protocolos estarão em desenvolvimento e serão indicados quando for o caso.
+            <p>Alguns protocolos estarão em desenvolvimento e serão indicados quando for o caso.</p>
             Utilize o <b>menu lateral</b> para navegar entre as diferentes etapas da análise.</p>
         </div>
     """)
@@ -1177,6 +1177,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
