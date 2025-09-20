@@ -25,12 +25,12 @@ st.markdown("""
 <style>
 /* Fundo do app */
 .stApp {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+  background: linear-gradient(135deg, #00c853 0%, #00bcd4 100%);
 }
 
 /* Pinta a barra superior (onde ficam Share, ⭐, etc.) */
 header[data-testid="stHeader"] {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%); !important;
+  background: linear-gradient(135deg, #00c853 0%, #00bcd4 100%); !important;
 }
 
 /* Deixa o miolo e a sidebar transparentes para o gradiente “aparecer” */
@@ -1152,6 +1152,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
