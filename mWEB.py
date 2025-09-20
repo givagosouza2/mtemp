@@ -75,7 +75,7 @@ def carregar_dados_generico(arquivo):
 
 pagina = st.sidebar.radio("📂 Navegue pelas páginas", [
     "🏠 Página Inicial",
-    "📁 Importar Dados",
+    "⬆️ Importar Dados",
     "📈 Visualização Gráfica",
     "📤 Exportar Resultados",
     "📤 Referências bibliográficas"
@@ -1300,6 +1300,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
