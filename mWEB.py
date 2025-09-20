@@ -21,16 +21,22 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- CSS cobrindo toda a página ---
 st.markdown("""
-    <style>
-    html, body, [class*="stApp"] {
-        background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%) !important;
-        height: 90%;
-        margin: 0;
-        padding: 0;
-    }
-    </style>
+<style>
+/* Fundo do app */
+.stApp {
+  background: linear-gradient(135deg, #dff6ff 0%, #e6e7ff 50%, #f3dfff 100%);
+}
+
+/* Pinta a barra superior (onde ficam Share, ⭐, etc.) */
+header[data-testid="stHeader"] {
+  background: linear-gradient(135deg, #dff6ff 0%, #e6e7ff 50%, #f3dfff 100%) !important;
+}
+
+/* Deixa o miolo e a sidebar transparentes para o gradiente “aparecer” */
+.block-container { background: transparent; }
+section[data-testid="stSidebar"] { background: transparent; }
+</style>
 """, unsafe_allow_html=True)
 
 st.title("Momentum Web")
@@ -1146,6 +1152,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
