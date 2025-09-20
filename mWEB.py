@@ -21,6 +21,15 @@ st.set_page_config(
     layout="wide"
 )
 
+# --- CSS só para o fundo ---
+st.markdown("""
+    <style>
+    .main {
+        background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%);
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("Momentum Web")
 # Função genérica para carregar dados de arquivos com 4 ou 5 colunas
 
@@ -1134,6 +1143,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
