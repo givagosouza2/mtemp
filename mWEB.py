@@ -194,15 +194,26 @@ elif pagina == "📁 Importar Dados":
             unsafe_allow_html=True
             )
             html = dedent("""
-                <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
-                    max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
-                    padding: 20px; border-radius: 8px;">
-                    <p>A avaliação do equilíbrio estático usando o Momentum Sensors foi baseada nos artigos de Rodrigues et al. (2022), Correa et al. (2023) e Fernandes et al. (2024).</p>
-                    <p>É necessário fixar o smartphone na coluna lombar do paciente e pedir para que ele não se movimente ou fale durante o tempo de registro.</p>
-                    
-                </div>
-            """)
-            st.markdown(html, unsafe_allow_html=True)
+            <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
+            max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
+            padding: 20px; border-radius: 8px;">
+    
+            <p>
+            A avaliação do equilíbrio estático usando o Momentum Sensors foi baseada nos artigos de 
+            <a href="https://www.mdpi.com/2075-4426/12/7/1019" target="_blank" style="color:#1E90FF; text-decoration:none;">Rodrigues et al. (2022)</a>, 
+            <a href="https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2023.1277408/full" target="_blank" style="color:#1E90FF; text-decoration:none;">Correa et al. (2023)</a> 
+            e 
+            <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">Fernandes et al. (2024)</a>.
+            </p>
+
+            <p>
+            É necessário fixar o smartphone na coluna lombar do paciente e pedir para que ele não se movimente ou fale durante o tempo de registro.
+            </p>
+
+</div>
+""")
+
+st.markdown(html, unsafe_allow_html=True)
         elif tipo_teste == 'Salto':
             st.title('Salto')
         else:
@@ -1194,6 +1205,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
