@@ -26,7 +26,7 @@ st.markdown("""
     <style>
     html, body, [class*="stApp"] {
         background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%) !important;
-        height: 100%;
+        height: 90%;
         margin: 0;
         padding: 0;
     }
@@ -1146,6 +1146,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
