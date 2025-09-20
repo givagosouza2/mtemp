@@ -287,7 +287,29 @@ elif pagina == "📁 Importar Dados":
             </div>
             """)
 
-            st.markdown(html, unsafe_allow_html=True)    
+            st.markdown(html, unsafe_allow_html=True)  
+        elif tipo_teste == "Y test":
+            st.markdown(
+            """
+            <h1 style='text-align: center; color: #1E90FF;'>
+            Y test
+            </h1>
+            """,
+            unsafe_allow_html=True
+            )
+            html = dedent("""
+            <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
+            max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
+            padding: 20px; border-radius: 8px;">
+    
+            <p>
+            A avaliação do equilíbrio dinâmico pelo Y test está em desenvolvimento sob coordenação do Prof. Dr. André dos Santos Cabral. 
+            </p>
+
+            </div>
+            """)
+
+            st.markdown(html, unsafe_allow_html=True)     
         else:
             st.title('Men at working')
 
@@ -1277,6 +1299,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
