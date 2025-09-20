@@ -195,6 +195,7 @@ elif pagina == "📁 Importar Dados":
                     
                 </div>
             """)
+            st.markdown(html, unsafe_allow_html=True)
         elif tipo_teste == 'Salto':
             st.title('Salto')
         else:
@@ -1186,6 +1187,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
