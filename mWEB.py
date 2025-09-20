@@ -281,7 +281,7 @@ elif pagina == "📁 Importar Dados":
             <p>
             A avaliação da sensação de posi~cionamento articular usando o Momentum Sensors foi baseada no artigo de 
             <a href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2025.1561241/full" style="color:#1E90FF; text-decoration:none;">Almeida et al. (2025)</a>. 
-            É preciso mensurar a amplitude articular inicial usando goniômetro ara adicionar à variações articulares desta posição inicial. 
+            É preciso mensurar a amplitude articular inicial usando goniômetro para adicionar à variações articulares desta posição inicial. 
             </p>
 
             </div>
@@ -303,7 +303,7 @@ elif pagina == "📁 Importar Dados":
             padding: 20px; border-radius: 8px;">
     
             <p>
-            A avaliação do equilíbrio dinâmico pelo Y test está em desenvolvimento sob coordenação do Prof. Dr. André dos Santos Cabral. 
+            A avaliação do equilíbrio dinâmico pelo Y test está em desenvolvimento sob coordenação do Prof. Dr. André dos Santos Cabral da Universidade do Estado do Pará. 
             </p>
 
             </div>
@@ -1299,6 +1299,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
