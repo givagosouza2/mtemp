@@ -117,7 +117,7 @@ elif pagina == "⬆️ Importar Dados":
             st.session_state["tipo_teste"] = tipo_teste
 
         if tipo_teste == "Equilíbrio":
-            st.subheader("📦 Importar dados de Equilíbrio")
+            st.subheader("🧍🏽‍♀️ Importar dados de Equilíbrio")
             arquivo = st.file_uploader(
                 "Selecione o arquivo de equilíbrio (CSV ou TXT)", type=["csv", "txt"])
             if arquivo is not None:
@@ -189,7 +189,7 @@ elif pagina == "⬆️ Importar Dados":
             st.markdown(
             """
             <h1 style='text-align: center; color: #1E90FF;'>
-            Equilíbrio estático
+            🧍🏽‍♀️Equilíbrio estático
             </h1>
             """,
             unsafe_allow_html=True
@@ -1300,6 +1300,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
