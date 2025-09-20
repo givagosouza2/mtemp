@@ -238,6 +238,33 @@ elif pagina == "📁 Importar Dados":
             """)
 
             st.markdown(html, unsafe_allow_html=True)
+        elif tipo_teste == "TUG":
+            st.markdown(
+            """
+            <h1 style='text-align: center; color: #1E90FF;'>
+            Timed Up and Go instrumentado
+            </h1>
+            """,
+            unsafe_allow_html=True
+            )
+            html = dedent("""
+            <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
+            max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
+            padding: 20px; border-radius: 8px;">
+    
+            <p>
+            A avaliação do Timed Up ang Go instrumentado usando o Momentum Sensors foi baseada nos artigos de 
+            <a href="https://www.mdpi.com/1424-8220/24/9/2918" target="_blank" style="color:#1E90FF; text-decoration:none;">Santos et al. (2024)</a>, 
+            <a href="https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2023.1277408/full" target="_blank" style="color:#1E90FF; text-decoration:none;">Correa et al. (2023)</a> 
+            e 
+            <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">Fernandes et al. (2024)</a>.
+            </p>
+
+            </div>
+            """)
+
+            st.markdown(html, unsafe_allow_html=True)
+            
         else:
             st.title('Men at working')
 
@@ -1227,6 +1254,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
