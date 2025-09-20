@@ -55,7 +55,7 @@ if pagina == "🏠 Página Inicial":
     
     st.H2(
         "Bem-vindo ao Momentum Web, o web app para análise de dados de protocolos de avaliação do Momentum Sensors")
-    st.markdown(Os protocolos de análise dos dados são baseados em métodos usados em artigos científicos do grupo idealizador do Projeto Momentum. O Projeto Momentum representa uma iniciativa de desenvolvimento científico e tecnológico com o objetivo de propor métodos confiáveis de avaliação sensório-motora usando sensores presentes em smartphones. Alguns protocolos estarão em desenvolvimento e indicados quando for o caso. Utilize o menu lateral para navegar entre as diferentes etapas da análise.")
+    st.markdown("Os protocolos de análise dos dados são baseados em métodos usados em artigos científicos do grupo idealizador do Projeto Momentum. O Projeto Momentum representa uma iniciativa de desenvolvimento científico e tecnológico com o objetivo de propor métodos confiáveis de avaliação sensório-motora usando sensores presentes em smartphones. Alguns protocolos estarão em desenvolvimento e indicados quando for o caso. Utilize o menu lateral para navegar entre as diferentes etapas da análise.")
 
 # === Página de Importação ===
 elif pagina == "📁 Importar Dados":
@@ -1133,6 +1133,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
