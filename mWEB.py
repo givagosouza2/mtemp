@@ -210,10 +210,10 @@ elif pagina == "📁 Importar Dados":
             É necessário fixar o smartphone na coluna lombar do paciente e pedir para que ele não se movimente ou fale durante o tempo de registro.
             </p>
 
-</div>
-""")
+            </div>
+            """)
 
-st.markdown(html, unsafe_allow_html=True)
+            st.markdown(html, unsafe_allow_html=True)
         elif tipo_teste == 'Salto':
             st.title('Salto')
         else:
@@ -1205,6 +1205,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
