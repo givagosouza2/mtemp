@@ -14,12 +14,58 @@ from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
 from scipy.ndimage import uniform_filter1d
 
-st.set_page_config(
-    page_title="Momentum Web",
-    page_icon="⚡",  # ícone da aba
-    layout="wide"
-)
+# --------- Estilos (CSS leve) ---------
+st.markdown("""
+<style>
+/* fundo suave com gradiente */
+.main {
+  background: linear-gradient(135deg, #0f172a 0%, #111827 40%, #0b1220 100%);
+}
+.block-container {padding-top: 2rem; padding-bottom: 4rem;}
+/* tipografia e cores base */
+h1, h2, h3, p, li, div { color: #e5e7eb !important; }
+small, span, label { color: #cbd5e1 !important; }
 
+/* hero */
+.hero {
+  border-radius: 24px;
+  padding: 32px;
+  background: radial-gradient(1200px 600px at 0% 0%, rgba(59,130,246,0.15), transparent),
+              radial-gradient(1200px 600px at 100% 0%, rgba(34,197,94,0.12), transparent),
+              rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* cards */
+.card {
+  border-radius: 20px;
+  padding: 18px 18px 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform .2s ease, background .2s ease;
+}
+.card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+
+/* botões */
+.stButton>button, .stDownloadButton>button, .stLinkButton>button {
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+}
+.stButton>button:hover, .stDownloadButton>button:hover, .stLinkButton>button:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* footnote */
+.footer {
+  text-align:center; opacity:.8; font-size:.9rem; margin-top: 32px;
+}
+</style>
+""", unsafe_allow_html=True)
 st.title("Momentum Web")
 # Função genérica para carregar dados de arquivos com 4 ou 5 colunas
 
@@ -1133,6 +1179,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
