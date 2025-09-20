@@ -215,7 +215,29 @@ elif pagina == "📁 Importar Dados":
 
             st.markdown(html, unsafe_allow_html=True)
         elif tipo_teste == 'Salto':
-            st.title('Salto')
+            st.markdown(
+            """
+            <h1 style='text-align: center; color: #1E90FF;'>
+            Salto vertical
+            </h1>
+            """,
+            unsafe_allow_html=True
+            )
+            html = dedent("""
+            <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
+            max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
+            padding: 20px; border-radius: 8px;">
+    
+            <p>
+            A avaliação do salto vertical usando o Momentum Sensors foi baseada nos artigos de 
+            <a href="https://www.mdpi.com/1424-8220/23/13/6022" target="_blank" style="color:#1E90FF; text-decoration:none;">Moreno-Pérez et al. (2023)</a>, 
+            e <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5454547/" target="_blank" style="color:#1E90FF; text-decoration:none;">Mateos-Angulo et al. (2015)</a> 
+            </p>
+
+            </div>
+            """)
+
+            st.markdown(html, unsafe_allow_html=True)
         else:
             st.title('Men at working')
 
@@ -1205,6 +1227,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
