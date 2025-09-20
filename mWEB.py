@@ -83,20 +83,26 @@ pagina = st.sidebar.radio("📂 Navegue pelas páginas", [
 if pagina == "🏠 Página Inicial":
     # texto descritivo mais bonito
     st.markdown(
-        """
-        <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto;">
-            <p><b>Bem-vindo ao Momentum Web</b>, o web app para análise de dados de protocolos de avaliação do <i>Momentum Sensors</i>.</p>
-    
-            <p>Os protocolos de análise dos dados são baseados em métodos usados em artigos científicos do grupo idealizador do Projeto Momentum. 
-            O projeto representa uma iniciativa de <b>desenvolvimento científico e tecnológico</b> com o objetivo de propor métodos confiáveis de avaliação 
-            sensório-motora usando sensores presentes em smartphones.</p>
-    
-            <p>Alguns protocolos estarão em desenvolvimento e serão indicados quando for o caso. 
-            Utilize o <b>menu lateral</b> para navegar entre as diferentes etapas da análise.</p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    """
+    <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; 
+                max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6); 
+                padding: 20px; border-radius: 8px;">
+        
+        <p><b>Bem-vindo ao Momentum Web</b>, o web app para análise de dados de protocolos de avaliação do 
+        <i>Momentum Sensors</i>.</p>
+
+        <p>Os protocolos de análise dos dados são baseados em métodos usados em artigos científicos do grupo 
+        idealizador do Projeto Momentum. O projeto representa uma iniciativa de 
+        <b>desenvolvimento científico e tecnológico</b> com o objetivo de propor métodos confiáveis de 
+        avaliação sensório-motora usando sensores presentes em smartphones.</p>
+
+        <p>Alguns protocolos estarão em desenvolvimento e serão indicados quando for o caso. 
+        Utilize o <b>menu lateral</b> para navegar entre as diferentes etapas da análise.</p>
+
+    </div>
+    """,
+    unsafe_allow_html=True
+)
     
     
 # === Página de Importação ===
@@ -1175,6 +1181,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
