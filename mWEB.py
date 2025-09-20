@@ -13,6 +13,7 @@ import matplotlib.gridspec as gridspec
 from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
 from scipy.ndimage import uniform_filter1d
+from textwrap import dedent
 
 #Criação do layout da página inicial
 # --------- Config da página ---------
@@ -1178,6 +1179,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
