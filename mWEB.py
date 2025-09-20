@@ -185,7 +185,14 @@ elif pagina == "📁 Importar Dados":
             st.info("Selecione um tipo de teste para continuar.")
     with col3:
         if tipo_teste == "Equilíbrio":
-            st.title('Equilíbrio estático. ')
+            st.markdown(
+            """
+            <h1 style='text-align: center; color: #1E90FF;'>
+            Equilíbrio estático
+            </h1>
+            """,
+            unsafe_allow_html=True
+            )
             html = dedent("""
                 <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
                     max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
@@ -1187,6 +1194,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
