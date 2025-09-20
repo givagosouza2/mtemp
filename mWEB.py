@@ -31,7 +31,7 @@ st.markdown("""
         padding: 0;
     }
     </style>
-
+""", unsafe_allow_html=True)
 
 st.title("Momentum Web")
 # Função genérica para carregar dados de arquivos com 4 ou 5 colunas
@@ -1146,6 +1146,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
