@@ -86,7 +86,7 @@ if pagina == "🏠 Página Inicial":
     # texto descritivo mais bonito
     html = dedent("""
         <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
-            max-width: 900px; margin: auto; background-color: rgba(0,0,0,0.6);
+            max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6);
             padding: 20px; border-radius: 8px;">
             <p><b>Bem-vindo ao Momentum Web</b>, a aplicação Web para análise de dados de protocolos de avaliação do
             <i>Momentum Sensors</i>.</p>
@@ -1300,6 +1300,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
