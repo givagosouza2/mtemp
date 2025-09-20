@@ -186,6 +186,15 @@ elif pagina == "📁 Importar Dados":
     with col3:
         if tipo_teste == "Equilíbrio":
             st.title('Equilíbrio estático. ')
+            html = dedent("""
+                <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
+                    max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
+                    padding: 20px; border-radius: 8px;">
+                    <p>A avaliação do equilíbrio estático usando o Momentum Sensors foi baseada nos artigos de Rodrigues et al. (2022), Correa et al. (2023) e Fernandes et al. (2024).</p>
+                    <p>É necessário fixar o smartphone na coluna lombar do paciente e pedir para que ele não se movimente ou fale durante o tempo de registro.</p>
+                    
+                </div>
+            """)
         elif tipo_teste == 'Salto':
             st.title('Salto')
         else:
@@ -1177,6 +1186,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
