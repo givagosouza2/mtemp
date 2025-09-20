@@ -39,7 +39,14 @@ section[data-testid="stSidebar"] { background: transparent; }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("Momentum Web")
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #1E90FF;'>
+        Momentum Web
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 # Função genérica para carregar dados de arquivos com 4 ou 5 colunas
 
 
@@ -1152,6 +1159,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
