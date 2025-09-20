@@ -14,8 +14,13 @@ from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
 from scipy.ndimage import uniform_filter1d
 
-st.set_page_config(page_title="App teste", layout="wide")
+st.set_page_config(
+    page_title="Momentum Web",
+    page_icon="⚡",  # ícone da aba
+    layout="wide"
+)
 
+st.title("Momentum Web")
 # Função genérica para carregar dados de arquivos com 4 ou 5 colunas
 
 
@@ -47,9 +52,9 @@ pagina = st.sidebar.radio("📂 Navegue pelas páginas", [
 
 # === Página Inicial ===
 if pagina == "🏠 Página Inicial":
-    st.title("👋 Bem-vindo ao Momentum Web, o web app para análise de dados de protocolos de avaliação do Momentum Sensors.")
+    
     st.write(
-        "Os protocolos de análise dos dados são baseados em métodos usados em artigos científicos do grupo idealizador do Projeto Momentum. O Projeto Momentum representa uma iniciativa de desenvolvimento científico e tecnológico com o objetivo de propor métodos confiáveis de avaliação sensório-motora usando sensores presentes em smartphones. Alguns protocolos estarão em desenvolvimento e indicados quando for o caso. Utilize o menu lateral para navegar entre as diferentes etapas da análise.")
+        "Bem-vindo ao Momentum Web, o web app para análise de dados de protocolos de avaliação do Momentum Sensors. Os protocolos de análise dos dados são baseados em métodos usados em artigos científicos do grupo idealizador do Projeto Momentum. O Projeto Momentum representa uma iniciativa de desenvolvimento científico e tecnológico com o objetivo de propor métodos confiáveis de avaliação sensório-motora usando sensores presentes em smartphones. Alguns protocolos estarão em desenvolvimento e indicados quando for o caso. Utilize o menu lateral para navegar entre as diferentes etapas da análise.")
 
 # === Página de Importação ===
 elif pagina == "📁 Importar Dados":
@@ -1127,6 +1132,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
