@@ -230,7 +230,7 @@ elif pagina == "📁 Importar Dados":
     
             <p>
             A avaliação do salto vertical usando o Momentum Sensors foi baseada nos artigos de 
-            <a href="https://www.mdpi.com/1424-8220/23/13/6022" target="_blank" style="color:#1E90FF; text-decoration:none;">Moreno-Pérez et al. (2023)</a>, 
+            <a href="https://www.mdpi.com/1424-8220/23/13/6022" target="_blank" style="color:#1E90FF; text-decoration:none;">Moreno-Pérez et al. (2023)</a>  
             e <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5454547/" target="_blank" style="color:#1E90FF; text-decoration:none;">Mateos-Angulo et al. (2015)</a> 
             </p>
 
@@ -1227,6 +1227,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
