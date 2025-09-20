@@ -264,7 +264,30 @@ elif pagina == "📁 Importar Dados":
             """)
 
             st.markdown(html, unsafe_allow_html=True)
-            
+        elif tipo_teste == "Propriocepção":
+            st.markdown(
+            """
+            <h1 style='text-align: center; color: #1E90FF;'>
+            Sensação de posicionamento articular
+            </h1>
+            """,
+            unsafe_allow_html=True
+            )
+            html = dedent("""
+            <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
+            max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
+            padding: 20px; border-radius: 8px;">
+    
+            <p>
+            A avaliação da sensação de posi~cionamento articular usando o Momentum Sensors foi baseada no artigo de 
+            <a href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2025.1561241/full" style="color:#1E90FF; text-decoration:none;">Almeida et al. (2025)</a>. 
+            É preciso mensurar a amplitude articular inicial usando goniômetro ara adicionar à variações articulares desta posição inicial. 
+            </p>
+
+            </div>
+            """)
+
+            st.markdown(html, unsafe_allow_html=True)    
         else:
             st.title('Men at working')
 
@@ -1254,6 +1277,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
