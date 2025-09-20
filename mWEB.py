@@ -21,14 +21,16 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- CSS para fundo (não mexe nas fontes) ---
+# --- CSS cobrindo toda a página ---
 st.markdown("""
     <style>
-    .stApp {
-        background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%);
+    html, body, [class*="stApp"] {
+        background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%) !important;
+        height: 100%;
+        margin: 0;
+        padding: 0;
     }
     </style>
-""", unsafe_allow_html=True)
 
 
 st.title("Momentum Web")
@@ -1144,6 +1146,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
