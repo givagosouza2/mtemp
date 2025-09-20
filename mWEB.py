@@ -103,8 +103,8 @@ if pagina == "🏠 Página Inicial":
     
     
 # === Página de Importação ===
-elif pagina == "📁 Importar Dados":
-    st.title("📁 Importar Dados")
+elif pagina == "⬆️ Importar Dados":
+    st.title("⬆️ Importar Dados")
 
     col1, col2, col3 = st.columns([1, 0.2, 1])
     with col1:
@@ -1300,6 +1300,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
