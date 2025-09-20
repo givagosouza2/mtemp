@@ -127,7 +127,7 @@ elif pagina == "⬆️ Importar Dados":
                     st.session_state["dados"] = dados
 
         elif tipo_teste == "Salto":
-            st.subheader("👆 Importar dados de Salto")
+            st.subheader("🤸 Importar dados de Salto")
             arquivo = st.file_uploader(
                 "Selecione o arquivo de salto (CSV ou TXT)", type=["csv", "txt"])
             if arquivo is not None:
@@ -219,7 +219,7 @@ elif pagina == "⬆️ Importar Dados":
             st.markdown(
             """
             <h1 style='text-align: center; color: #1E90FF;'>
-            Salto vertical
+            🤸Salto vertical
             </h1>
             """,
             unsafe_allow_html=True
@@ -1300,6 +1300,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
