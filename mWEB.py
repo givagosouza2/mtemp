@@ -39,7 +39,7 @@ header[data-testid="stHeader"] {
 .block-container { background: transparent; }
 section[data-testid="stSidebar"] { background: transparent; }
 </style>
-""", unsafe_allow_html=True)
+""", unsafe_allow_html=False)
 
 #Criação do título
 st.markdown(
@@ -1181,6 +1181,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
             
+
 
 
 
