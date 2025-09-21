@@ -1307,7 +1307,7 @@ elif pagina == "📖 Referências bibliográficas":
     padding: 20px; border-radius: 8px;">
 
     <p>
-    Artigos que utilizaram aplicativos desenvolvidos:</p>
+    Artigos que utilizaram aplicativos desenvolvidos no projeto Momentum:</p>
     <a href="https://www.mdpi.com/1424-8220/24/9/2918" target="_blank" style="color:#1E90FF; text-decoration:none;">SANTOS, P. S. A. ; SANTOS, E. G. R. ; MONTEIRO, L. C. P. ; SANTOS-LOBATO, B. L. ; PINTO, G. H. L. ; BELGAMO, A. ; ANDRÉ DOS SANTOS, CABRAL ; COSTA E SILVA, A. A ; CALLEGARI, B. ; SOUZA, Givago da Silva . The hand tremor spectrum is modified by the inertial sensor mass during lightweight wearable and smartphone-based assessment in healthy young subjects. Scientific Reports, v. 12, p. 01, 2022.</a></p>, 
     <a href="https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2023.1277408/full" target="_blank" style="color:#1E90FF; text-decoration:none;">RODRIGUES, L. A. ; SANTOS, E. G. R. ; SANTOS, P. S. A. ; IGARASHI, Y. ; OLIVEIRA, L. K. R. ; PINTO, G. H. L. ; SANTOS-LOBATO, B. L. ; CABRAL, A. S. ; BELGAMO, A. ; COSTA E SILVA, A. A ; CALLEGARI, B. ; Souza, G. S. . Wearable Devices and Smartphone Inertial Sensors for Static Balance Assessment: A Concurrent Validity Study in Young Adult Population. Journal Of Personalized Medicine, v. 1, p. 1-1, 2022.</a></p> 
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">CORREA, B. D. C. ; SANTOS, E. G. R. ; BELGAMO, A. ; PINTO, G. H. L. ; XAVIER, S. S. ; DIAS, A. R. N. ; PARANHOS, A. C. M. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; COSTA E SILVA, A. A. ; QUARESMA, J. A. S. ; FALCAO, L. F. M. ; SOUZA, GIVAGO S. . SMARTPHONE-BASED EVALUATION OF STATIC BALANCE AND MOBILITY IN LONG LASTING COVID-19 PATIENTS. Frontiers in Neurology, v. 1, p. 1, 2023.</a>.</p>
@@ -1332,6 +1332,7 @@ elif pagina == "📖 Referências bibliográficas":
     st.markdown(html, unsafe_allow_html=True)
 
     
+
 
 
 
