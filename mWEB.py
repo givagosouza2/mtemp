@@ -55,6 +55,49 @@ st.markdown(
 
 
 @st.cache_data
+T = {
+    "pt": {"title": "Página Inicial", "welcome": "Bem-vindo!", "body": "Conteúdo em Português."},
+    "en": {"title": "Home",          "welcome": "Welcome!",   "body": "Content in English."},
+    "es": {"title": "Inicio",        "welcome": "¡Bienvenido!","body": "Contenido en Español."},
+}
+
+def set_lang(lang_code: str):
+    st.session_state["lang"] = lang_code
+    # persiste na URL para compartilhamento e reabertura
+    st.query_params["lang"] = lang_code
+    st.rerun()
+
+# -------- ler idioma da URL ou sessão --------
+if "lang" not in st.session_state:
+    qp = st.query_params.get("lang", None)
+    st.session_state["lang"] = qp if qp in T else None
+
+# -------- seletor visual (não escrito) antes do conteúdo --------
+if st.session_state["lang"] not in T:
+    st.markdown(
+        """
+        <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:10vh;">
+            <div style="font-size:1.25rem;opacity:.8;">Selecione o idioma</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        if st.button("🇧🇷", type="primary", use_container_width=True, help="Português"):
+            set_lang("pt")
+    with c2:
+        if st.button("🇺🇸", type="primary", use_container_width=True, help="English"):
+            set_lang("en")
+    with c3:
+        if st.button("🇪🇸", type="primary", use_container_width=True, help="Español"):
+            set_lang("es")
+
+    st.stop()  # impede o resto da página de carregar até escolher
+# -------- conteúdo do site (já no idioma escolhido) --------
+lang = st.session_state["lang"]
+
+
 def carregar_dados_generico(arquivo):
     try:
         df = pd.read_csv(arquivo, sep=None, engine='python')
@@ -1332,6 +1375,7 @@ elif pagina == "📖 Referências bibliográficas":
     st.markdown(html, unsafe_allow_html=True)
 
     
+
 
 
 
