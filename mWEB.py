@@ -1301,7 +1301,7 @@ elif pagina == "📤 Exportar Resultados":
                 mime="text/plain"
             )        
            
-elif pagina == "📖 Referências bibliográficas":
+if pagina == "📖 Referências bibliográficas":
     html = dedent("""
     <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
     max-width: 900px; margin: auto; background-color: rgba(255,255,255,0.6);
@@ -1333,6 +1333,7 @@ elif pagina == "📖 Referências bibliográficas":
 
     st.markdown(html, unsafe_allow_html=True)
     
+
 
 
 
