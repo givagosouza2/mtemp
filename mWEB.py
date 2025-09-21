@@ -15,7 +15,6 @@ from scipy.integrate import trapezoid, cumulative_trapezoid
 from scipy.ndimage import uniform_filter1d
 from textwrap import dedent
 
-#Criação do layout da página inicial
 # --------- Config da página ---------
 st.set_page_config(
     page_title="Momentum Web",
@@ -23,47 +22,92 @@ st.set_page_config(
     layout="wide"
 )
 
+# ============== I18N: Portão de idioma (NÃO ESCRITO) ==============
+# Dicionário básico só para rótulos principais; você pode expandir depois
 T = {
-    "pt": {"title": "Página Inicial", "welcome": "Bem-vindo!", "body": "Conteúdo em Português."},
-    "en": {"title": "Home",          "welcome": "Welcome!",   "body": "Content in English."},
-    "es": {"title": "Inicio",        "welcome": "¡Bienvenido!","body": "Contenido en Español."},
+    "pt": {
+        "choose": "Selecione o idioma",
+        "pages": {
+            "home": "🏠 Página Inicial",
+            "import": "⬆️ Importar Dados",
+            "plot": "📈 Visualização Gráfica",
+            "export": "📤 Exportar Resultados",
+            "refs": "📖 Referências bibliográficas",
+        }
+    },
+    "en": {
+        "choose": "Choose your language",
+        "pages": {
+            "home": "🏠 Home",
+            "import": "⬆️ Import Data",
+            "plot": "📈 Plots",
+            "export": "📤 Export Results",
+            "refs": "📖 References",
+        }
+    },
+    "es": {
+        "choose": "Elija su idioma",
+        "pages": {
+            "home": "🏠 Inicio",
+            "import": "⬆️ Importar Datos",
+            "plot": "📈 Visualización Gráfica",
+            "export": "📤 Exportar Resultados",
+            "refs": "📖 Referencias bibliográficas",
+        }
+    },
 }
 
-def set_lang(lang_code: str):
+def _set_lang(lang_code: str):
     st.session_state["lang"] = lang_code
-    # persiste na URL para compartilhamento e reabertura
     st.query_params["lang"] = lang_code
     st.rerun()
 
-# -------- ler idioma da URL ou sessão --------
+# Lê idioma de URL ou sessão
 if "lang" not in st.session_state:
     qp = st.query_params.get("lang", None)
     st.session_state["lang"] = qp if qp in T else None
 
-# -------- seletor visual (não escrito) antes do conteúdo --------
+# Mostra seletor (apenas bandeiras) antes do conteúdo
 if st.session_state["lang"] not in T:
-    st.markdown(
-        """
-        <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:10vh;">
-            <div style="font-size:1.25rem;opacity:.8;">Selecione o idioma</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.markdown("""
+        <style>
+        .lang-gate {
+            position: fixed; inset: 0; display:flex; align-items:center; justify-content:center;
+            background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%);
+            z-index: 9999;
+        }
+        .lang-card {
+            background: rgba(255,255,255,.8); padding: 24px; border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,.1); text-align:center; min-width: 280px;
+        }
+        .lang-title { font-size: 1.1rem; margin-bottom: .75rem; opacity: .85; }
+        </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown('<div class="lang-gate"><div class="lang-card">', unsafe_allow_html=True)
+    st.markdown(f'<div class="lang-title">{T["pt"]["choose"]}</div>', unsafe_allow_html=True)
+
     c1, c2, c3 = st.columns(3)
     with c1:
         if st.button("🇧🇷", type="primary", use_container_width=True, help="Português"):
-            set_lang("pt")
+            _set_lang("pt")
     with c2:
         if st.button("🇺🇸", type="primary", use_container_width=True, help="English"):
-            set_lang("en")
+            _set_lang("en")
     with c3:
         if st.button("🇪🇸", type="primary", use_container_width=True, help="Español"):
-            set_lang("es")
+            _set_lang("es")
 
-    st.stop()  # impede o resto da página de carregar até escolher
+    st.markdown('</div></div>', unsafe_allow_html=True)
+    st.stop()
 
-#Criação do estilo do fundo
+# Idioma atual
+LANG = st.session_state["lang"]
+PAGES_LABELS = T[LANG]["pages"]
+PAGE_IDS = ["home", "import", "plot", "export", "refs"]
+PAGE_LABEL_LIST = [PAGES_LABELS[k] for k in PAGE_IDS]
+
+# ===================== Estilo de fundo (seu CSS) ===================
 st.markdown("""
 <style>
 /* Fundo estilo "alumínio" */
@@ -82,7 +126,7 @@ section[data-testid="stSidebar"] { background: transparent; }
 </style>
 """, unsafe_allow_html=True)
 
-#Criação do título
+# ====================== Título (mantido) ===========================
 st.markdown(
     """
     <h1 style='text-align: center; color: #1E90FF;'>
@@ -91,14 +135,9 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-# Função genérica para carregar dados de arquivos com 4 ou 5 colunas
 
-
+# =================== Função de carga (mantida) =====================
 @st.cache_data
-# -------- conteúdo do site (já no idioma escolhido) --------
-lang = st.session_state["lang"]
-
-
 def carregar_dados_generico(arquivo):
     try:
         df = pd.read_csv(arquivo, sep=None, engine='python')
@@ -109,25 +148,18 @@ def carregar_dados_generico(arquivo):
         else:
             st.error("O arquivo deve conter 4 ou 5 colunas com cabeçalhos.")
             return None
-
         dados.columns = ["Tempo", "X", "Y", "Z"]
         return dados
     except Exception as e:
         st.error(f"Erro ao ler o arquivo: {e}")
         return None
 
-
-pagina = st.sidebar.radio("📂 Navegue pelas páginas", [
-    "🏠 Página Inicial",
-    "⬆️ Importar Dados",
-    "📈 Visualização Gráfica",
-    "📤 Exportar Resultados",
-    "📖 Referências bibliográficas"
-])
+# =================== Menu lateral com i18n =========================
+selected_label = st.sidebar.radio("📂 Navegue pelas páginas", PAGE_LABEL_LIST)
+pagina = PAGE_IDS[PAGE_LABEL_LIST.index(selected_label)]  # retorna ID 'home'/'import'/...
 
 # === Página Inicial ===
-if pagina == "🏠 Página Inicial":
-    # texto descritivo mais bonito
+if pagina == "home":
     html = dedent("""
         <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
             max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6);
@@ -142,12 +174,10 @@ if pagina == "🏠 Página Inicial":
             Utilize o <b>menu lateral</b> para navegar entre as diferentes etapas da análise.</p>
         </div>
     """)
-
     st.markdown(html, unsafe_allow_html=True)
-    
-    
+
 # === Página de Importação ===
-elif pagina == "⬆️ Importar Dados":
+elif pagina == "import":
     st.title("⬆️ Importar Dados")
 
     col1, col2, col3 = st.columns([1, 0.2, 1])
@@ -217,6 +247,7 @@ elif pagina == "⬆️ Importar Dados":
                             st.success("Arquivo carregado com sucesso!")
                             st.dataframe(dados_acc_joelho.head())
                             st.session_state["dados_acc_joelho"] = dados_acc_joelho
+
         elif tipo_teste == "Propriocepção":
             st.subheader("📦 Importar dados de Propriocepção")
             arquivo = st.file_uploader(
@@ -228,6 +259,7 @@ elif pagina == "⬆️ Importar Dados":
                     st.session_state["dados"] = dados
         elif tipo_teste == "Selecione...":
             st.info("Selecione um tipo de teste para continuar.")
+
     with col3:
         if tipo_teste == "Equilíbrio":
             st.markdown(
@@ -257,7 +289,6 @@ elif pagina == "⬆️ Importar Dados":
 
             </div>
             """)
-
             st.markdown(html, unsafe_allow_html=True)
         elif tipo_teste == 'Salto':
             st.markdown(
@@ -281,7 +312,6 @@ elif pagina == "⬆️ Importar Dados":
 
             </div>
             """)
-
             st.markdown(html, unsafe_allow_html=True)
         elif tipo_teste == "TUG":
             st.markdown(
@@ -307,7 +337,6 @@ elif pagina == "⬆️ Importar Dados":
 
             </div>
             """)
-
             st.markdown(html, unsafe_allow_html=True)
         elif tipo_teste == "Propriocepção":
             st.markdown(
@@ -331,7 +360,6 @@ elif pagina == "⬆️ Importar Dados":
 
             </div>
             """)
-
             st.markdown(html, unsafe_allow_html=True)  
         elif tipo_teste == "Y test":
             st.markdown(
@@ -353,13 +381,12 @@ elif pagina == "⬆️ Importar Dados":
 
             </div>
             """)
-
             st.markdown(html, unsafe_allow_html=True)     
         else:
             st.title('Men at working')
 
 # === Página de Visualização Gráfica ===
-elif pagina == "📈 Visualização Gráfica":
+elif pagina == "plot":
     st.title("📈 Visualização Gráfica")
     if "dados" in st.session_state and "tipo_teste" in st.session_state:
         tipo_teste = st.session_state["tipo_teste"]
@@ -688,8 +715,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.set_ylabel('Velocidade angular AP (rad/s)')
                 ax8.legend()
                 st.pyplot(fig8)
+
         if tipo_teste == "Y test":
-            
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
             
@@ -776,7 +803,6 @@ elif pagina == "📈 Visualização Gráfica":
                 if valor == min_c2:
                     t_min_c2 = tempo_sel[index]
                     break        
-
             max_c2 = np.max(ap_sel_media[index:endRec])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c2:
@@ -785,8 +811,6 @@ elif pagina == "📈 Visualização Gráfica":
             
             with col1:
                 st.title("Coluna vertebral")
-                # Cria figura com GridSpec personalizado
-                # Cria uma figura com 3 subplots verticais
                 fig = plt.figure(figsize=(12, 10))
                 gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
                 limite = 5
@@ -805,7 +829,6 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.set_ylim(-limite, limite)
                 ax1.tick_params(axis='both', labelsize=8)
 
-                # Gráfico 2: ocupa linha superior direita (metade superior)
                 ax2 = fig.add_subplot(gs[1, 0])
                 ax2.plot(
                 tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
@@ -816,7 +839,6 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2.set_ylim(-limite, limite)
                 ax2.tick_params(axis='both', labelsize=8)
 
-                # Gráfico 2: ocupa linha superior direita (metade superior)
                 axv = fig.add_subplot(gs[2, 0])
                 axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
                 axv.plot(tempo_sel[startRec:endRec], v_sel_media[startRec:endRec], color='red', linewidth=0.8)
@@ -825,12 +847,10 @@ elif pagina == "📈 Visualização Gráfica":
                 axv.set_xlim(-5, limite_tempo)
                 axv.set_ylim(-limite, limite)
                 axv.tick_params(axis='both', labelsize=8)
-                # Exibe no Streamlit
                 st.pyplot(fig)
+
             with col2:
                 st.title("Joelho")
-                # Cria figura com GridSpec personalizado
-                # Cria uma figura com 3 subplots verticais
                 fig_2 = plt.figure(figsize=(12, 10))
                 gs_2 = gridspec.GridSpec(3, 2, figure=fig_2, wspace=0.3, hspace=0.6)
             
@@ -845,7 +865,6 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1_2.set_ylim(-limite, limite)
                 ax1_2.tick_params(axis='both', labelsize=8)
 
-                # Gráfico 2: ocupa linha superior direita (metade superior)
                 ax2_2 = fig_2.add_subplot(gs_2[1, 0])
                 ax2_2.plot(
                 tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
@@ -856,7 +875,6 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2_2.set_ylim(-limite, limite)
                 ax2_2.tick_params(axis='both', labelsize=8)
 
-                # Gráfico 2: ocupa linha superior direita (metade superior)
                 axv_2 = fig_2.add_subplot(gs_2[2, 0])
                 axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
                 axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
@@ -865,12 +883,8 @@ elif pagina == "📈 Visualização Gráfica":
                 axv_2.set_xlim(-5, limite_tempo)
                 axv_2.set_ylim(-limite, limite)
                 axv_2.tick_params(axis='both', labelsize=8)
-                # Exibe no Streamlit
                 st.pyplot(fig_2)
 
-        
-             
-            
         if tipo_teste == "Propriocepção":
             calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
             dados = st.session_state["dados"]
@@ -923,8 +937,7 @@ elif pagina == "📈 Visualização Gráfica":
                     t4 = t4 - index
                     break        
                 
-                    
-            col1,col2,col3 = st.columns([0.2,0.8,0.2])# Cria figura com GridSpec personalizado
+            col1,col2,col3 = st.columns([0.2,0.8,0.2])
             with col2:
                 fig = plt.figure(figsize=(8, 10))
                 gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
@@ -935,17 +948,13 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.plot([tempo[t3],tempo[t3]],[0,120],'k--')
                 ax1.plot([tempo[t4],tempo[t4]],[0,120],'k--')
                 st.pyplot(fig)
-            
-            
         else:
             st.markdown("### Sinais brutos de X, Y e Z ao longo do Tempo")
-
     else:
         st.info("Dados ou tipo de teste não definidos. Vá até a aba 'Importar Dados'.")
 
-
 # === Página de Exportação ===
-elif pagina == "📤 Exportar Resultados":
+elif pagina == "export":
     if "dados" in st.session_state and "tipo_teste" in st.session_state:
         tipo_teste = st.session_state["tipo_teste"]
         st.subheader(f"📊 Visualização - {tipo_teste}")
@@ -1013,7 +1022,6 @@ elif pagina == "📤 Exportar Resultados":
             
             resultado_txt = "Variável\tValor\n"  # Cabeçalho com tabulação
 
-            # Lista de pares (nome, valor)
             variaveis = [
                 ("RMS ML", round(rms_ml, 4)),
                 ("RMS AP", round(rms_ap, 4)),
@@ -1031,7 +1039,6 @@ elif pagina == "📤 Exportar Resultados":
                 ("Energia AP 2–8 Hz", round((10**5)*energy_ap[2], 8)),
             ]
 
-            # Adiciona linha por linha
             for nome, valor in variaveis:
                 resultado_txt += f"{nome}\t{valor}\n"
 
@@ -1137,7 +1144,6 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Diferença de A2 e G4  (s)", value=round(A2_lat-G4_lat, 4))
                 
         if tipo_teste == "Y test":
-            
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
             
@@ -1158,7 +1164,7 @@ elif pagina == "📤 Exportar Resultados":
             showRec = st.checkbox('Mostrar o dado original', value=True)
             
             tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
-            tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter)
+            tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados)-10],filter)
             
             col1, col2 = st.columns(2)
             tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1(
@@ -1208,7 +1214,6 @@ elif pagina == "📤 Exportar Resultados":
             else:
                 limite_tempo = n2
             
-                
             min_c1 = np.min(ap_sel_media[startRec:endRec])
             for index,valor in enumerate(ap_sel_media):
                 if valor == min_c1:
@@ -1224,7 +1229,6 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == min_c2:
                     t_min_c2 = tempo_sel[index]
                     break        
-
             max_c2 = np.max(ap_sel_media[index:endRec])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c2:
@@ -1243,9 +1247,8 @@ elif pagina == "📤 Exportar Resultados":
             with col4:
                 st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4))
                 st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4))
-            resultado_txt = "Variável\tValor\n"  # Cabeçalho com tabulação
+            resultado_txt = "Variável\tValor\n"
 
-            # Lista de pares (nome, valor)
             variaveis = [
                 ("Amplitude de C1 (m/s2)", round(min_c1, 4)),
                 ("Tempo de C1 (s)", round(t_min_c1, 4)),
@@ -1255,125 +1258,10 @@ elif pagina == "📤 Exportar Resultados":
                 ("Tempo de C3 (s)", round(t_min_c2, 4)),
                 ("Amplitude de C4 (m/s2)", round(max_c2, 4)),
                 ("Tempo de C4 (s)", round(t_max_c2, 4)),
-
             ]
 
-            # Adiciona linha por linha
             for nome, valor in variaveis:
-                resultado_txt += f"{nome}\t{valor}\n"
-
-            st.download_button(
-                label="📄 Exportar resultados (.txt)",
-                data=resultado_txt,
-                file_name="resultados_analise_postural.txt",
-                mime="text/plain"
-            )    
-            
-        if tipo_teste == "Propriocepção":
-            calibracao = st.session_state["calibracao"] 
-            dados = st.session_state["dados"]
-            tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
-            max_val = len(tempo)
-            # Cálculo dos ângulos
-            accelAngleX = np.arctan(y_vf / np.sqrt(x_vf**2 + z_vf**2)) * 180 / math.pi
-            angulo = accelAngleX + 90
-
-            # Calibração
-            def objetivo(x):
-                media_ajustada = np.mean(angulo[100:500] + x)
-                return abs(media_ajustada - calibracao)
-
-            media_baseline = np.mean(angulo[100:500])
-            if media_baseline != calibracao:
-                resultado = minimize_scalar(objetivo)
-                angulo = angulo + resultado.x
-            else:
-                resultado = type('obj', (object,), {'x': 0})()
-
-            for index,valor in enumerate(angulo[100:-1]):
-                if valor > 10+calibracao:
-                    t1 = index+100
-                    break
-            for index2,valor in enumerate(angulo[t1:-1]):
-                if valor < 10+calibracao:
-                    t2 = index2+t1
-                    break       
-            for index3,valor in enumerate(angulo[t2:-1]):
-                if valor > 10+calibracao:
-                    t3 = index3+t2
-                    break
-                    
-            for index4,valor in enumerate(angulo[t3:-1]):
-                if valor < 10+calibracao:
-                    t4 = index4+t3
-                    break  
-            ref_max = np.max(angulo[t1:t2])
-            for index,valor in enumerate(angulo[t1:t2]):
-                if valor == ref_max:
-                    t1 = t1 + index
-                    t2 = t2 - index
-                    break
-            pos_max = np.max(angulo[t3:t4])
-            for index,valor in enumerate(angulo[t3:t4]):
-                if valor == pos_max:
-                    t3 = t3 + index
-                    t4 = t4 - index
-                    break                            
-            Angulacao_referencia = np.mean(angulo[t1:t2])
-            Angulacao_posicionamento = np.mean(angulo[t3:t4])
-            st.metric(label=r"Ângulo de referências (graus)", value=round(Angulacao_referencia, 4))
-            st.metric(label=r"Ângulo de posicionamento (graus)", value=round(Angulacao_posicionamento, 4))        
-            
-            resultado_txt = "Variável\tValor\n"  # Cabeçalho com tabulação
-
-            # Lista de pares (nome, valor)
-            variaveis = [
-                ("Angulo médio de referência (graus)", round(Angulacao_referencia, 4)),
-                ("Angulo médio de posicionamento (graus)", round(Angulacao_posicionamento, 4)),
-                
-            ]
-
-            # Adiciona linha por linha
-            for nome, valor in variaveis:
-                resultado_txt += f"{nome}\t{valor}\n"
-
-            st.download_button(
-                label="📄 Exportar resultados (.txt)",
-                data=resultado_txt,
-                file_name="resultados_propriocepção.txt",
-                mime="text/plain"
-            )        
-           
-elif pagina == "📖 Referências bibliográficas":
-    html = dedent("""
-    <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
-    max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6);
-    padding: 20px; border-radius: 8px;">
-
-    <p>
-    Artigos que utilizaram aplicativos desenvolvidos no projeto Momentum:</p>
-    <a href="https://www.mdpi.com/1424-8220/24/9/2918" target="_blank" style="color:#1E90FF; text-decoration:none;">1. SANTOS, P. S. A. ; SANTOS, E. G. R. ; MONTEIRO, L. C. P. ; SANTOS-LOBATO, B. L. ; PINTO, G. H. L. ; BELGAMO, A. ; ANDRÉ DOS SANTOS, CABRAL ; COSTA E SILVA, A. A ; CALLEGARI, B. ; SOUZA, Givago da Silva . The hand tremor spectrum is modified by the inertial sensor mass during lightweight wearable and smartphone-based assessment in healthy young subjects. Scientific Reports, v. 12, p. 01, 2022.</a></p>. 
-    <a href="https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2023.1277408/full" target="_blank" style="color:#1E90FF; text-decoration:none;">2. RODRIGUES, L. A. ; SANTOS, E. G. R. ; SANTOS, P. S. A. ; IGARASHI, Y. ; OLIVEIRA, L. K. R. ; PINTO, G. H. L. ; SANTOS-LOBATO, B. L. ; CABRAL, A. S. ; BELGAMO, A. ; COSTA E SILVA, A. A ; CALLEGARI, B. ; Souza, G. S. . Wearable Devices and Smartphone Inertial Sensors for Static Balance Assessment: A Concurrent Validity Study in Young Adult Population. Journal Of Personalized Medicine, v. 1, p. 1-1, 2022.</a></p> 
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">3. CORREA, B. D. C. ; SANTOS, E. G. R. ; BELGAMO, A. ; PINTO, G. H. L. ; XAVIER, S. S. ; DIAS, A. R. N. ; PARANHOS, A. C. M. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; COSTA E SILVA, A. A. ; QUARESMA, J. A. S. ; FALCAO, L. F. M. ; SOUZA, GIVAGO S. . SMARTPHONE-BASED EVALUATION OF STATIC BALANCE AND MOBILITY IN LONG LASTING COVID-19 PATIENTS. Frontiers in Neurology, v. 1, p. 1, 2023.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">4. FURTADO, E. C. S. ; AZEVEDO, Y. S. ; GALHARDO, D. R. ; MIRANDA, I. P. C. ; OLIVEIRA, M. E. C. ; NEVES, P. F. M. ; MONTE, L. B. ; NUNES, E. F. C. ; FERREIRA, E. A. G. ; CALLEGARI, B. ; SOUZA, G.S. ; MELO NETO, J. S. . The weeks of gestation age influence the myoelectric activity of the pelvic floor muscles, plantar contact and functional mobility in high-risk pregnant women? a cross-sectional study. SENSORS, v. 1, p. 1, 2024.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">5. SANTOS, T. T. S. ; MARQUES, A. P. ; MONTEIRO, L. C. P. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; BELGAMO, A. ; COSTA E SILVA, A. A. ; CABRAL, A. S. ; KULIŚ ; GAJEWSKI, J. ; Souza, G. S. ; SILVA, T. J. ; COSTA, W. T. A. ; SALOMAO, R. C. ; CALLEGARI, B. . Intra and Inter-Device Reliabilities of the Instrumented Timed-Up and Go Test Using Smartphones in Young Adult Population. SENSORS, v. 24, p. 2918, 2024.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">6. FERNANDES, T. F. ; CÔRTES, M. I. T. ; PENA, F. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; BELGAMO, A. ; COSTA E SILVA, A. A. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; Souza, G. S. . Smartphone-based evaluation of static balance and mobility in type 2 Diabetes. ANAIS DA ACADEMIA BRASILEIRA DE CIÊNCIAS, v. 96, p. 1-1, 2024.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">7. NASCIMENTO, A. Q. ; NAGATA, L. A. R. ; ALMEIDA, M. T. ; COSTA, V. L. S. ; MARIN, A. B. R. ; TAVARES, V. B. ; ISHAK, G. ; CALLEGARI, B. ; SANTOS, E. G. R. ; SOUZA, GIVAGO SILVA ; MELO NETO, J. S. . Smartphone-based inertial measurements during Chester step test as a predictor of length of hospital stay in abdominopelvic cancer postoperative period: a prospective cohort study. World Journal of Surgical Oncology, v. 22, p. 71-1, 2024.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">8. FERREIRA, E. C. V. ; MARQUES, A. P. ; KULIS, S. ; GAJEWSKI, J. ; MORAES, A. A. C. ; DUARTE, M. B. ; ALMEIDA, G. C. S. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; ANDRÉ DOS SANTOS, CABRAL ; Souza, Gilvago Silva ; COSTA E SILVA, A. A ; CALLEGARI, B. . Validity And Reliability of a Mobile Device Application for Assessing Motor Performance in the 30-Second Sit-To-Stand Test. IEEE Access, p. 1-1, 2025.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">9. AZEVEDO, L. S. ; FEITOSA JR, N. Q. ; SANTOS, E. G. R. ; ALVAREZ, M. A. M. ; NORAT, L. A. X. ; BOTELHO, G. I. S. ; BELGAMO, A. ; PINTO, G. H. L. ; SANTANA DE CASTRO, KETLIN JAQUELLINE ; CALLEGARI, B. ; SILVA, A. A. C. E. ; SALOMAO, R. C. ; ANDRÉ DOS SANTOS, CABRAL ; ROSA, A. A. M. ; Silva Souza, Givago . Assessing static balance control improvement following cataract surgery using a smartphone. Digital Health, v. 11, p. 1-1, 2025.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">10. DUARTE, M. B. ; MORAES, A. A. C. ; FERREIRA, E. V. ; ALMEIDA, G. C. S. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; OLIVEIRA, P. R. ; AMORIM, C. F. ; ANDRÉ DOS SANTOS, CABRAL ; SAUNIER, G. J. A. ; COSTA E SILVA, A. A. ; SOUZA, GIVAGO S. ; CALLEGARI, B. . Validity and reliability of a smartphone-based assessment for anticipatory and compensatory postural adjustments during predictable perturbations. GAIT & POSTURE, v. 96, p. 9-17, 2022.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">11. MORAES, A. A. C. ; DUARTE, M. B. ; FERREIRA, E. V. ; ALMEIDA, G. C. S. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; OLIVEIRA, P. R. ; AMORIM, C. F. ; ANDRÉ DOS SANTOS, CABRAL ; COSTA E SILVA, A. A. ; Souza, G. S. ; CALLEGARI, B. . Validity and reliability of smartphone app for evaluating postural adjustments during step initiation. SENSORS, v. 1, p. 1, 2022.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">12. MORAES, A. A. C. ; DUARTE, M. B. ; SANTOS, E. J. M. ; ALMEIDA, G. C. S. ; ANDRÉ DOS SANTOS, CABRAL ; COSTA E SILVA, A. A. ; GARCEZ, D. R. ; GIVAGO DA SILVA, SOUZA ; CALLEGARI, B. . Comparison of inertial records during anticipatory postural adjustments obtained with devices of different masses. PeerJ, v. 11, p. e15627, 2023.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">13. BRITO, F. A. C. ; MONTEIRO, L. C. P. ; SANTOS, E. G. R. ; LIMA, R. C. ; SANTOS-LOBATO, B. L. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; SILVA, A. A. C. E. ; GIVAGO DA SILVA, SOUZA . The role of sex and handedness in the performance of the smartphone-based Finger-Tapping Test. PLOS Digital Health, v. 2, p. e0000304, 2023.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">14. LIMA, R. C. ; BRITO, F. A. C. ; NASCIMENTO, R. L. ; MARTINS, S. N. E. S. ; MONTEIRO, L. C. P. ; SEABRA, J. P. ; FARIA, H. L. C. ; SILVA, L. M. C. ; MIRANDA, V. M. S. ; BELGAMO, A. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; COSTA E SILVA, A. A ; CRISP, A. ; ALVES, CÂNDIDA HELENA LOPES ; LACERDA, E. M. C. B. ; SOUZA, G.S. . DATASET OF SMARTPHONE-BASED FINGER TAPPING TEST. Scientific Data, v. 1, p. 1, 2024.</a>.</p>
-    <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p>
-    
-    </p>
-
-    </div>
-    """)
-
-    st.markdown(html, unsafe_allow_html=True)
+                resultado_txt += f"{nome
 
     
 
