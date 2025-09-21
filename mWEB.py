@@ -23,38 +23,6 @@ st.set_page_config(
     layout="wide"
 )
 
-#Criação do estilo do fundo
-st.markdown("""
-<style>
-/* Fundo estilo "alumínio" */
-.stApp {
-  background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%);
-}
-
-/* Barra superior */
-header[data-testid="stHeader"] {
-  background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%) !important;
-}
-
-/* Deixa centro e sidebar transparentes para o gradiente aparecer */
-.block-container { background: transparent; }
-section[data-testid="stSidebar"] { background: transparent; }
-</style>
-""", unsafe_allow_html=True)
-
-#Criação do título
-st.markdown(
-    """
-    <h1 style='text-align: center; color: #1E90FF;'>
-        Momentum Web
-    </h1>
-    """,
-    unsafe_allow_html=True
-)
-# Função genérica para carregar dados de arquivos com 4 ou 5 colunas
-
-
-@st.cache_data
 T = {
     "pt": {"title": "Página Inicial", "welcome": "Bem-vindo!", "body": "Conteúdo em Português."},
     "en": {"title": "Home",          "welcome": "Welcome!",   "body": "Content in English."},
@@ -94,6 +62,39 @@ if st.session_state["lang"] not in T:
             set_lang("es")
 
     st.stop()  # impede o resto da página de carregar até escolher
+
+#Criação do estilo do fundo
+st.markdown("""
+<style>
+/* Fundo estilo "alumínio" */
+.stApp {
+  background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%);
+}
+
+/* Barra superior */
+header[data-testid="stHeader"] {
+  background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%) !important;
+}
+
+/* Deixa centro e sidebar transparentes para o gradiente aparecer */
+.block-container { background: transparent; }
+section[data-testid="stSidebar"] { background: transparent; }
+</style>
+""", unsafe_allow_html=True)
+
+#Criação do título
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #1E90FF;'>
+        Momentum Web
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
+# Função genérica para carregar dados de arquivos com 4 ou 5 colunas
+
+
+@st.cache_data
 # -------- conteúdo do site (já no idioma escolhido) --------
 lang = st.session_state["lang"]
 
@@ -1375,6 +1376,7 @@ elif pagina == "📖 Referências bibliográficas":
     st.markdown(html, unsafe_allow_html=True)
 
     
+
 
 
 
