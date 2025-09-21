@@ -314,7 +314,6 @@ elif pagina == "⬆️ Importar Dados":
         else:
             st.title('Men at working')
 
-
 # === Página de Visualização Gráfica ===
 elif pagina == "📈 Visualização Gráfica":
     st.title("📈 Visualização Gráfica")
@@ -900,7 +899,7 @@ elif pagina == "📈 Visualização Gráfica":
     else:
         st.info("Dados ou tipo de teste não definidos. Vá até a aba 'Importar Dados'.")
 
-"📖 Referências bibliográficas"
+
 # === Página de Exportação ===
 elif pagina == "📤 Exportar Resultados":
     if "dados" in st.session_state and "tipo_teste" in st.session_state:
@@ -1334,3 +1333,4 @@ elif pagina == "📖 Referências bibliográficas":
     st.markdown(html, unsafe_allow_html=True)
 else:
     
+
