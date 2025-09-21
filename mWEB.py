@@ -158,7 +158,7 @@ def carregar_dados_generico(arquivo):
 selected_label = st.sidebar.radio("📂 Navegue pelas páginas", PAGE_LABEL_LIST)
 pagina = PAGE_IDS[PAGE_LABEL_LIST.index(selected_label)]  #
 
-== Página Inicial ===
+#== Página Inicial ===
 if pagina == "home":
     html = dedent("""
         <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333;
@@ -386,6 +386,7 @@ elif pagina == "import":
             st.title('Men at working')
 
     
+
 
 
 
