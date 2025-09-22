@@ -15,13 +15,17 @@ from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
 from scipy.ndimage import uniform_filter1d
 from textwrap import dedent
+
 #Criação do layout da página inicial
 # --------- Config da página ---------
 st.set_page_config( page_title="Momentum Web", page_icon="⚡", layout="wide" )
+
 #Criação do estilo do fundo
 st.markdown(""" <style> /* Fundo estilo "alumínio" */ .stApp { background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%); } /* Barra superior */ header[data-testid="stHeader"] { background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%) !important; } /* Deixa centro e sidebar transparentes para o gradiente aparecer */ .block-container { background: transparent; } section[data-testid="stSidebar"] { background: transparent; } </style> """, unsafe_allow_html=True)
+
 #Criação do título
 st.markdown( """ <h1 style='text-align: center; color: #1E90FF;'> Momentum Web </h1> """, unsafe_allow_html=True )
+
 # Função genérica para carregar dados de arquivos com 4 ou 5 colunas
 @st.cache_data
 def carregar_dados_generico(arquivo):
@@ -39,7 +43,9 @@ def carregar_dados_generico(arquivo):
     except Exception as e:
         st.error(f"Erro ao ler o arquivo: {e}")
     return None
+
 pagina = st.sidebar.radio("📂 Navegue pelas páginas", [ "🏠 Página Inicial", "⬆️ Importar Dados", "📈 Visualização Gráfica", "📤 Exportar Resultados", "📖 Referências bibliográficas" ])
+
 # === Página Inicial ===
 if pagina == "🏠 Página Inicial": # texto descritivo mais bonito
     html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;">
@@ -50,7 +56,9 @@ if pagina == "🏠 Página Inicial": # texto descritivo mais bonito
     <p>Alguns protocolos estarão em desenvolvimento e serão indicados quando for o caso.</p>
     Utilize o <b>menu lateral</b> para navegar entre as diferentes etapas da análise.</p>
     </div> """) 
+
     st.markdown(html, unsafe_allow_html=True)
+
 # === Página de Importação ===
 elif pagina == "⬆️ Importar Dados":
     st.title("⬆️ Importar Dados")
@@ -129,12 +137,14 @@ elif pagina == "⬆️ Importar Dados":
             <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">Fernandes et al. (2024)</a>. </p> 
             <p> É necessário fixar o smartphone na coluna lombar do paciente e pedir para que ele não se movimente ou fale durante o tempo de registro. </p> </div> """)
             st.markdown(html, unsafe_allow_html=True)
+        
         elif tipo_teste == 'Salto':
             st.markdown( """ <h1 style='text-align: center; color: #1E90FF;'> 🤸Salto vertical </h1> """, unsafe_allow_html=True )
             html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;"> <p> A avaliação do salto vertical usando o Momentum Sensors foi baseada nos artigos de
             <a href="https://www.mdpi.com/1424-8220/23/13/6022" target="_blank" style="color:#1E90FF; text-decoration:none;">Moreno-Pérez et al. (2023)</a> e 
             <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5454547/" target="_blank" style="color:#1E90FF; text-decoration:none;">Mateos-Angulo et al. (2015)</a>. </p> </div> """)
             st.markdown(html, unsafe_allow_html=True)
+        
         elif tipo_teste == "TUG":
             st.markdown( """ <h1 style='text-align: center; color: #1E90FF;'> Timed Up and Go instrumentado </h1> """, unsafe_allow_html=True )
             html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;"> <p> A avaliação do Timed Up ang Go instrumentado usando o Momentum Sensors foi baseada nos artigos de
@@ -142,16 +152,19 @@ elif pagina == "⬆️ Importar Dados":
             <a href="https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2023.1277408/full" target="_blank" style="color:#1E90FF; text-decoration:none;">Correa et al. (2023)</a> e
             <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">Fernandes et al. (2024)</a>. </p> </div> """)
             st.markdown(html, unsafe_allow_html=True)
+        
         elif tipo_teste == "Propriocepção":
             st.markdown( """ <h1 style='text-align: center; color: #1E90FF;'> Sensação de posicionamento articular </h1> """, unsafe_allow_html=True )
             html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;"> <p> A avaliação da sensação de posi~cionamento articular usando o Momentum Sensors foi baseada no artigo de
             <a href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2025.1561241/full" style="color:#1E90FF; text-decoration:none;">Almeida et al. (2025)</a>.
             É preciso mensurar a amplitude articular inicial usando goniômetro para adicionar à variações articulares desta posição inicial. </p> </div> """)
             st.markdown(html, unsafe_allow_html=True)
+        
         elif tipo_teste == "Y test":
             st.markdown( """ <h1 style='text-align: center; color: #1E90FF;'> Y test </h1> """, unsafe_allow_html=True )
             html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;"> <p> A avaliação do equilíbrio dinâmico pelo Y test está em desenvolvimento sob coordenação do Prof. Dr. André dos Santos Cabral da Universidade do Estado do Pará. </p> </div> """)
             st.markdown(html, unsafe_allow_html=True)
+        
         else: st.title('Men at working')
 # === Página de Visualização Gráfica ===
 elif pagina == "📈 Visualização Gráfica":
@@ -907,3 +920,4 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
