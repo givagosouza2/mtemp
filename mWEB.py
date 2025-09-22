@@ -357,14 +357,16 @@ elif pagina == "📈 Visualização Gráfica":
             ax1.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
             ax1.set_xlabel('Tempo (s)')
             ax1.set_ylabel('Aceleração norma (m/s²)')
-            ax1.legend() st.pyplot(fig1)
+            ax1.legend()
+            st.pyplot(fig1)
             fig2, ax2 = plt.subplots()
             ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black')
             ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
             ax2.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
             ax2.set_xlabel('Tempo (s)')
             ax2.set_ylabel('Aceleração ML (m/s²)')
-            ax2.legend() st.pyplot(fig2)
+            ax2.legend()
+            st.pyplot(fig2)
             fig3, ax3 = plt.subplots()
             ax3.plot(t_novo_acc, np.sqrt(v_acc**2), linewidth=0.8, color='black')
             ax3.plot(A1v_lat,A1v_amp,'ro')
@@ -373,7 +375,8 @@ elif pagina == "📈 Visualização Gráfica":
             ax3.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
             ax3.set_xlabel('Tempo (s)')
             ax3.set_ylabel('Aceleração vertical (m/s²)')
-            ax3.legend() st.pyplot(fig3)
+            ax3.legend()
+            st.pyplot(fig3)
             fig4, ax4 = plt.subplots()
             ax4.plot(t_novo_acc, np.sqrt(z_acc_filtrado**2), linewidth=0.8, color='black')
             ax4.plot(A1_lat,A1_amp,'ro')
@@ -938,6 +941,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
