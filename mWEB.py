@@ -241,8 +241,7 @@ elif pagina == "📈 Visualização Gráfica":
                     ax1.set_ylim(-limite, limite)
                     ax1.tick_params(axis='both', labelsize=8)
                     ax1.add_patch(ellipse) # Gráfico 2: ocupa linha superior direita (metade superior)
-                    st.pyplot(fig)
-                    
+                                        
                     ax2 = fig.add_subplot(gs[0, 2:])
                     if showRec:
                         ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
@@ -252,8 +251,7 @@ elif pagina == "📈 Visualização Gráfica":
                     ax2.set_xlim(0, max(tempo))
                     ax2.set_ylim(-limite, limite)
                     ax2.tick_params(axis='both', labelsize=8) # Gráfico 3: linha do meio à direita
-                    st.pyplot(fig)
-                    
+                                        
                     ax3 = fig.add_subplot(gs[1, 2:])
                     if showRec:
                         ax3.plot(tempo, ap, color='tomato', linewidth=0.5)
@@ -263,8 +261,7 @@ elif pagina == "📈 Visualização Gráfica":
                     ax3.set_xlim(0, max(tempo))
                     ax3.set_ylim(-limite, limite)
                     ax3.tick_params(axis='both', labelsize=8) # Gráfico 4: canto inferior esquerdo
-                    st.pyplot(fig)
-                    
+                                        
                     ax4 = fig.add_subplot(gs[2:4, 0:2])
                     if showRec:
                         ax4.plot(freqs, psd_ml, color='tomato', linewidth=0.5)
@@ -274,8 +271,7 @@ elif pagina == "📈 Visualização Gráfica":
                     ax4.set_xlabel('Frequência temporal (Hz)', fontsize=8)
                     ax4.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
                     ax4.tick_params(axis='both', labelsize=8) # Gráfico 5: canto inferior direito
-                    st.pyplot(fig)
-                    
+                                        
                     ax5 = fig.add_subplot(gs[2:4, 2:])
                     if showRec:
                         ax5.plot(freqs, psd_ap, color='tomato', linewidth=0.5)
@@ -965,6 +961,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
