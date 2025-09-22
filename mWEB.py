@@ -3,46 +3,61 @@ import numpy as np
 import pandas as pd
 import math
 import matplotlib.pyplot as plt
-import minimize_scalar
-from processamento import balanceProcessing
-from processamento import jumpProcessing
-from processamento import tugProcessing
-from processamento import ytestProcessing
-from processamento import jointSenseProcessing
+from scipy.optimize import minimize_scalar  # <-- corrigido
+from processamento import balanceProcessing, jumpProcessing, tugProcessing, ytestProcessing, jointSenseProcessing
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
 from scipy.ndimage import uniform_filter1d
-from scipy.optimize
 from textwrap import dedent
 
-#Criação do layout da página inicial
 # --------- Config da página ---------
-st.set_page_config( page_title="Momentum Web", page_icon="⚡", layout="wide" )
+st.set_page_config(page_title="Momentum Web", page_icon="⚡", layout="wide")
 
-#Criação do estilo do fundo
-st.markdown(""" <style> /* Fundo estilo "alumínio" */ .stApp { background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%); } /* Barra superior */ header[data-testid="stHeader"] { background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%) !important; } /* Deixa centro e sidebar transparentes para o gradiente aparecer */ .block-container { background: transparent; } section[data-testid="stSidebar"] { background: transparent; } </style> """, unsafe_allow_html=True)
+# --------- Estilo ---------
+st.markdown(
+    """
+    <style>
+      .stApp {
+        background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%);
+      }
+      header[data-testid="stHeader"] {
+        background: linear-gradient(135deg, #ffffff 0%, #f2f2f2 40%, #e6e6e6 100%) !important;
+      }
+      .block-container { background: transparent; }
+      section[data-testid="stSidebar"] { background: transparent; }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-#Criação do título
-st.markdown( """ <h1 style='text-align: center; color: #1E90FF;'> Momentum Web </h1> """, unsafe_allow_html=True )
+st.markdown("<h1 style='text-align: center; color: #1E90FF;'>Momentum Web</h1>", unsafe_allow_html=True)
 
-# Função genérica para carregar dados de arquivos com 4 ou 5 colunas
 @st.cache_data
 def carregar_dados_generico(arquivo):
-    try: df = pd.read_csv(arquivo, sep=None, engine='python')
-        if df.shape[1] == 5: 
-            dados = df.iloc[:, 1:5]
-        # Usa colunas 2 a 5
+    """
+    Lê CSV com 4 ou 5 colunas.
+    - 5 colunas: descarta a 1ª (ex.: índice/metadata) e usa as colunas 2..5
+    - 4 colunas: usa todas
+    Retorna DataFrame com colunas: ["Tempo", "X", "Y", "Z"] ou None em caso de erro.
+    """
+    try:
+        df = pd.read_csv(arquivo, sep=None, engine='python')  # autodetecta separador
+
+        if df.shape[1] == 5:
+            dados = df.iloc[:, 1:5].copy()  # usa colunas 2..5
         elif df.shape[1] == 4:
-            dados = df.iloc[:, 0:4] # Usa todas
-        else: 
+            dados = df.iloc[:, 0:4].copy()  # usa todas
+        else:
             st.error("O arquivo deve conter 4 ou 5 colunas com cabeçalhos.")
-        return None
-            dados.columns = ["Tempo", "X", "Y", "Z"]
+            return None
+
+        dados.columns = ["Tempo", "X", "Y", "Z"]
         return dados
+
     except Exception as e:
         st.error(f"Erro ao ler o arquivo: {e}")
-    return None
+        return None
 
 pagina = st.sidebar.radio("📂 Navegue pelas páginas", [ "🏠 Página Inicial", "⬆️ Importar Dados", "📈 Visualização Gráfica", "📤 Exportar Resultados", "📖 Referências bibliográficas" ])
 
@@ -920,5 +935,6 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
