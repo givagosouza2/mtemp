@@ -277,360 +277,361 @@ elif pagina == "📈 Visualização Gráfica":
                     ax5.set_xlabel('Frequência temporal (Hz)', fontsize=8)
                     ax5.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                     ax5.tick_params(axis='both', labelsize=8) # Exibe no Streamlit st.pyplot(fig)
-    if tipo_teste == "Salto":
-        col1, col2, col3 = st.columns([0.4, 1, 0.4])
-        dados = st.session_state["dados"]
-        tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = jumpProcessing.processar_salto( dados, 8)
-        with col2:
-            fig, ax = plt.subplots()
-            ax.plot(tempo[istart-100:iend+100], salto[istart - 100:iend+100], linewidth=0.8, color='black')
-            ax.axvline(startJump, color='green', linestyle='--', label='Início Voo', linewidth=0.8)
-            ax.axvline(endJump, color='red', linestyle='--', label='Fim Voo', linewidth=0.8)
-            ax.set_xlabel('Tempo (s)')
-            ax.set_ylabel('Aceleração vertical (m/s²)')
-            ax.legend() 
-            st.pyplot(fig)
-    if tipo_teste == "TUG":
-        col1, col2, col3 = st.columns([0.4, 0.4, 0.4])
-        dados_acc = st.session_state["dados_acc"]
-        dados_gyro = st.session_state["dados_gyro"]
-        t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25)
-        vertical_squared = np.sqrt(v_gyro**2)
-        lat1 = idx[1][0]
-        lat2 = idx[1][1]
-        amp1 = vertical_squared[idx[0][0]]
-        amp2 = vertical_squared[idx[0][1]]
-        if lat1 > lat2:
-            G1_lat = lat2
-            G1_amp = amp2
-            G2_lat = lat1
-            G2_amp = amp1
-        else:
-            G1_lat = lat1
-            G1_amp = amp1
-            G2_lat = lat2
-            G2_amp = amp2
-            ml_squared = np.sqrt(ml_gyro**2)
-        lat1 = idx_ml[1][0]
-        lat2 = idx_ml[1][1]
-        amp1 = ml_squared[idx_ml[0][0]]
-        amp2 = ml_squared[idx_ml[0][1]]
-        if lat1 > lat2:
-            G0_lat = lat2
-            G0_amp = amp2
-            G4_lat = lat1
-            G4_amp = amp1
-        else:
-            G0_lat = lat1
-            G0_amp = amp1
-            G4_lat = lat2
-            G4_amp = amp2
-        acc_ap_squared = np.sqrt(z_acc_filtrado**2)
-        lat1 = idx_acc_ap[1][0]
-        lat2 = idx_acc_ap[1][1]
-        amp1 = acc_ap_squared[idx_acc_ap[0][0]]
-        amp2 = acc_ap_squared[idx_acc_ap[0][1]]
-        if lat1 > lat2:
-            A1_lat = lat2
-            A1_amp = amp2
-            A2_lat = lat1
-            A2_amp = amp1
-        else:
-            A1_lat = lat1
-            A1_amp = amp1
-            A2_lat = lat2
-            A2_amp = amp2
-        acc_v_squared = np.sqrt(v_acc**2)
-        lat1 = idx_acc_v[1][0]
-        lat2 = idx_acc_v[1][1]
-        amp1 = acc_v_squared[idx_acc_v[0][0]]
-        amp2 = acc_v_squared[idx_acc_v[0][1]]
-        if lat1 > lat2:
-            A1v_lat = lat2
-            A1v_amp = amp2
-            A2v_lat = lat1
-            A2v_amp = amp1
-        else:
-            A1v_lat = lat1
-            A1v_amp = amp1
-            A2v_lat = lat2
-            A2v_amp = amp2
-        with col1:
-            fig1, ax1 = plt.subplots()
-            ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
-            ax1.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-            ax1.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
-            ax1.set_xlabel('Tempo (s)')
-            ax1.set_ylabel('Aceleração norma (m/s²)')
-            ax1.legend()
-            st.pyplot(fig1)
-            fig2, ax2 = plt.subplots()
-            ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black')
-            ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-            ax2.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
-            ax2.set_xlabel('Tempo (s)')
-            ax2.set_ylabel('Aceleração ML (m/s²)')
-            ax2.legend()
-            st.pyplot(fig2)
-            fig3, ax3 = plt.subplots()
-            ax3.plot(t_novo_acc, np.sqrt(v_acc**2), linewidth=0.8, color='black')
-            ax3.plot(A1v_lat,A1v_amp,'ro')
-            ax3.plot(A2v_lat,A2v_amp,'ro')
-            ax3.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-            ax3.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
-            ax3.set_xlabel('Tempo (s)')
-            ax3.set_ylabel('Aceleração vertical (m/s²)')
-            ax3.legend()
-            st.pyplot(fig3)
-            fig4, ax4 = plt.subplots()
-            ax4.plot(t_novo_acc, np.sqrt(z_acc_filtrado**2), linewidth=0.8, color='black')
-            ax4.plot(A1_lat,A1_amp,'ro')
-            ax4.plot(A2_lat,A2_amp,'ro')
-            ax4.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-            ax4.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
-            ax4.set_xlabel('Tempo (s)')
-            ax4.set_ylabel('Aceleração AP (m/s²)')
-            ax4.legend()
-            st.pyplot(fig4)
-        with col2:
-            fig5, ax5 = plt.subplots()
-            ax5.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black')
-            ax5.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-            ax5.axvline(A1v_lat, color='blue', linestyle='--', label='A1 v', linewidth=0.8)
-            ax5.axvline(A1_lat, color='orange', linestyle='--', label='A1 AP', linewidth=0.8)
-            ax5.axvline(G1_lat, color='black', linestyle='--', label='G1', linewidth=0.8)
-            ax5.axvline(G2_lat, color='black', linestyle='--', label='G2', linewidth=0.8)
-            ax5.axvline(G4_lat, color='cyan', linestyle='--', label='G4', linewidth=0.8)
-            ax5.axvline(A2v_lat, color='yellow', linestyle='--', label='A2 v', linewidth=0.8)
-            ax5.axvline(A2_lat, color='gray', linestyle='--', label='A2 AP', linewidth=0.8)
-            ax5.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
-            ax5.set_xlabel('Tempo (s)')
-            ax5.set_ylabel('Velocidade angular norma (rad/s)')
-            ax5.legend()
-            st.pyplot(fig5)
-            fig6, ax6 = plt.subplots()
-            ax6.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
-            ax6.plot(G1_lat,G1_amp,'ro')
-            ax6.plot(G2_lat,G2_amp,'ro')
-            ax6.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-            ax6.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
-            ax6.set_xlabel('Tempo (s)')
-            ax6.set_ylabel('Velocidade angular Vertical (rad/s)')
-            ax6.legend()
-            st.pyplot(fig6)
-            fig7, ax7 = plt.subplots()
-            ax7.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
-            ax7.plot(G0_lat,G0_amp,'ro')
-            ax7.plot(G4_lat,G4_amp,'ro')
-            ax7.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-            ax7.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
-            ax7.set_xlabel('Tempo (s)')
-            ax7.set_ylabel('Velocidade angular ML (rad/s)')
-            ax7.legend()
-            st.pyplot(fig7)
-            fig8, ax8 = plt.subplots()
-            ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
-            ax8.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-            ax8.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
-            ax8.set_xlabel('Tempo (s)')
-            ax8.set_ylabel('Velocidade angular AP (rad/s)')
-            ax8.legend()
-            st.pyplot(fig8)
-    if tipo_teste == "Y test":
-        dados = st.session_state["dados_acc_coluna"]
-        dados2 = st.session_state["dados_acc_joelho"]
-        tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados,8)
-        max_val = 5000
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            startRec = st.number_input( 'Indique o início do registro', value=0, step=1, max_value=max_val)
-        with col2:
-            endRec = st.number_input( 'Indique o final do registro', value=max_val, step=1, max_value=max_val)
-        with col3:
-            filter = st.number_input( 'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
-        showRec = st.checkbox('Mostrar o dado original', value=True)
-        tempo, ml, ap, v = ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
-        tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter)
-        col1, col2 = st.columns(2)
-        tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1( dados[startRec:endRec], filter)
-        tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2( dados2[startRec:endRec], filter)
-        picoSaltoCintura = np.max(v[0:1000])
-        for index,valor in enumerate(v):
-            if valor == picoSaltoCintura:
-                onsetCintura = index 
-                tempo = tempo - tempo[onsetCintura]
-                break
-        picoSaltoJoelho = np.max(v_2[0:1000])
-        for index,valor in enumerate(v_2):
-            if valor == picoSaltoJoelho:
-                onsetJoelho = index
-                tempo_2 = tempo_2 - tempo_2[onsetJoelho]
-                break
-        picoSaltoCintura_sel = np.max(v_sel[0:1000])
-        for index,valor in enumerate(v_sel):
-            if valor == picoSaltoCintura_sel:
-                onsetCintura_sel = index
-                tempo_sel = tempo_sel - tempo_sel[onsetCintura_sel]
-                break
-        picoSaltoJoelho_sel = np.max(v_2_sel[0:1000])
-        for index,valor in enumerate(v_2_sel):
-            if valor == picoSaltoJoelho_sel:
-                onsetJoelho_sel = index
-                tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel]
-                break
-        ap_sel_media = uniform_filter1d(ap_sel, size=30)
-        ml_sel_media = uniform_filter1d(ml_sel, size=30)
-        v_sel_media = uniform_filter1d(v_sel, size=30)
-        ap_2_sel_media = uniform_filter1d(ap_2_sel, size=30)
-        ml_2_sel_media = uniform_filter1d(ml_2_sel, size=30)
-        v_2_sel_media = uniform_filter1d(v_2_sel, size=30)
-        n1 = np.max(tempo_sel)
-        n2 = np.max(tempo_sel_2)
-        if n1 > n2:
-            limite_tempo = n1
-        else:
-            limite_tempo = n2
-        min_c1 = np.min(ap_sel_media[startRec:endRec])
-        for index,valor in enumerate(ap_sel_media):
-            if valor == min_c1:
-                t_min_c1 = tempo_sel[index]
-                break
-        max_c1 = np.max(ap_sel_media[startRec:endRec])
-        for index,valor in enumerate(ap_sel_media):
-            if valor == max_c1:
-                t_max_c1 = tempo_sel[index]
-                break
-        min_c2 = np.min(ap_sel_media[index:endRec])
-        for index,valor in enumerate(ap_sel_media):
-            if valor == min_c2:
-                t_min_c2 = tempo_sel[index]
-                break
-        max_c2 = np.max(ap_sel_media[index:endRec])
-        for index,valor in enumerate(ap_sel_media):
-            if valor == max_c2:
-                t_max_c2 = tempo_sel[index]
-                break
-        with col1:
-            st.title("Coluna vertebral") # Cria figura com GridSpec personalizado # Cria uma figura com 3 subplots verticais
-            fig = plt.figure(figsize=(12, 10))
-            gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
-            limite = 5
-            ax1 = fig.add_subplot(gs[0, 0])
-            ax1.plot( tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
-            ax1.plot( tempo_sel[startRec:endRec], ap_sel_media[startRec:endRec], color='red', linewidth=0.8)
-            ax1.plot([t_min_c1,t_min_c1],[-4,4],"--r")
-            ax1.plot([t_max_c1,t_max_c1],[-4,4],"--r")
-            ax1.plot([t_min_c2,t_min_c2],[-4,4],"--r")
-            ax1.plot([t_max_c2,t_max_c2],[-4,4],"--r")
-            ax1.set_xlabel(r'Tempo (s)', fontsize=8)
-            ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-            ax1.set_xlim(-5, limite_tempo)
-            ax1.set_ylim(-limite, limite)
-            ax1.tick_params(axis='both', labelsize=8) # Gráfico 2: ocupa linha superior direita (metade superior)
-            ax2 = fig.add_subplot(gs[1, 0])
-            ax2.plot( tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
-            ax2.plot(tempo_sel[startRec:endRec], ml_sel_media[startRec:endRec], color='red', linewidth=0.8)
-            ax2.set_xlabel('Tempo (s)', fontsize=8)
-            ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-            ax2.set_xlim(-5, limite_tempo)
-            ax2.set_ylim(-limite, limite)
-            ax2.tick_params(axis='both', labelsize=8) # Gráfico 2: ocupa linha superior direita (metade superior)
-            axv = fig.add_subplot(gs[2, 0])
-            axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
-            axv.plot(tempo_sel[startRec:endRec], v_sel_media[startRec:endRec], color='red', linewidth=0.8)
-            axv.set_xlabel('Tempo (s)', fontsize=8)
-            axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-            axv.set_xlim(-5, limite_tempo)
-            axv.set_ylim(-limite, limite)
-            axv.tick_params(axis='both', labelsize=8) # Exibe no Streamlit
-            st.pyplot(fig)
-        with col2:
-            st.title("Joelho") # Cria figura com GridSpec personalizado # Cria uma figura com 3 subplots verticais
-            fig_2 = plt.figure(figsize=(12, 10))
-            gs_2 = gridspec.GridSpec(3, 2, figure=fig_2, wspace=0.3, hspace=0.6)
-            ax1_2 = fig_2.add_subplot(gs_2[0, 0])
-            ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
-            ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
-            ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
-            ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-            ax1_2.set_xlim(-5, limite_tempo)
-            ax1_2.set_ylim(-limite, limite)
-            ax1_2.tick_params(axis='both', labelsize=8) # Gráfico 2: ocupa linha superior direita (metade superior)
-            ax2_2 = fig_2.add_subplot(gs_2[1, 0])
-            ax2_2.plot( tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
-            ax2_2.plot(tempo_sel_2[startRec:endRec], ml_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
-            ax2_2.set_xlabel('Tempo (s)', fontsize=8)
-            ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-            ax2_2.set_xlim(-5, limite_tempo)
-            ax2_2.set_ylim(-limite, limite)
-            ax2_2.tick_params(axis='both', labelsize=8) # Gráfico 2: ocupa linha superior direita (metade superior)
-            axv_2 = fig_2.add_subplot(gs_2[2, 0])
-            axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
-            axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
-            axv_2.set_xlabel('Tempo (s)', fontsize=8)
-            axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-            axv_2.set_xlim(-5, limite_tempo)
-            axv_2.set_ylim(-limite, limite)
-            axv_2.tick_params(axis='both', labelsize=8) # Exibe no Streamlit
-            st.pyplot(fig_2)
-    if tipo_teste == "Propriocepção":
-        calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
-        dados = st.session_state["dados"]
-        st.session_state["calibracao"] = calibracao
-        tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
-        max_val = len(tempo) # Cálculo dos ângulos
-        accelAngleX = np.arctan(y_vf / np.sqrt(x_vf**2 + z_vf**2)) * 180 / math.pi
-        angulo = accelAngleX + 90 
-        # Calibração
-        def objetivo(x):
-            media_ajustada = np.mean(angulo[100:500] + x)
-            return abs(media_ajustada - calibracao)
-        media_baseline = np.mean(angulo[100:500])
-        if media_baseline != calibracao:
-            resultado = minimize_scalar(objetivo)
-            angulo = angulo + resultado.x
-        else:
-            resultado = type('obj', (object,), {'x': 0})()
-        for index,valor in enumerate(angulo[100:-1]):
-            if valor > 10+calibracao:
-                t1 = index+100
-                break
-        for index2,valor in enumerate(angulo[t1:-1]):
-             if valor < 10+calibracao:
-                 t2 = index2+t1
-                 break
-        for index3,valor in enumerate(angulo[t2:-1]):
-            if valor > 10+calibracao:
-                t3 = index3+t2
-                break
-        for index4,valor in enumerate(angulo[t3:-1]):
-            if valor < 10+calibracao:
-                t4 = index4+t3
-                break
-        ref_max = np.max(angulo[t1:t2])
-        for index,valor in enumerate(angulo[t1:t2]):
-            if valor == ref_max:
-                t1 = t1 + index
-                t2 = t2 - index
-                break
-        pos_max = np.max(angulo[t3:t4])
-        for index,valor in enumerate(angulo[t3:t4]):
-            if valor == pos_max:
-                t3 = t3 + index
-                t4 = t4 - index
-                break
-        col1,col2,col3 = st.columns([0.2,0.8,0.2])# Cria figura com GridSpec personalizado
-        with col2:
-            fig = plt.figure(figsize=(8, 10))
-            gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
-            ax1 = fig.add_subplot(gs[0:2, 0:2])
-            ax1.plot(tempo, angulo, color='tomato', linewidth=0.5)
-            ax1.plot([tempo[t1],tempo[t1]],[0,120],'k--')
-            ax1.plot([tempo[t2],tempo[t2]],[0,120],'k--')
-            ax1.plot([tempo[t3],tempo[t3]],[0,120],'k--')
-            ax1.plot([tempo[t4],tempo[t4]],[0,120],'k--')
-            st.pyplot(fig)
-    else: st.info("Dados ou tipo de teste não definidos. Vá até a aba 'Importar Dados'.")
+        if tipo_teste == "Salto":
+            col1, col2, col3 = st.columns([0.4, 1, 0.4])
+            dados = st.session_state["dados"]
+            tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = jumpProcessing.processar_salto( dados, 8)
+            with col2:
+                fig, ax = plt.subplots()
+                ax.plot(tempo[istart-100:iend+100], salto[istart - 100:iend+100], linewidth=0.8, color='black')
+                ax.axvline(startJump, color='green', linestyle='--', label='Início Voo', linewidth=0.8)
+                ax.axvline(endJump, color='red', linestyle='--', label='Fim Voo', linewidth=0.8)
+                ax.set_xlabel('Tempo (s)')
+                ax.set_ylabel('Aceleração vertical (m/s²)')
+                ax.legend() 
+                st.pyplot(fig)
+        if tipo_teste == "TUG":
+            col1, col2, col3 = st.columns([0.4, 0.4, 0.4])
+            dados_acc = st.session_state["dados_acc"]
+            dados_gyro = st.session_state["dados_gyro"]
+            t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25)
+            vertical_squared = np.sqrt(v_gyro**2)
+            lat1 = idx[1][0]
+            lat2 = idx[1][1]
+            amp1 = vertical_squared[idx[0][0]]
+            amp2 = vertical_squared[idx[0][1]]
+            if lat1 > lat2:
+                G1_lat = lat2
+                G1_amp = amp2
+                G2_lat = lat1
+                G2_amp = amp1
+            else:
+                G1_lat = lat1
+                G1_amp = amp1
+                G2_lat = lat2
+                G2_amp = amp2
+                ml_squared = np.sqrt(ml_gyro**2)
+            lat1 = idx_ml[1][0]
+            lat2 = idx_ml[1][1]
+            amp1 = ml_squared[idx_ml[0][0]]
+            amp2 = ml_squared[idx_ml[0][1]]
+            if lat1 > lat2:
+                G0_lat = lat2
+                G0_amp = amp2
+                G4_lat = lat1
+                G4_amp = amp1
+            else:
+                G0_lat = lat1
+                G0_amp = amp1
+                G4_lat = lat2
+                G4_amp = amp2
+            acc_ap_squared = np.sqrt(z_acc_filtrado**2)
+            lat1 = idx_acc_ap[1][0]
+            lat2 = idx_acc_ap[1][1]
+            amp1 = acc_ap_squared[idx_acc_ap[0][0]]
+            amp2 = acc_ap_squared[idx_acc_ap[0][1]]
+            if lat1 > lat2:
+                A1_lat = lat2
+                A1_amp = amp2
+                A2_lat = lat1
+                A2_amp = amp1
+            else:
+                A1_lat = lat1
+                A1_amp = amp1
+                A2_lat = lat2
+                A2_amp = amp2
+            acc_v_squared = np.sqrt(v_acc**2)
+            lat1 = idx_acc_v[1][0]
+            lat2 = idx_acc_v[1][1]
+            amp1 = acc_v_squared[idx_acc_v[0][0]]
+            amp2 = acc_v_squared[idx_acc_v[0][1]]
+            if lat1 > lat2:
+                A1v_lat = lat2
+                A1v_amp = amp2
+                A2v_lat = lat1
+                A2v_amp = amp1
+            else:
+                A1v_lat = lat1
+                A1v_amp = amp1
+                A2v_lat = lat2
+                A2v_amp = amp2
+            with col1:
+                fig1, ax1 = plt.subplots()
+                ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
+                ax1.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax1.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax1.set_xlabel('Tempo (s)')
+                ax1.set_ylabel('Aceleração norma (m/s²)')
+                ax1.legend()
+                st.pyplot(fig1)
+                fig2, ax2 = plt.subplots()
+                ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black')
+                ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax2.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax2.set_xlabel('Tempo (s)')
+                ax2.set_ylabel('Aceleração ML (m/s²)')
+                ax2.legend()
+                st.pyplot(fig2)
+                fig3, ax3 = plt.subplots()
+                ax3.plot(t_novo_acc, np.sqrt(v_acc**2), linewidth=0.8, color='black')
+                ax3.plot(A1v_lat,A1v_amp,'ro')
+                ax3.plot(A2v_lat,A2v_amp,'ro')
+                ax3.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax3.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax3.set_xlabel('Tempo (s)')
+                ax3.set_ylabel('Aceleração vertical (m/s²)')
+                ax3.legend()
+                st.pyplot(fig3)
+                fig4, ax4 = plt.subplots()
+                ax4.plot(t_novo_acc, np.sqrt(z_acc_filtrado**2), linewidth=0.8, color='black')
+                ax4.plot(A1_lat,A1_amp,'ro')
+                ax4.plot(A2_lat,A2_amp,'ro')
+                ax4.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax4.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax4.set_xlabel('Tempo (s)')
+                ax4.set_ylabel('Aceleração AP (m/s²)')
+                ax4.legend()
+                st.pyplot(fig4)
+            with col2:
+                fig5, ax5 = plt.subplots()
+                ax5.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black')
+                ax5.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax5.axvline(A1v_lat, color='blue', linestyle='--', label='A1 v', linewidth=0.8)
+                ax5.axvline(A1_lat, color='orange', linestyle='--', label='A1 AP', linewidth=0.8)
+                ax5.axvline(G1_lat, color='black', linestyle='--', label='G1', linewidth=0.8)
+                ax5.axvline(G2_lat, color='black', linestyle='--', label='G2', linewidth=0.8)
+                ax5.axvline(G4_lat, color='cyan', linestyle='--', label='G4', linewidth=0.8)
+                ax5.axvline(A2v_lat, color='yellow', linestyle='--', label='A2 v', linewidth=0.8)
+                ax5.axvline(A2_lat, color='gray', linestyle='--', label='A2 AP', linewidth=0.8)
+                ax5.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax5.set_xlabel('Tempo (s)')
+                ax5.set_ylabel('Velocidade angular norma (rad/s)')
+                ax5.legend()
+                st.pyplot(fig5)
+                fig6, ax6 = plt.subplots()
+                ax6.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
+                ax6.plot(G1_lat,G1_amp,'ro')
+                ax6.plot(G2_lat,G2_amp,'ro')
+                ax6.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax6.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax6.set_xlabel('Tempo (s)')
+                ax6.set_ylabel('Velocidade angular Vertical (rad/s)')
+                ax6.legend()
+                st.pyplot(fig6)
+                fig7, ax7 = plt.subplots()
+                ax7.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
+                ax7.plot(G0_lat,G0_amp,'ro')
+                ax7.plot(G4_lat,G4_amp,'ro')
+                ax7.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax7.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax7.set_xlabel('Tempo (s)')
+                ax7.set_ylabel('Velocidade angular ML (rad/s)')
+                ax7.legend()
+                st.pyplot(fig7)
+                fig8, ax8 = plt.subplots()
+                ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
+                ax8.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax8.set_xlabel('Tempo (s)')
+                ax8.set_ylabel('Velocidade angular AP (rad/s)')
+                ax8.legend()
+                st.pyplot(fig8)
+        if tipo_teste == "Y test":
+            dados = st.session_state["dados_acc_coluna"]
+            dados2 = st.session_state["dados_acc_joelho"]
+            tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados,8)
+            max_val = 5000
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                startRec = st.number_input( 'Indique o início do registro', value=0, step=1, max_value=max_val)
+            with col2:
+                endRec = st.number_input( 'Indique o final do registro', value=max_val, step=1, max_value=max_val)
+            with col3:
+                filter = st.number_input( 'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
+            showRec = st.checkbox('Mostrar o dado original', value=True)
+            tempo, ml, ap, v = ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
+            tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter)
+            col1, col2 = st.columns(2)
+            tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1( dados[startRec:endRec], filter)
+            tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2( dados2[startRec:endRec], filter)
+            picoSaltoCintura = np.max(v[0:1000])
+            for index,valor in enumerate(v):
+                if valor == picoSaltoCintura:
+                    onsetCintura = index 
+                    tempo = tempo - tempo[onsetCintura]
+                    break
+            picoSaltoJoelho = np.max(v_2[0:1000])
+            for index,valor in enumerate(v_2):
+                if valor == picoSaltoJoelho:
+                    onsetJoelho = index
+                    tempo_2 = tempo_2 - tempo_2[onsetJoelho]
+                    break
+            picoSaltoCintura_sel = np.max(v_sel[0:1000])
+            for index,valor in enumerate(v_sel):
+                if valor == picoSaltoCintura_sel:
+                    onsetCintura_sel = index
+                    tempo_sel = tempo_sel - tempo_sel[onsetCintura_sel]
+                    break
+            picoSaltoJoelho_sel = np.max(v_2_sel[0:1000])
+            for index,valor in enumerate(v_2_sel):
+                if valor == picoSaltoJoelho_sel:
+                    onsetJoelho_sel = index
+                    tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel]
+                    break
+            ap_sel_media = uniform_filter1d(ap_sel, size=30)
+            ml_sel_media = uniform_filter1d(ml_sel, size=30)
+            v_sel_media = uniform_filter1d(v_sel, size=30)
+            ap_2_sel_media = uniform_filter1d(ap_2_sel, size=30)
+            ml_2_sel_media = uniform_filter1d(ml_2_sel, size=30)
+            v_2_sel_media = uniform_filter1d(v_2_sel, size=30)
+            n1 = np.max(tempo_sel)
+            n2 = np.max(tempo_sel_2)
+            if n1 > n2:
+                limite_tempo = n1
+            else:
+                limite_tempo = n2
+            min_c1 = np.min(ap_sel_media[startRec:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == min_c1:
+                    t_min_c1 = tempo_sel[index]
+                    break
+            max_c1 = np.max(ap_sel_media[startRec:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == max_c1:
+                    t_max_c1 = tempo_sel[index]
+                    break
+            min_c2 = np.min(ap_sel_media[index:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == min_c2:
+                    t_min_c2 = tempo_sel[index]
+                    break
+            max_c2 = np.max(ap_sel_media[index:endRec])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == max_c2:
+                    t_max_c2 = tempo_sel[index]
+                    break
+            with col1:
+                st.title("Coluna vertebral") # Cria figura com GridSpec personalizado # Cria uma figura com 3 subplots verticais
+                fig = plt.figure(figsize=(12, 10))
+                gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6)
+                limite = 5
+                ax1 = fig.add_subplot(gs[0, 0])
+                ax1.plot( tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8)
+                ax1.plot( tempo_sel[startRec:endRec], ap_sel_media[startRec:endRec], color='red', linewidth=0.8)
+                ax1.plot([t_min_c1,t_min_c1],[-4,4],"--r")
+                ax1.plot([t_max_c1,t_max_c1],[-4,4],"--r")
+                ax1.plot([t_min_c2,t_min_c2],[-4,4],"--r")
+                ax1.plot([t_max_c2,t_max_c2],[-4,4],"--r")
+                ax1.set_xlabel(r'Tempo (s)', fontsize=8)
+                ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                ax1.set_xlim(-5, limite_tempo)
+                ax1.set_ylim(-limite, limite)
+                ax1.tick_params(axis='both', labelsize=8) # Gráfico 2: ocupa linha superior direita (metade superior)
+                ax2 = fig.add_subplot(gs[1, 0])
+                ax2.plot( tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
+                ax2.plot(tempo_sel[startRec:endRec], ml_sel_media[startRec:endRec], color='red', linewidth=0.8)
+                ax2.set_xlabel('Tempo (s)', fontsize=8)
+                ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                ax2.set_xlim(-5, limite_tempo)
+                ax2.set_ylim(-limite, limite)
+                ax2.tick_params(axis='both', labelsize=8) # Gráfico 2: ocupa linha superior direita (metade superior)
+                axv = fig.add_subplot(gs[2, 0])
+                axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
+                axv.plot(tempo_sel[startRec:endRec], v_sel_media[startRec:endRec], color='red', linewidth=0.8)
+                axv.set_xlabel('Tempo (s)', fontsize=8)
+                axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                axv.set_xlim(-5, limite_tempo)
+                axv.set_ylim(-limite, limite)
+                axv.tick_params(axis='both', labelsize=8) # Exibe no Streamlit
+                st.pyplot(fig)
+            with col2:
+                st.title("Joelho") # Cria figura com GridSpec personalizado # Cria uma figura com 3 subplots verticais
+                fig_2 = plt.figure(figsize=(12, 10))
+                gs_2 = gridspec.GridSpec(3, 2, figure=fig_2, wspace=0.3, hspace=0.6)
+                ax1_2 = fig_2.add_subplot(gs_2[0, 0])
+                ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
+                ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
+                ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                ax1_2.set_xlim(-5, limite_tempo)
+                ax1_2.set_ylim(-limite, limite)
+                ax1_2.tick_params(axis='both', labelsize=8) # Gráfico 2: ocupa linha superior direita (metade superior)
+                ax2_2 = fig_2.add_subplot(gs_2[1, 0])
+                ax2_2.plot( tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                ax2_2.plot(tempo_sel_2[startRec:endRec], ml_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
+                ax2_2.set_xlabel('Tempo (s)', fontsize=8)
+                ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                ax2_2.set_xlim(-5, limite_tempo)
+                ax2_2.set_ylim(-limite, limite)
+                ax2_2.tick_params(axis='both', labelsize=8) # Gráfico 2: ocupa linha superior direita (metade superior)
+                axv_2 = fig_2.add_subplot(gs_2[2, 0])
+                axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
+                axv_2.set_xlabel('Tempo (s)', fontsize=8)
+                axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                axv_2.set_xlim(-5, limite_tempo)
+                axv_2.set_ylim(-limite, limite)
+                axv_2.tick_params(axis='both', labelsize=8) # Exibe no Streamlit
+                st.pyplot(fig_2)
+        if tipo_teste == "Propriocepção":
+            calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
+            dados = st.session_state["dados"]
+            st.session_state["calibracao"] = calibracao
+            tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
+            max_val = len(tempo) # Cálculo dos ângulos
+            accelAngleX = np.arctan(y_vf / np.sqrt(x_vf**2 + z_vf**2)) * 180 / math.pi
+            angulo = accelAngleX + 90 
+            # Calibração
+            def objetivo(x):
+                media_ajustada = np.mean(angulo[100:500] + x)
+                return abs(media_ajustada - calibracao)
+            media_baseline = np.mean(angulo[100:500])
+            if media_baseline != calibracao:
+                resultado = minimize_scalar(objetivo)
+                angulo = angulo + resultado.x
+            else:
+                resultado = type('obj', (object,), {'x': 0})()
+            for index,valor in enumerate(angulo[100:-1]):
+                if valor > 10+calibracao:
+                    t1 = index+100
+                    break
+            for index2,valor in enumerate(angulo[t1:-1]):
+                 if valor < 10+calibracao:
+                     t2 = index2+t1
+                     break
+            for index3,valor in enumerate(angulo[t2:-1]):
+                if valor > 10+calibracao:
+                    t3 = index3+t2
+                    break
+            for index4,valor in enumerate(angulo[t3:-1]):
+                if valor < 10+calibracao:
+                    t4 = index4+t3
+                    break
+            ref_max = np.max(angulo[t1:t2])
+            for index,valor in enumerate(angulo[t1:t2]):
+                if valor == ref_max:
+                    t1 = t1 + index
+                    t2 = t2 - index
+                    break
+            pos_max = np.max(angulo[t3:t4])
+            for index,valor in enumerate(angulo[t3:t4]):
+                if valor == pos_max:
+                    t3 = t3 + index
+                    t4 = t4 - index
+                    break
+            col1,col2,col3 = st.columns([0.2,0.8,0.2])# Cria figura com GridSpec personalizado
+            with col2:
+                fig = plt.figure(figsize=(8, 10))
+                gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
+                ax1 = fig.add_subplot(gs[0:2, 0:2])
+                ax1.plot(tempo, angulo, color='tomato', linewidth=0.5)
+                ax1.plot([tempo[t1],tempo[t1]],[0,120],'k--')
+                ax1.plot([tempo[t2],tempo[t2]],[0,120],'k--')
+                ax1.plot([tempo[t3],tempo[t3]],[0,120],'k--')
+                ax1.plot([tempo[t4],tempo[t4]],[0,120],'k--')
+                st.pyplot(fig)
+    else:
+        st.info("Dados ou tipo de teste não definidos. Vá até a aba 'Importar Dados'.")
 # === Página de Exportação === 
 elif pagina == "📤 Exportar Resultados":
     if "dados" in st.session_state and "tipo_teste" in st.session_state:
@@ -955,6 +956,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
