@@ -239,7 +239,8 @@ elif pagina == "📈 Visualização Gráfica":
                     ax2 = fig.add_subplot(gs[0, 2:])
                     if showRec:
                         ax2.plot(tempo, ml, color='tomato', linewidth=0.5)
-                    ax2.plot( tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8) ax2.set_xlabel('Tempo (s)', fontsize=8)
+                    ax2.plot( tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
+                    ax2.set_xlabel('Tempo (s)', fontsize=8)
                     ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
                     ax2.set_xlim(0, max(tempo))
                     ax2.set_ylim(-limite, limite)
@@ -935,6 +936,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
