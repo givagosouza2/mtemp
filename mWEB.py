@@ -625,8 +625,6 @@ elif pagina == "📈 Visualização Gráfica":
             ax1.plot([tempo[t3],tempo[t3]],[0,120],'k--')
             ax1.plot([tempo[t4],tempo[t4]],[0,120],'k--')
             st.pyplot(fig)
-        else:
-            st.markdown("### Sinais brutos de X, Y e Z ao longo do Tempo")
     else: st.info("Dados ou tipo de teste não definidos. Vá até a aba 'Importar Dados'.")
 # === Página de Exportação === 
 elif pagina == "📤 Exportar Resultados":
@@ -942,6 +940,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
