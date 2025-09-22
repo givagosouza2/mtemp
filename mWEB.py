@@ -913,12 +913,22 @@ elif pagina == "📤 Exportar Resultados":
             Angulacao_posicionamento = np.mean(angulo[t3:t4])
             st.metric(label=r"Ângulo de referências (graus)", value=round(Angulacao_referencia, 4))
             st.metric(label=r"Ângulo de posicionamento (graus)", value=round(Angulacao_posicionamento, 4))
-            resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor)
-            variaveis = [("Angulo médio de referência (graus)", round(Angulacao_referencia, 4)),
-                         ("Angulo médio de posicionamento (graus)", round(Angulacao_posicionamento, 4)),0] # Adiciona linha por linha
+            resultado_txt = "Variável\tValor\n"  # Cabeçalho com tabulação
+
+            variaveis = [
+                ("Angulo médio de referência (graus)", round(Angulacao_referencia, 4)),
+                ("Angulo médio de posicionamento (graus)", round(Angulacao_posicionamento, 4))
+            ]
+            
             for nome, valor in variaveis:
                 resultado_txt += f"{nome}\t{valor}\n"
-            st.download_button( label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_propriocepção.txt", mime="text/plain" )
+            
+            st.download_button(
+                label="📄 Exportar resultados (.txt)",
+                data=resultado_txt,
+                file_name="resultados_propriocepcao.txt",
+                mime="text/plain"
+            )
 elif pagina == "📖 Referências bibliográficas":
     html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;"> 
     <p> Artigos que utilizaram aplicativos desenvolvidos no projeto Momentum:
@@ -940,6 +950,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
