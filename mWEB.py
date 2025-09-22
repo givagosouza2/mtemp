@@ -694,7 +694,7 @@ elif pagina == "📤 Exportar Resultados":
                          ("Energia AP 2–8 Hz", round((10**5)*energy_ap[2], 8)),] # Adiciona linha por linha 
             for nome, valor in variaveis:
                 resultado_txt += f"{nome}\t{valor}\n"
-                st.download_button( label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" )
+            st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" )
         if tipo_teste == "Salto":
             dados = st.session_state["dados"]
             tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = jumpProcessing.processar_salto( dados, 8)
@@ -961,6 +961,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
