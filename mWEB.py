@@ -870,12 +870,12 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == max_c1:
                     t_max_c1 = tempo_sel[index]
                     break
-            for index2,valor in enumerate(tempo_sel_2):
+            for index3,valor in enumerate(tempo_sel_2):
                 if valor == t_max_c1:
                     break
-            dados = ap_2_sel_media[index2-50:index2]        
+            dados = ap_2_sel_media[index3-50:index3]        
             ampC2_pre = np.sqrt(np.mean(np.square(dados)))
-            dados = ap_2_sel_media[index2:index2+50]        
+            dados = ap_2_sel_media[index3:index3+50]        
             ampC2_pos = np.sqrt(np.mean(np.square(dados)))
                        
             min_c2 = np.min(ap_sel_media[index:endRec])
@@ -883,12 +883,12 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == min_c2:
                     t_min_c2 = tempo_sel[index]
                     break
-            for index2,valor in enumerate(tempo_sel_2):
+            for index4,valor in enumerate(tempo_sel_2):
                 if valor == t_min_c2:
                     break
-            dados = ap_2_sel_media[index2-50:index2]        
+            dados = ap_2_sel_media[index4-50:index4]        
             ampC3_pre = np.sqrt(np.mean(np.square(dados)))
-            dados = ap_2_sel_media[index2:index2+50]        
+            dados = ap_2_sel_media[index4:index4+50]        
             ampC3_pos = np.sqrt(np.mean(np.square(dados)))
             
             max_c2 = np.max(ap_sel_media[index:endRec])
@@ -896,12 +896,12 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == max_c2:
                     t_max_c2 = tempo_sel[index]
                     break
-            for index2,valor in enumerate(tempo_sel_2):
+            for index5,valor in enumerate(tempo_sel_2):
                 if valor == t_max_c2:
                     break        
-            dados = ap_2_sel_media[index2-50:index2]        
+            dados = ap_2_sel_media[index5-50:index5]        
             ampC4_pre = np.sqrt(np.mean(np.square(dados)))
-            dados = ap_2_sel_media[index2:index2+50]        
+            dados = ap_2_sel_media[index5:index5+50]        
             ampC4_pos = np.sqrt(np.mean(np.square(dados)))        
                     
             col1,col2,col3,col4 = st.columns(4)
@@ -1030,6 +1030,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
