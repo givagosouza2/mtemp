@@ -933,14 +933,14 @@ elif pagina == "📤 Exportar Resultados":
                          ("Tempo de C3 (s)", round(t_min_c2, 4)),
                          ("Amplitude de C4 (m/s2)", round(max_c2, 4)),
                          ("Tempo de C4 (s)", round(t_max_c2, 4)),
-                         ("Amplitude pré-C1 (m/s2)",round(ampC1_pre, 4))),
-                         ("Amplitude pós-C1 (m/s2)",round(ampC1_pos, 4))),
-                         ("Amplitude pré-C2 (m/s2)",round(ampC2_pre, 4))),
-                         ("Amplitude pós-C2 (m/s2)",round(ampC2_pos, 4))),
-                         ("Amplitude pré-C3 (m/s2)",round(ampC3_pre, 4))),
-                         ("Amplitude pós-C3 (m/s2)",round(ampC3_pos, 4))),
-                         ("Amplitude pré-C4 (m/s2)",round(ampC4_pre, 4))),
-                         ("Amplitude pós-C4 (m/s2)",round(ampC4_pos, 4)))] # Adiciona linha por linha 
+                         ("Amplitude pré-C1 (m/s2)",round(ampC1_pre, 4)),
+                         ("Amplitude pós-C1 (m/s2)",round(ampC1_pos, 4)),
+                         ("Amplitude pré-C2 (m/s2)",round(ampC2_pre, 4)),
+                         ("Amplitude pós-C2 (m/s2)",round(ampC2_pos, 4)),
+                         ("Amplitude pré-C3 (m/s2)",round(ampC3_pre, 4)),
+                         ("Amplitude pós-C3 (m/s2)",round(ampC3_pos, 4)),
+                         ("Amplitude pré-C4 (m/s2)",round(ampC4_pre, 4)),
+                         ("Amplitude pós-C4 (m/s2)",round(ampC4_pos, 4)),] # Adiciona linha por linha 
             for nome, valor in variaveis:
                 resultado_txt += f"{nome}\t{valor}\n"
             st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" )
@@ -1029,6 +1029,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
