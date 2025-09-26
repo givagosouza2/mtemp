@@ -775,7 +775,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Tempo para levantar (s)", value=round(G0_lat-start_test, 4))
                 st.metric(label=r"Tempo para a caminhada de ida (s)", value=round(G1_lat-G0_lat, 4))
                 st.metric(label=r"Tempo para a caminhada de volta (s)", value=round(G2_lat-G1_lat, 4))
-                st.metric(label=r"Tempo para levantar (s)", value=round(stop_test-G1_lat, 4))
+                st.metric(label=r"Tempo para sentar (s)", value=round(stop_test-G2_lat, 4))
                 
         if tipo_teste == "Y test":
             dados = st.session_state["dados_acc_coluna"]
@@ -961,6 +961,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
