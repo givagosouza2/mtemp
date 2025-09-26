@@ -861,9 +861,14 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == t_min_c1:
                     break
             dados = ap_2_sel_media[index2-50:index2]        
-            ampC1_pre = np.sqrt(np.mean(np.square(dados)))
+            ampC1_ap_pre = np.sqrt(np.mean(np.square(dados)))
             dados = ap_2_sel_media[index2:index2+50]        
-            ampC1_pos = np.sqrt(np.mean(np.square(dados)))
+            ampC1_ap_pos = np.sqrt(np.mean(np.square(dados)))
+
+            dados = ml_2_sel_media[index2-50:index2]        
+            ampC1_ml_pre = np.sqrt(np.mean(np.square(dados)))
+            dados = ml_2_sel_media[index2:index2+50]        
+            ampC1_ml_pos = np.sqrt(np.mean(np.square(dados)))
             
             max_c1 = np.max(ap_sel_media[index:index+1000])
             for index,valor in enumerate(ap_sel_media):
@@ -874,9 +879,14 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == t_max_c1:
                     break
             dados = ap_2_sel_media[index3-50:index3]        
-            ampC2_pre = np.sqrt(np.mean(np.square(dados)))
+            ampC2_ap_pre = np.sqrt(np.mean(np.square(dados)))
             dados = ap_2_sel_media[index3:index3+50]        
-            ampC2_pos = np.sqrt(np.mean(np.square(dados)))
+            ampC2_ap_pos = np.sqrt(np.mean(np.square(dados)))
+
+            dados = ml_2_sel_media[index3-50:index3]        
+            ampC2_ml_pre = np.sqrt(np.mean(np.square(dados)))
+            dados = ml_2_sel_media[index3:index3+50]        
+            ampC2_ml_pos = np.sqrt(np.mean(np.square(dados)))
                        
             min_c2 = np.min(ap_sel_media[index:index+1000])
             for index,valor in enumerate(ap_sel_media):
@@ -887,9 +897,14 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == t_min_c2:
                     break
             dados = ap_2_sel_media[index4-50:index4]        
-            ampC3_pre = np.sqrt(np.mean(np.square(dados)))
+            ampC3_ap_pre = np.sqrt(np.mean(np.square(dados)))
             dados = ap_2_sel_media[index4:index4+50]        
-            ampC3_pos = np.sqrt(np.mean(np.square(dados)))
+            ampC3_ap_pos = np.sqrt(np.mean(np.square(dados)))
+
+            dados = ml_2_sel_media[index4-50:index4]        
+            ampC3_ml_pre = np.sqrt(np.mean(np.square(dados)))
+            dados = ml_2_sel_media[index4:index4+50]        
+            ampC3_ml_pos = np.sqrt(np.mean(np.square(dados)))
             
             max_c2 = np.max(ap_sel_media[index:index+1000])
             for index,valor in enumerate(ap_sel_media):
@@ -900,31 +915,44 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == t_max_c2:
                     break        
             dados = ap_2_sel_media[index5-50:index5]        
-            ampC4_pre = np.sqrt(np.mean(np.square(dados)))
+            ampC4_ap_pre = np.sqrt(np.mean(np.square(dados)))
             dados = ap_2_sel_media[index5:index5+50]        
-            ampC4_pos = np.sqrt(np.mean(np.square(dados)))        
+            ampC4_ap_pos = np.sqrt(np.mean(np.square(dados)))   
+
+            dados = ml_2_sel_media[index5-50:index5]        
+            ampC4_ml_pre = np.sqrt(np.mean(np.square(dados)))
+            dados = ml_2_sel_media[index5:index5+50]        
+            ampC4_ml_pos = np.sqrt(np.mean(np.square(dados)))
                     
             col1,col2,col3,col4 = st.columns(4)
             with col1:
                 st.metric(label=r"Amplitude de C1 (m/s2)", value=round(min_c1, 4))
                 st.metric(label=r"Tempo de C1 (s)", value=round(t_min_c1, 4))
-                st.metric(label=r"Amplitude pré-C1 (m/s2)", value=round(ampC1_pre, 4))
-                st.metric(label=r"Amplitude pós-C1 (m/s2)", value=round(ampC1_pos, 4))
+                st.metric(label=r"Amplitude pré-C1 AP (m/s2)", value=round(ampC1_ap_pre, 4))
+                st.metric(label=r"Amplitude pós-C1 AP (m/s2)", value=round(ampC1_ap_pos, 4))
+                st.metric(label=r"Amplitude pré-C1 ML (m/s2)", value=round(ampC1_ml_pre, 4))
+                st.metric(label=r"Amplitude pós-C1 ML (m/s2)", value=round(ampC1_ml_pos, 4))
             with col2:
                 st.metric(label=r"Amplitude de C2 (m/s2)", value=round(max_c1, 4))
                 st.metric(label=r"Tempo de C2 (s)", value=round(t_max_c1, 4))
-                st.metric(label=r"Amplitude pré-C2 (m/s2)", value=round(ampC2_pre, 4))
-                st.metric(label=r"Amplitude pós-C2 (m/s2)", value=round(ampC2_pos, 4))
+                st.metric(label=r"Amplitude pré-C2 AP (m/s2)", value=round(ampC2_ap_pre, 4))
+                st.metric(label=r"Amplitude pós-C2 AP (m/s2)", value=round(ampC2_ap_pos, 4))
+                st.metric(label=r"Amplitude pré-C2 ML (m/s2)", value=round(ampC2_ml_pre, 4))
+                st.metric(label=r"Amplitude pós-C2 ML (m/s2)", value=round(ampC2_ml_pos, 4))
             with col3:
                 st.metric(label=r"Amplitude de C3 (m/s2)", value=round(min_c2, 4))
                 st.metric(label=r"Tempo de C3 (s)", value=round(t_min_c2, 4))
-                st.metric(label=r"Amplitude pré-C3 (m/s2)", value=round(ampC3_pre, 4))
-                st.metric(label=r"Amplitude pós-C3 (m/s2)", value=round(ampC3_pos, 4))
+                st.metric(label=r"Amplitude pré-C3 AP (m/s2)", value=round(ampC3_ap_pre, 4))
+                st.metric(label=r"Amplitude pós-C3 AP (m/s2)", value=round(ampC3_ap_pos, 4))
+                st.metric(label=r"Amplitude pré-C3 ML (m/s2)", value=round(ampC3_ml_pre, 4))
+                st.metric(label=r"Amplitude pós-C3 ML (m/s2)", value=round(ampC3_ml_pos, 4))
             with col4:
                 st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4))
                 st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4))
-                st.metric(label=r"Amplitude pré-C4 (m/s2)", value=round(ampC4_pre, 4))
-                st.metric(label=r"Amplitude pós-C4 (m/s2)", value=round(ampC4_pos, 4))
+                st.metric(label=r"Amplitude pré-C4 AP (m/s2)", value=round(ampC4_ap_pre, 4))
+                st.metric(label=r"Amplitude pós-C4 AP (m/s2)", value=round(ampC4_ap_pos, 4))
+                st.metric(label=r"Amplitude pré-C4 ML (m/s2)", value=round(ampC4_ml_pre, 4))
+                st.metric(label=r"Amplitude pós-C4 ML (m/s2)", value=round(ampC4_ml_pos, 4))
             resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor)
             variaveis = [("Amplitude de C1 (m/s2)", round(min_c1, 4)),
                          ("Tempo de C1 (s)", round(t_min_c1, 4)),
@@ -1030,6 +1058,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
