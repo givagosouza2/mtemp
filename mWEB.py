@@ -501,17 +501,17 @@ elif pagina == "📈 Visualização Gráfica":
                 if valor == min_c1:
                     t_min_c1 = tempo_sel[index]
                     break
-            max_c1 = np.max(ap_sel_media[index:index+500])
+            max_c1 = np.max(ap_sel_media[index:index+700])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c1:
                     t_max_c1 = tempo_sel[index]
                     break
-            min_c2 = np.min(ap_sel_media[index:index+500])
+            min_c2 = np.min(ap_sel_media[index:index+700])
             for index,valor in enumerate(ap_sel_media):
                 if valor == min_c2:
                     t_min_c2 = tempo_sel[index]
                     break
-            max_c2 = np.max(ap_sel_media[index:index+500])
+            max_c2 = np.max(ap_sel_media[index:index+700])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c2:
                     t_max_c2 = tempo_sel[index]
@@ -1030,6 +1030,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
