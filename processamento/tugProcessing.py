@@ -51,9 +51,9 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
         smartphone = 1
 
     # Remover tendência
-    x_acc_detrended = detrend(x_acc)
-    y_acc_detrended = detrend(y_acc)
-    z_acc_detrended = detrend(z_acc)
+    x_acc_detrended = detrend(x_acc_interp)
+    y_acc_detrended = detrend(y_acc_interp)
+    z_acc_detrended = detrend(z_acc_interp)
 
     # Filtragem passa-baixa
     nyquist = fs_novo / 2
@@ -85,9 +85,9 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2):
     z_gyro_interp = interp_z_gyro(t_novo_gyro)
 
     # Remover tendência
-    x_gyro_detrended = detrend(x_gyro)
-    y_gyro_detrended = detrend(y_gyro)
-    z_gyro_detrended = detrend(z_gyro)
+    x_gyro_detrended = detrend(x_gyro_interp)
+    y_gyro_detrended = detrend(y_gyro_interp)
+    z_gyro_detrended = detrend(z_gyro_interp)
 
     # Filtragem passa-baixa
     nyquist = fs_novo / 2
