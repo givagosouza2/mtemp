@@ -929,31 +929,31 @@ elif pagina == "📤 Exportar Resultados":
             with col1:
                 st.metric(label=r"Amplitude de C1 (m/s2)", value=round(min_c1, 4))
                 st.metric(label=r"Tempo de C1 (s)", value=round(t_min_c1, 4))
-                st.metric(label=r"Amplitude pré-C1 AP (m/s2)", value=round(ampC1_ap_pre, 4))
-                st.metric(label=r"Amplitude pós-C1 AP (m/s2)", value=round(ampC1_ap_pos, 4))
-                st.metric(label=r"Amplitude pré-C1 ML (m/s2)", value=round(ampC1_ml_pre, 4))
-                st.metric(label=r"Amplitude pós-C1 ML (m/s2)", value=round(ampC1_ml_pos, 4))
+                st.metric(label=r"Amplitude pré-C1 Joelho AP (m/s2)", value=round(ampC1_ap_pre, 4))
+                st.metric(label=r"Amplitude pós-C1 Joelho AP (m/s2)", value=round(ampC1_ap_pos, 4))
+                st.metric(label=r"Amplitude pré-C1 Joelho ML (m/s2)", value=round(ampC1_ml_pre, 4))
+                st.metric(label=r"Amplitude pós-C1 Joelho ML (m/s2)", value=round(ampC1_ml_pos, 4))
             with col2:
                 st.metric(label=r"Amplitude de C2 (m/s2)", value=round(max_c1, 4))
                 st.metric(label=r"Tempo de C2 (s)", value=round(t_max_c1, 4))
-                st.metric(label=r"Amplitude pré-C2 AP (m/s2)", value=round(ampC2_ap_pre, 4))
-                st.metric(label=r"Amplitude pós-C2 AP (m/s2)", value=round(ampC2_ap_pos, 4))
-                st.metric(label=r"Amplitude pré-C2 ML (m/s2)", value=round(ampC2_ml_pre, 4))
-                st.metric(label=r"Amplitude pós-C2 ML (m/s2)", value=round(ampC2_ml_pos, 4))
+                st.metric(label=r"Amplitude pré-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pre, 4))
+                st.metric(label=r"Amplitude pós-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pos, 4))
+                st.metric(label=r"Amplitude pré-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pre, 4))
+                st.metric(label=r"Amplitude pós-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pos, 4))
             with col3:
                 st.metric(label=r"Amplitude de C3 (m/s2)", value=round(min_c2, 4))
                 st.metric(label=r"Tempo de C3 (s)", value=round(t_min_c2, 4))
-                st.metric(label=r"Amplitude pré-C3 AP (m/s2)", value=round(ampC3_ap_pre, 4))
-                st.metric(label=r"Amplitude pós-C3 AP (m/s2)", value=round(ampC3_ap_pos, 4))
-                st.metric(label=r"Amplitude pré-C3 ML (m/s2)", value=round(ampC3_ml_pre, 4))
-                st.metric(label=r"Amplitude pós-C3 ML (m/s2)", value=round(ampC3_ml_pos, 4))
+                st.metric(label=r"Amplitude pré-C3 Joelho AP (m/s2)", value=round(ampC3_ap_pre, 4))
+                st.metric(label=r"Amplitude pós-C3 Joelho AP (m/s2)", value=round(ampC3_ap_pos, 4))
+                st.metric(label=r"Amplitude pré-C3 Joelho ML (m/s2)", value=round(ampC3_ml_pre, 4))
+                st.metric(label=r"Amplitude pós-C3 Joelho ML (m/s2)", value=round(ampC3_ml_pos, 4))
             with col4:
                 st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4))
                 st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4))
-                st.metric(label=r"Amplitude pré-C4 AP (m/s2)", value=round(ampC4_ap_pre, 4))
-                st.metric(label=r"Amplitude pós-C4 AP (m/s2)", value=round(ampC4_ap_pos, 4))
-                st.metric(label=r"Amplitude pré-C4 ML (m/s2)", value=round(ampC4_ml_pre, 4))
-                st.metric(label=r"Amplitude pós-C4 ML (m/s2)", value=round(ampC4_ml_pos, 4))
+                st.metric(label=r"Amplitude pré-C4 Joelho AP (m/s2)", value=round(ampC4_ap_pre, 4))
+                st.metric(label=r"Amplitude pós-C4 Joelho AP (m/s2)", value=round(ampC4_ap_pos, 4))
+                st.metric(label=r"Amplitude pré-C4 Joelho ML (m/s2)", value=round(ampC4_ml_pre, 4))
+                st.metric(label=r"Amplitude pós-C4 Joelho ML (m/s2)", value=round(ampC4_ml_pos, 4))
             resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor)
             variaveis = [("Amplitude de C1 (m/s2)", round(min_c1, 4)),
                          ("Tempo de C1 (s)", round(t_min_c1, 4)),
@@ -963,22 +963,22 @@ elif pagina == "📤 Exportar Resultados":
                          ("Tempo de C3 (s)", round(t_min_c2, 4)),
                          ("Amplitude de C4 (m/s2)", round(max_c2, 4)),
                          ("Tempo de C4 (s)", round(t_max_c2, 4)),
-                         ("Amplitude pré-C1 AP (m/s2)",round(ampC1_ap_pre, 4)),
-                         ("Amplitude pós-C1 AP (m/s2)",round(ampC1_ap_pos, 4)),
-                         ("Amplitude pré-C2 AP (m/s2)",round(ampC2_ap_pre, 4)),
-                         ("Amplitude pós-C2 AP (m/s2)",round(ampC2_ap_pos, 4)),
-                         ("Amplitude pré-C3 AP (m/s2)",round(ampC3_ap_pre, 4)),
-                         ("Amplitude pós-C3 AP (m/s2)",round(ampC3_ap_pos, 4)),
-                         ("Amplitude pré-C4 AP (m/s2)",round(ampC4_ap_pre, 4)),
-                         ("Amplitude pós-C4 AP (m/s2)",round(ampC4_ap_pos, 4)),
-                         ("Amplitude pré-C1 ML (m/s2)",round(ampC1_ml_pre, 4)),
-                         ("Amplitude pós-C1 ML (m/s2)",round(ampC1_ml_pos, 4)),
-                         ("Amplitude pré-C2 ML (m/s2)",round(ampC2_ml_pre, 4)),
-                         ("Amplitude pós-C2 ML (m/s2)",round(ampC2_ml_pos, 4)),
-                         ("Amplitude pré-C3 ML (m/s2)",round(ampC3_ml_pre, 4)),
-                         ("Amplitude pós-C3 ML (m/s2)",round(ampC3_ml_pos, 4)),
-                         ("Amplitude pré-C4 ML (m/s2)",round(ampC4_ml_pre, 4)),
-                         ("Amplitude pós-C4 ML (m/s2)",round(ampC4_ml_pos, 4)),] # Adiciona linha por linha 
+                         ("Amplitude pré-C1 Joelho AP (m/s2)",round(ampC1_ap_pre, 4)),
+                         ("Amplitude pós-C1 Joelho AP (m/s2)",round(ampC1_ap_pos, 4)),
+                         ("Amplitude pré-C2 Joelho AP (m/s2)",round(ampC2_ap_pre, 4)),
+                         ("Amplitude pós-C2 Joelho AP (m/s2)",round(ampC2_ap_pos, 4)),
+                         ("Amplitude pré-C3 Joelho AP (m/s2)",round(ampC3_ap_pre, 4)),
+                         ("Amplitude pós-C3 Joelho AP (m/s2)",round(ampC3_ap_pos, 4)),
+                         ("Amplitude pré-C4 Joelho AP (m/s2)",round(ampC4_ap_pre, 4)),
+                         ("Amplitude pós-C4 Joelho AP (m/s2)",round(ampC4_ap_pos, 4)),
+                         ("Amplitude pré-C1 Joelho ML (m/s2)",round(ampC1_ml_pre, 4)),
+                         ("Amplitude pós-C1 Joelho ML (m/s2)",round(ampC1_ml_pos, 4)),
+                         ("Amplitude pré-C2 Joelho ML (m/s2)",round(ampC2_ml_pre, 4)),
+                         ("Amplitude pós-C2 Joelho ML (m/s2)",round(ampC2_ml_pos, 4)),
+                         ("Amplitude pré-C3 Joelho ML (m/s2)",round(ampC3_ml_pre, 4)),
+                         ("Amplitude pós-C3 Joelho ML (m/s2)",round(ampC3_ml_pos, 4)),
+                         ("Amplitude pré-C4 Joelho ML (m/s2)",round(ampC4_ml_pre, 4)),
+                         ("Amplitude pós-C4 Joelho ML (m/s2)",round(ampC4_ml_pos, 4)),] # Adiciona linha por linha 
             for nome, valor in variaveis:
                 resultado_txt += f"{nome}\t{valor}\n"
             st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" )
@@ -1067,6 +1067,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
