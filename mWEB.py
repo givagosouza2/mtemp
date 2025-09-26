@@ -813,8 +813,8 @@ elif pagina == "📤 Exportar Resultados":
             tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
             tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter)
             col1, col2 = st.columns(2)
-            tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1( dados[startRec:endRec], filter)
-            tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2( dados2[startRec:endRec], filter)
+            tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1(dados[startRec:endRec], filter)
+            tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2(dados2[startRec:endRec], filter)
             picoSaltoCintura = np.max(v[0:1000])
             for index,valor in enumerate(v):
                 if valor == picoSaltoCintura:
@@ -856,34 +856,74 @@ elif pagina == "📤 Exportar Resultados":
                 if valor == min_c1:
                     t_min_c1 = tempo_sel[index]
                     break
+            for index,valor in enumerate(tempo_sel_2)
+                if valor == t_min_c1:
+                    break
+            dados = ap_2_sel_media[index-50:index]        
+            ampC1_pre = np.sqrt(np.mean(np.square(dados)))
+            dados = ap_2_sel_media[index:index+50]        
+            ampC1_pos = np.sqrt(np.mean(np.square(dados)))
+            
             max_c1 = np.max(ap_sel_media[startRec:endRec])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c1:
                     t_max_c1 = tempo_sel[index]
                     break
+            for index,valor in enumerate(tempo_sel_2)
+                if valor == t_max_c1:
+                    break
+            dados = ap_2_sel_media[index-50:index]        
+            ampC2_pre = np.sqrt(np.mean(np.square(dados)))
+            dados = ap_2_sel_media[index:index+50]        
+            ampC2_pos = np.sqrt(np.mean(np.square(dados)))
+                       
             min_c2 = np.min(ap_sel_media[index:endRec])
             for index,valor in enumerate(ap_sel_media):
                 if valor == min_c2:
                     t_min_c2 = tempo_sel[index]
                     break
+            for index,valor in enumerate(tempo_sel_2)
+                if valor == t_min_c2:
+                    break
+            dados = ap_2_sel_media[index-50:index]        
+            ampC3_pre = np.sqrt(np.mean(np.square(dados)))
+            dados = ap_2_sel_media[index:index+50]        
+            ampC3_pos = np.sqrt(np.mean(np.square(dados)))
+            
             max_c2 = np.max(ap_sel_media[index:endRec])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c2:
                     t_max_c2 = tempo_sel[index]
                     break
+            for index,valor in enumerate(tempo_sel_2)
+                if valor == t_max_c2:
+                    break        
+            dados = ap_2_sel_media[index-50:index]        
+            ampC4_pre = np.sqrt(np.mean(np.square(dados)))
+            dados = ap_2_sel_media[index:index+50]        
+            ampC4_pos = np.sqrt(np.mean(np.square(dados)))        
+                    
             col1,col2,col3,col4 = st.columns(4)
             with col1:
                 st.metric(label=r"Amplitude de C1 (m/s2)", value=round(min_c1, 4))
                 st.metric(label=r"Tempo de C1 (s)", value=round(t_min_c1, 4))
+                st.metric(label=r"Amplitude pré-C1 (m/s2)", value=round(ampC1_pre, 4))
+                st.metric(label=r"Amplitude pós-C1 (m/s2)", value=round(ampC1_pos, 4))
             with col2:
                 st.metric(label=r"Amplitude de C2 (m/s2)", value=round(max_c1, 4))
                 st.metric(label=r"Tempo de C2 (s)", value=round(t_max_c1, 4))
+                st.metric(label=r"Amplitude pré-C2 (m/s2)", value=round(ampC2_pre, 4))
+                st.metric(label=r"Amplitude pós-C2 (m/s2)", value=round(ampC2_pos, 4))
             with col3:
                 st.metric(label=r"Amplitude de C3 (m/s2)", value=round(min_c2, 4))
                 st.metric(label=r"Tempo de C3 (s)", value=round(t_min_c2, 4))
+                st.metric(label=r"Amplitude pré-C3 (m/s2)", value=round(ampC3_pre, 4))
+                st.metric(label=r"Amplitude pós-C3 (m/s2)", value=round(ampC3_pos, 4))
             with col4:
                 st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4))
                 st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4))
+                st.metric(label=r"Amplitude pré-C4 (m/s2)", value=round(ampC4_pre, 4))
+                st.metric(label=r"Amplitude pós-C4 (m/s2)", value=round(ampC4_pos, 4))
             resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor)
             variaveis = [("Amplitude de C1 (m/s2)", round(min_c1, 4)),
                          ("Tempo de C1 (s)", round(t_min_c1, 4)),
@@ -892,7 +932,15 @@ elif pagina == "📤 Exportar Resultados":
                          ("Amplitude de C3 (m/s2)", round(min_c2, 4)),
                          ("Tempo de C3 (s)", round(t_min_c2, 4)),
                          ("Amplitude de C4 (m/s2)", round(max_c2, 4)),
-                         ("Tempo de C4 (s)", round(t_max_c2, 4)),] # Adiciona linha por linha 
+                         ("Tempo de C4 (s)", round(t_max_c2, 4)),
+                         ("Amplitude pré-C1 (m/s2)",round(ampC1_pre, 4))),
+                         ("Amplitude pós-C1 (m/s2)",round(ampC1_pos, 4))),
+                         ("Amplitude pré-C2 (m/s2)",round(ampC2_pre, 4))),
+                         ("Amplitude pós-C2 (m/s2)",round(ampC2_pos, 4))),
+                         ("Amplitude pré-C3 (m/s2)",round(ampC3_pre, 4))),
+                         ("Amplitude pós-C3 (m/s2)",round(ampC3_pos, 4))),
+                         ("Amplitude pré-C4 (m/s2)",round(ampC4_pre, 4))),
+                         ("Amplitude pós-C4 (m/s2)",round(ampC4_pos, 4)))] # Adiciona linha por linha 
             for nome, valor in variaveis:
                 resultado_txt += f"{nome}\t{valor}\n"
             st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" )
@@ -981,6 +1029,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
