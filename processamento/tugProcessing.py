@@ -24,7 +24,7 @@ def top2_peaks(y, x=None, distance=None, prominence=None, abs_peaks=False):
         return idx_top, t_top
     return idx_top
 
-def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset):
+def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset,baseline_offset):
     
     df_acc = df1.copy()
     time_vec_acc = df_acc["Tempo"]
@@ -110,9 +110,15 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset):
         v_gyro = y_gyro_filtrado
         v_acc = y_acc_filtrado
         ml_acc = x_acc_filtrado
+    
     for index, valor in enumerate(t_novo_gyro):
         if valor > baseline_onset:
             baseline_onset_index = index
+            break
+
+    for index, valor in enumerate(t_novo_gyro):
+        if valor > baseline_offset:
+            baseline_offset_index = index
             break
 
     for index, valor in enumerate(np.sqrt(ml_gyro[baseline_onset_index:-1])):
@@ -120,7 +126,7 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset):
             start_test = t_novo_gyro[index+baseline_onset_index]
             break
             
-    for index in range(len(ml_gyro) - 1, -1, -1):
+    for index in range(len(ml_gyro[0:baseline_offset_index]) - 1, -1, -1):
         valor = np.sqrt(ml_gyro[index]**2)
         if valor > 0.25:
             stop_test = t_novo_gyro[index]
