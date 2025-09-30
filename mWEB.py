@@ -808,10 +808,10 @@ elif pagina == "📤 Exportar Resultados":
                 A2v_amp = amp2
             with col1:
                 st.metric(label=r"Duração do teste (s)", value=round(stop_test-start_test, 4))
-                st.metric(label=r"Tempo para levantar (s)", value=round(G0_lat-start_test, 4))
-                st.metric(label=r"Tempo para a caminhada de ida (s)", value=round(G1_lat-G0_lat, 4))
-                st.metric(label=r"Tempo para a caminhada de volta (s)", value=round(G2_lat-G1_lat, 4))
-                st.metric(label=r"Tempo para sentar (s)", value=round(stop_test-G2_lat, 4))
+                st.metric(label=r"Duração para levantar (s)", value=round(G0_lat-start_test, 4))
+                st.metric(label=r"Duração da caminhada de ida (s)", value=round(G1_lat-G0_lat, 4))
+                st.metric(label=r"Duração da caminhada de volta (s)", value=round(G2_lat-G1_lat, 4))
+                st.metric(label=r"Duração para sentar (s)", value=round(stop_test-G2_lat, 4))
             with col2:
                 st.metric(label=r"Tempo para o pico de velocidade angular na transição de sentado para de pé (s)", value=round(G0_lat-start_test, 4))
                 st.metric(label=r"Tempo para o pico de aceleração AP na transição de sentado para de pé (s)", value=round(A1_lat-start_test, 4))
@@ -822,14 +822,37 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Tempo para o pico de aceleração AP na transição de pé para sentado (s)", value=round(A2_lat-start_test, 4))
                 st.metric(label=r"Tempo para o pico de aceleração V na transição de pé para sentado (s)", value=round(A2v_lat-start_test, 4))
             with col3:
-                st.metric(label=r"Velocidade angular mpaxima na transição de sentado para de pé (rad/s)", value=round(G0_amp, 4))
+                st.metric(label=r"Velocidade angular máxima na transição de sentado para de pé (rad/s)", value=round(G0_amp, 4))
                 st.metric(label=r"Aceleração máxima AP na transição de sentado para de pé (m/s2)", value=round(A1_amp, 4))
                 st.metric(label=r"Aceleração máxima V na transição de sentado para de pé (m/s2)", value=round(A1v_amp, 4))
                 st.metric(label=r"Velocidade angular máxima no giro em 3 m (s)", value=round(G1_amp, 4))
                 st.metric(label=r"Velocidade angular máxima no giro em 6 m (s)", value=round(G2_amp, 4))
                 st.metric(label=r"Aceleração máxima AP na transição de sentado para pé (s)", value=round(A2_amp, 4))
                 st.metric(label=r"Aceleração máxima V na transição de sentado para pé (s)", value=round(A2v_amp, 4))
-                
+            resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor)
+            variaveis = [("Duração do teste (s)", round(stop_test-start_test, 4)),
+                         ("Duração para levantar (s)", round(G0_lat-start_test, 4)),
+                         ("Duração da caminhada de ida (s)",round(G1_lat-G0_lat, 4)),
+                         ("Duração da caminhada de volta (s)",round(G2_lat-G1_lat, 4)),
+                         ("Duração para sentar (s)",round(stop_test-G2_lat, 4)),
+                         ("Tempo para o pico de velocidade angular na transição de sentado para de pé (s)",round(G0_lat-start_test, 4)),
+                         ("Tempo para o pico de aceleração AP na transição de sentado para de pé (s)",round(A1_lat-start_test, 4)),
+                         ("Tempo para o pico de aceleração V na transição de sentado para de pé (s)",round(A1v_lat-start_test, 4)),
+                         ("Tempo para o pico de velocidade angular no giro em 3 m (s)",round(G1_lat-start_test, 4)),
+                         ("Tempo para o pico de velocidade angular no giro em 6 m (s)",round(G2_lat-start_test, 4)),
+                         ("Tempo para o pico de velocidade angular na transição de pé para sentado (s)",round(A2_lat-start_test, 4)),
+                         ("Tempo para o pico de aceleração AP na transição de pé para sentado (s)",round(A2_lat-start_test, 4)),
+                         ("Tempo para o pico de aceleração V na transição de pé para sentado (s)",round(A2v_lat-start_test, 4)),
+                         ("Velocidade angular máxima na transição de sentado para de pé (rad/s)",round(G0_amp, 4)),
+                         ("Aceleração máxima AP na transição de sentado para de pé (m/s2)",round(A1_amp, 4)),
+                         ("Aceleração máxima V na transição de sentado para de pé (m/s2)",round(A1v_amp, 4)),
+                         ("Velocidade angular máxima no giro em 3 m (s)",round(G1_amp, 4)),
+                         ("Velocidade angular máxima no giro em 6 m (s)",round(G2_amp, 4)),
+                         ("Aceleração máxima AP na transição de sentado para pé (s)",round(A2_amp, 4)),
+                         ("Aceleração máxima V na transição de sentado para pé (s)",round(A2v_amp, 4))] # Adiciona linha por linha 
+            for nome, valor in variaveis:
+                resultado_txt += f"{nome}\t{valor}\n"
+            st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" )    
                 
         if tipo_teste == "Y test":
             dados = st.session_state["dados_acc_coluna"]
@@ -1100,6 +1123,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
