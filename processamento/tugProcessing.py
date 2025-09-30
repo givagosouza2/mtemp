@@ -112,7 +112,7 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset):
         ml_acc = x_acc_filtrado
     for index, valor in enumerate(t_novo_gyro):
         if valor > baseline_onset:
-            baseline_onset_index == index
+            baseline_onset_index = index
             break
 
     for index, valor in enumerate(np.sqrt(ml_gyro[baseline_onset_index:-1])):
