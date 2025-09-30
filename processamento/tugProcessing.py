@@ -134,7 +134,7 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset,baseline_
     idx_top = top2_peaks(np.sqrt(v_gyro**2), x=t_novo_gyro, distance=None, prominence=None, abs_peaks=False)
     idx_top_ml = top2_peaks(np.sqrt(ml_gyro**2), x=t_novo_gyro, distance=None, prominence=None, abs_peaks=False)
     idx_top_acc_ap = top2_peaks(np.sqrt(z_acc_filtrado**2), x=t_novo_acc, distance=None, prominence=None, abs_peaks=False)
-    idx_top_acc_v = top2_peaks(np.sqrt(y_acc_filtrado**2), x=t_novo_acc, distance=400, prominence=None, abs_peaks=False)
+    idx_top_acc_v = top2_peaks(np.sqrt(y_acc_filtrado**2), x=t_novo_acc, distance=3, prominence=None, abs_peaks=False)
         
     duration = stop_test - start_test
     
