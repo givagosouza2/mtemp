@@ -25,12 +25,13 @@ def top2_peaks(y, x=None, distance=None, prominence=None, abs_peaks=False):
     return idx_top
 
 def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset):
-    baseline_onset_index = baseline_onset * 100
+    
     df_acc = df1.copy()
     time_vec_acc = df_acc["Tempo"]
     x_acc = df_acc["X"]
     y_acc = df_acc["Y"]
     z_acc = df_acc["Z"]
+    
 
     # Reamostragem para 100 Hz
     t_original = time_vec_acc / 1000  # Converter para segundos
@@ -109,6 +110,10 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset):
         v_gyro = y_gyro_filtrado
         v_acc = y_acc_filtrado
         ml_acc = x_acc_filtrado
+    for index, valor in enumerate(t_novo_gyro):
+        if valor > baseline_onset:
+            baseline_onset_index == index
+            break
 
     for index, valor in enumerate(np.sqrt(ml_gyro[baseline_onset_index:-1])):
         if valor**2 > 0.25:
