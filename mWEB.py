@@ -742,7 +742,7 @@ elif pagina == "📤 Exportar Resultados":
         if tipo_teste == "TUG":
             baseline_onset = st.session_state["baseline_onset"]
             baseline_offset = st.session_state["baseline_offset"]
-            col1, col2, col3 = st.columns(3)
+            col1, col2, col3 = st.columns([0.4,0.7,0.7])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
             t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25,baseline_onset,baseline_offset)
@@ -1123,6 +1123,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
