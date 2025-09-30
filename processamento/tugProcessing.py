@@ -116,7 +116,7 @@ def processar_tug(df1,df2,filter_cutoff1,filter_cutoff2,baseline_onset):
             break
 
     for index, valor in enumerate(np.sqrt(ml_gyro[baseline_onset_index:-1])):
-        if valor**2 > 0.25:
+        if np.sqrt(valor**2) > 0.25:
             start_test = t_novo_gyro[index+baseline_onset_index]
             break
             
