@@ -298,7 +298,7 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig)
         if tipo_teste == "TUG":
             baseline_onset = st.number_input('Indique o momento inicial da baseline do início do teste (s)', value=0.0)
-            baseline_offset = st.number_input('Indique o momento inicial da baseline do final do teste (s)', value=0.0)
+            baseline_offset = st.number_input('Indique o momento inicial da baseline do final do teste (s)', value=50)
             st.session_state["baseline"] = baseline_onset
             col1, col2, col3 = st.columns([0.4, 0.4, 0.4])
             dados_acc = st.session_state["dados_acc"]
@@ -369,6 +369,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
                 #ax1.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 #ax1.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax1.set_xlim(start_test-5,stop_test+5)
                 ax1.set_xlabel('Tempo (s)')
                 ax1.set_ylabel('Aceleração norma (m/s²)')
                 ax1.legend()
@@ -377,6 +378,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black')
                 ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 ax2.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax2.set_xlim(start_test-5,stop_test+5)
                 ax2.set_xlabel('Tempo (s)')
                 ax2.set_ylabel('Aceleração ML (m/s²)')
                 ax2.legend()
@@ -387,6 +389,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax3.plot(A2v_lat,A2v_amp,'ro')
                 ax3.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 ax3.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax3.set_xlim(start_test-5,stop_test+5)
                 ax3.set_xlabel('Tempo (s)')
                 ax3.set_ylabel('Aceleração vertical (m/s²)')
                 ax3.legend()
@@ -397,6 +400,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax4.plot(A2_lat,A2_amp,'ro')
                 ax4.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 ax4.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax4.set_xlim(start_test-5,stop_test+5)
                 ax4.set_xlabel('Tempo (s)')
                 ax4.set_ylabel('Aceleração AP (m/s²)')
                 ax4.legend()
@@ -413,6 +417,7 @@ elif pagina == "📈 Visualização Gráfica":
                 #ax5.axvline(A2v_lat, color='yellow', linestyle='--', label='A2 v', linewidth=0.8)
                 #ax5.axvline(A2_lat, color='gray', linestyle='--', label='A2 AP', linewidth=0.8)
                 ax5.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax5.set_xlim(start_test-5,stop_test+5)
                 ax5.set_xlabel('Tempo (s)')
                 ax5.set_ylabel('Velocidade angular norma (rad/s)')
                 ax5.legend()
@@ -423,6 +428,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax6.plot(G2_lat,G2_amp,'ro')
                 ax6.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 ax6.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax6.set_xlim(start_test-5,stop_test+5)
                 ax6.set_xlabel('Tempo (s)')
                 ax6.set_ylabel('Velocidade angular Vertical (rad/s)')
                 ax6.legend()
@@ -433,6 +439,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax7.plot(G4_lat,G4_amp,'ro')
                 ax7.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 ax7.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax7.set_xlim(start_test-5,stop_test+5)
                 ax7.set_xlabel('Tempo (s)')
                 ax7.set_ylabel('Velocidade angular ML (rad/s)')
                 ax7.legend()
@@ -441,6 +448,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
                 ax8.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 ax8.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax8.set_xlim(start_test-5,stop_test+5)
                 ax8.set_xlabel('Tempo (s)')
                 ax8.set_ylabel('Velocidade angular AP (rad/s)')
                 ax8.legend()
@@ -1070,6 +1078,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
