@@ -411,7 +411,7 @@ elif pagina == "📈 Visualização Gráfica":
             with col2:
                 fig5, ax5 = plt.subplots()
                 ax5.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black')
-                ax5.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                #ax5.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 #ax5.axvline(A1v_lat, color='blue', linestyle='--', label='A1 v', linewidth=0.8)
                 #ax5.axvline(A1_lat, color='orange', linestyle='--', label='A1 AP', linewidth=0.8)
                 #ax5.axvline(G1_lat, color='black', linestyle='--', label='G1', linewidth=0.8)
@@ -419,7 +419,7 @@ elif pagina == "📈 Visualização Gráfica":
                 #ax5.axvline(G4_lat, color='cyan', linestyle='--', label='G4', linewidth=0.8)
                 #ax5.axvline(A2v_lat, color='yellow', linestyle='--', label='A2 v', linewidth=0.8)
                 #ax5.axvline(A2_lat, color='gray', linestyle='--', label='A2 AP', linewidth=0.8)
-                ax5.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                #ax5.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
                 ax5.set_xlim(start_test-5,stop_test+5)
                 ax5.set_xlabel('Tempo (s)')
                 ax5.set_ylabel('Velocidade angular norma (rad/s)')
@@ -1124,6 +1124,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
