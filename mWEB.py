@@ -379,8 +379,8 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig1)
                 fig2, ax2 = plt.subplots()
                 ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black')
-                #ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-                #ax2.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax2.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
                 ax2.set_xlim(start_test-5,stop_test+5)
                 ax2.set_xlabel('Tempo (s)')
                 ax2.set_ylabel('Aceleração ML (m/s²)')
@@ -440,8 +440,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax7.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
                 ax7.plot(G0_lat,G0_amp,'ro')
                 ax7.plot(G4_lat,G4_amp,'ro')
-                #ax7.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-                #ax7.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax7.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax7.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
                 ax7.set_xlim(start_test-5,stop_test+5)
                 ax7.set_xlabel('Tempo (s)')
                 ax7.set_ylabel('Velocidade angular ML (rad/s)')
@@ -449,8 +449,8 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig7)
                 fig8, ax8 = plt.subplots()
                 ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
-                #ax8.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-                #ax8.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax8.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
                 ax8.set_xlim(start_test-5,stop_test+5)
                 ax8.set_xlabel('Tempo (s)')
                 ax8.set_ylabel('Velocidade angular AP (rad/s)')
@@ -1124,6 +1124,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
