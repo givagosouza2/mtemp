@@ -209,7 +209,19 @@ elif pagina == "📈 Visualização Gráfica":
     if "dados" in st.session_state and "tipo_teste" in st.session_state:
         tipo_teste = st.session_state["tipo_teste"]
         st.subheader(f"📊 Visualização - {tipo_teste}") 
-        if tipo_teste == "Equilíbrio":
+        if tipo_teste == "Registro inercial livre":
+            dados = st.session_state["dados"]
+            fig, ax = plt.subplots()
+            ax.plot(dff[col_x], dff[col_y], label=col_y)
+            ax.set_xlabel(col_x)
+            ax.set_ylabel(col_y)
+            ax.grid(True, which="both", linestyle="--", alpha=0.4)
+            ax.legend()
+
+st.pyplot(fig)
+            
+                    
+        elif tipo_teste == "Equilíbrio":
             dados = st.session_state["dados"]
             tempo, ml, ap, freqs, psd_ml, psd_ap = balanceProcessing.processar_equilibrio( dados, 0, 0, 0, 0, 8)
             max_val = len(tempo)
@@ -1140,6 +1152,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
