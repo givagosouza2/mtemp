@@ -10,6 +10,9 @@ from matplotlib.patches import Ellipse
 from scipy.integrate import trapezoid, cumulative_trapezoid
 from scipy.ndimage import uniform_filter1d
 from textwrap import dedent
+from scipy.interpolate import interp1d
+from scipy.signal import butter, filtfilt, welch, detrend, savgol_filter
+from typing import Tuple
 
 # --------- Config da página ---------
 st.set_page_config(page_title="Momentum Web", page_icon="⚡", layout="wide")
@@ -220,6 +223,11 @@ elif pagina == "📈 Visualização Gráfica":
                 detrend = st.checkbox('Fazer detrend?',False)
             with col2:
                 fig, ax = plt.subplots()
+                if detrend:
+                    x = detrend(x)
+                    y = detrend(y)
+                    z = detrend(z)
+                    
                 ax.plot(t, x, label='x')
                 ax.plot(t, y, label='y')
                 ax.plot(t, z, label='z')
@@ -1160,6 +1168,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
