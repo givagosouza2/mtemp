@@ -221,23 +221,44 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2 = st.columns([0.5,0.5])
             with col1:
                 detrend_command = st.checkbox('Fazer detrend?',False)
+                separados = st.checkbox('Gráficos separados?',False)
             with col2:
-                fig, ax = plt.subplots()
                 if detrend_command:
-                    x_new = detrend(x)
-                    y_new = detrend(y)
-                    z_new = detrend(z)
-                else:
-                    x_new = x
-                    y_new = y
-                    z_new = z
-                ax.plot(t, x_new, label='x')
-                ax.plot(t, y_new, label='y')
-                ax.plot(t, z_new, label='z')
-                ax.set_xlabel('Tempo (ms)')
-                ax.set_ylabel('Amplitude')
-                ax.legend()
-                st.pyplot(fig)
+                        x_new = detrend(x)
+                        y_new = detrend(y)
+                        z_new = detrend(z)
+                    else:
+                        x_new = x
+                        y_new = y
+                        z_new = z
+                if separados:
+                    fig, ax = plt.subplots()
+                    ax.plot(t, x_new, label='x')
+                    ax.set_xlabel('Tempo (ms)')
+                    ax.set_ylabel('Amplitude')
+                    ax.legend()
+                    st.pyplot(fig)
+                    fig, ax = plt.subplots()
+                    ax.plot(t, y_new, label='y')                    
+                    ax.set_xlabel('Tempo (ms)')
+                    ax.set_ylabel('Amplitude')
+                    ax.legend()
+                    st.pyplot(fig)
+                    fig, ax = plt.subplots()                    
+                    ax.plot(t, z_new, label='z')
+                    ax.set_xlabel('Tempo (ms)')
+                    ax.set_ylabel('Amplitude')
+                    ax.legend()
+                    st.pyplot(fig)
+                else:                    
+                    fig, ax = plt.subplots()
+                    ax.plot(t, x_new, label='x')
+                    ax.plot(t, y_new, label='y')
+                    ax.plot(t, z_new, label='z')
+                    ax.set_xlabel('Tempo (ms)')
+                    ax.set_ylabel('Amplitude')
+                    ax.legend()
+                    st.pyplot(fig)
             
                     
         elif tipo_teste == "Equilíbrio":
@@ -1171,6 +1192,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
