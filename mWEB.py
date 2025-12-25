@@ -79,7 +79,7 @@ elif pagina == "⬆️ Importar Dados":
     st.title("⬆️ Importar Dados")
     col1, col2, col3 = st.columns([1, 0.2, 1])
     with col1:
-        tipo_teste = st.selectbox( "Qual teste você deseja analisar?", ["Selecione...", "Equilíbrio", "Salto", "TUG", "Propriocepção", "Y test"] )
+        tipo_teste = st.selectbox( "Qual teste você deseja analisar?", ["Selecione...", "Registro inercial livre", "Equilíbrio", "Salto", "TUG", "Propriocepção", "Y test"] )
         if tipo_teste != "Selecione...":
             st.session_state["tipo_teste"] = tipo_teste
             if tipo_teste == "Equilíbrio":
@@ -1124,6 +1124,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
