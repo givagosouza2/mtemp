@@ -234,31 +234,33 @@ elif pagina == "📈 Visualização Gráfica":
                     y_new = y
                     z_new = z
                 if filtrado:
-                    if filtrado:
-                        dt = np.diff(t)
-                        fs_mean = 1 / np.mean(dt)
-                        nyquist = fs_mean / 2
-                        st.text(nyquist)
-                    
-                        # garante limites válidos (evita nyquist muito baixo)
-                        min_cutoff = 0.1
-                        max_cutoff = max(0.2, nyquist - 0.01)
-                        default_cutoff = min(50.0, max_cutoff)
-                    
-                        cutoff = st.number_input(
-                            "Frequência de corte (Hz)",
-                            min_value=0.1,
-                            max_value=float(max_cutoff),
-                            value=float(default_cutoff),
-                            step=0.1
-                        )
-                        # Segurança extra: garante 0 < Wn < 1
-                        cutoff = float(np.clip(cutoff, min_cutoff, nyquist * 0.99))
-                        wn = cutoff / nyquist  # 0 < wn < 1
-                        b, a = butter(4.0, cutoff, btype="low", analog=False)
-                        x_new = filtfilt(b, a, x_new)
-                        y_new = filtfilt(b, a, y_new)
-                        z_new = filtfilt(b, a, z_new)
+                    dt = np.diff(t)
+                    dt = dt[np.isfinite(dt) & (dt > 0)]
+                    fs_mean = 1.0 / float(np.median(dt))   # mais robusto que mean
+                    nyquist = fs_mean / 2.0
+                    st.text(nyquist)
+                
+                    # garante limites válidos (evita nyquist muito baixo)
+                    min_cutoff = 0.1
+                    max_cutoff = max(min_cutoff + 0.1, float(nyquist * 0.99))
+                    default_cutoff = min(50.0, max_cutoff)
+                
+                    cutoff = st.number_input(
+                        "Frequência de corte (Hz)",
+                        min_value=float(min_cutoff),
+                        max_value=float(max_cutoff),
+                        value=float(default_cutoff),
+                        step=0.1
+                    )
+                
+                    # Segurança extra: garante cutoff < Nyquist
+                    cutoff = float(np.clip(cutoff, min_cutoff, nyquist * 0.99))
+                    wn = cutoff / nyquist  # 0 < wn < 1
+                
+                    b, a = butter(4, wn, btype="low", analog=False)  # <-- aqui é wn
+                    x_new = filtfilt(b, a, x_new)
+                    y_new = filtfilt(b, a, y_new)
+                    z_new = filtfilt(b, a, z_new)
                 if separados:
                     fig, ax = plt.subplots(figsize=(10, 4))
                     ax.plot(t, x_new,'-r', label='x')
@@ -1220,6 +1222,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
