@@ -38,21 +38,32 @@ st.markdown(
 st.markdown("<h1 style='text-align: center; color: #1E90FF;'>Momentum Web</h1>", unsafe_allow_html=True)
 
 @st.cache_data
-
 def carregar_dados_generico(arquivo):
     """
-    Lê CSV com 4 ou 5 colunas.
-    - 5 colunas: descarta a 1ª (ex.: índice/metadata) e usa as colunas 2..5
-    - 4 colunas: usa todas
-    Retorna DataFrame com colunas: ["Tempo", "X", "Y", "Z"] ou None em caso de erro.
+    Roteador:
+    - Se o arquivo for áudio -> usa carregar_dados_generico_audio()
+    - Caso contrário -> tenta ler como CSV/TXT (4 ou 5 colunas)
     """
     try:
-        df = pd.read_csv(arquivo, sep=None, engine='python')  # autodetecta separador
+        nome = getattr(arquivo, "name", "").lower()
+        ext = nome.rsplit(".", 1)[-1] if "." in nome else ""
+
+        # 1) ÁUDIO: nunca passa pelo pandas
+        if ext in {"3ga", "aac", "m4a", "mp3", "wav", "ogg", "flac"}:
+            return carregar_dados_generico_audio(arquivo)
+
+        # 2) TEXTO/CSV
+        try:
+            arquivo.seek(0)
+        except Exception:
+            pass
+
+        df = pd.read_csv(arquivo, sep=None, engine="python")
 
         if df.shape[1] == 5:
-            dados = df.iloc[:, 1:5].copy()  # usa colunas 2..5
+            dados = df.iloc[:, 1:5].copy()
         elif df.shape[1] == 4:
-            dados = df.iloc[:, 0:4].copy()  # usa todas
+            dados = df.iloc[:, 0:4].copy()
         else:
             st.error("O arquivo deve conter 4 ou 5 colunas com cabeçalhos.")
             return None
@@ -63,81 +74,6 @@ def carregar_dados_generico(arquivo):
     except Exception as e:
         st.error(f"Erro ao ler o arquivo: {e}")
         return None
-
-import io
-import numpy as np
-
-def carregar_dados_generico_audio(arquivo_upload):
-    """
-    Para arquivos de áudio (3ga/aac/m4a/mp3/wav/ogg/flac):
-      retorna um dicionário com:
-        - x: sinal mono normalizado em float32 (-1..1)
-        - sr: taxa de amostragem (Hz)
-        - t: vetor tempo (s)
-        - duration_s: duração (s)
-        - name: nome do arquivo
-        - channels_original: canais antes de converter pra mono
-
-    Obs: Para aac/3ga/m4a/mp3 você normalmente precisa de FFmpeg instalado.
-    """
-    # Detecta extensão
-    nome = getattr(arquivo_upload, "name", "").lower()
-    ext = nome.split(".")[-1] if "." in nome else ""
-
-    # Se for áudio, trata como binário (NUNCA utf-8)
-    if ext in {"3ga", "aac", "m4a", "mp3", "wav", "ogg", "flac"}:
-        try:
-            from pydub import AudioSegment
-        except Exception as e:
-            # Sem pydub, não dá pra decodificar esses formatos com facilidade
-            return None
-
-        # Garante ponteiro no início (caso o arquivo já tenha sido lido antes)
-        try:
-            arquivo_upload.seek(0)
-        except Exception:
-            pass
-
-        data = arquivo_upload.read()  # bytes binários
-
-        # Decodifica
-        try:
-            # 1) tenta auto-detect (às vezes funciona melhor)
-            audio = AudioSegment.from_file(io.BytesIO(data))
-        except Exception:
-            # 2) fallback usando extensão
-            audio = AudioSegment.from_file(io.BytesIO(data), format=ext)
-
-        channels_original = audio.channels
-
-        # Converte para mono (média dos canais)
-        if audio.channels > 1:
-            audio = audio.set_channels(1)
-
-        # Converte para numpy
-        samples = np.array(audio.get_array_of_samples()).astype(np.float32)
-
-        # Normaliza para -1..1
-        max_int = float(1 << (8 * audio.sample_width - 1))
-        x = samples / max_int
-
-        sr = int(audio.frame_rate)
-        t = np.arange(len(x), dtype=np.float32) / float(sr)
-        duration_s = float(len(x) / sr)
-
-        return {
-            "x": x,
-            "sr": sr,
-            "t": t,
-            "duration_s": duration_s,
-            "name": nome,
-            "channels_original": channels_original,
-        }
-
-    # Se não for áudio, você pode manter aqui a sua lógica antiga
-    # (CSV, TXT, JSON etc.). Por enquanto, retornamos None.
-    return None
-
 
 
 pagina = st.sidebar.radio("📂 Navegue pelas páginas", [ "🏠 Página Inicial", "⬆️ Importar Dados", "📈 Visualização Gráfica", "📤 Exportar Resultados", "📖 Referências bibliográficas" ])
@@ -176,7 +112,7 @@ elif pagina == "⬆️ Importar Dados":
                 st.subheader("🧍🏽‍♀️ Importar arquivo de áudio livre")
                 arquivo = st.file_uploader("Escolha um arquivo de áudio",type=["3ga", "aac", "m4a", "mp3", "wav", "ogg", "flac"],)
                 if arquivo is not None:
-                    dados = carregar_dados_generico_audio(arquivo)
+                    dados = carregar_dados_generico(arquivo)
                     if dados is not None:
                         st.success('Dados carregados com sucesso')
                         st.session_state["dados"] = dados
@@ -1328,6 +1264,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
