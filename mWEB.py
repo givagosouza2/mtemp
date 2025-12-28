@@ -13,6 +13,7 @@ from textwrap import dedent
 from scipy.interpolate import interp1d
 from scipy.signal import butter, filtfilt, welch, detrend, savgol_filter
 from typing import Tuple
+import io
 
 # --------- Config da página ---------
 st.set_page_config(page_title="Momentum Web", page_icon="⚡", layout="wide")
@@ -82,12 +83,21 @@ elif pagina == "⬆️ Importar Dados":
     st.title("⬆️ Importar Dados")
     col1, col2, col3 = st.columns([1, 0.2, 1])
     with col1:
-        tipo_teste = st.selectbox( "Qual teste você deseja analisar?", ["Selecione...", "Registro inercial livre", "Equilíbrio", "Salto", "TUG", "Propriocepção", "Y test"] )
+        tipo_teste = st.selectbox( "Qual teste você deseja analisar?", ["Selecione...", "Registro inercial livre", "Registro de áudio livre", "Equilíbrio", "Salto", "TUG", "Propriocepção", "Y test"] )
         if tipo_teste != "Selecione...":
             st.session_state["tipo_teste"] = tipo_teste
             if tipo_teste == "Registro inercial livre":
                 st.subheader("🧍🏽‍♀️ Importar registro inercial livre")
-                arquivo = st.file_uploader( "Selecione o arquivo de equilíbrio (CSV ou TXT)", type=["csv", "txt"])
+                arquivo = st.file_uploader( "Selecione o arquivo de registro inercial (CSV ou TXT)", type=["csv", "txt"])
+                if arquivo is not None:
+                    dados = carregar_dados_generico(arquivo)
+                    if dados is not None:
+                        st.success('Dados carregados com sucesso')
+                        st.session_state["dados"] = dados
+                        st.session_state["tipo_teste"] = tipo_teste
+            elif tipo_teste == "Registro de áudio livre":
+                st.subheader("🧍🏽‍♀️ Importar arquivo de áudio livre")
+                arquivo = st.file_uploader("Escolha um arquivo de áudio",type=["3ga", "aac", "m4a", "mp3", "wav", "ogg", "flac"],)
                 if arquivo is not None:
                     dados = carregar_dados_generico(arquivo)
                     if dados is not None:
@@ -166,7 +176,12 @@ elif pagina == "⬆️ Importar Dados":
             <p> Esta opção foi criada para o usuário que quiser visualizar registros inerciais em condições ainda não protocoladas nesta plataforma
             </p> </div> """)
             st.markdown(html, unsafe_allow_html=True)
-            
+        elif tipo_teste == "Registro de áudio livre":
+            st.markdown( """ <h1 style='text-align: center; color: #1E90FF;'> 🧍🏽‍♀️Equilíbrio estático </h1> """, unsafe_allow_html=True )
+            html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;">
+            <p> Esta opção foi criada para o usuário que quiser visualizar registros de áudios em condições ainda não protocoladas nesta plataforma 
+            </p> </div> """)
+            st.markdown(html, unsafe_allow_html=True)
         elif tipo_teste == "Equilíbrio":
             st.markdown( """ <h1 style='text-align: center; color: #1E90FF;'> 🧍🏽‍♀️Equilíbrio estático </h1> """, unsafe_allow_html=True )
             html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;">
@@ -288,7 +303,128 @@ elif pagina == "📈 Visualização Gráfica":
                     ax.legend()
                     st.pyplot(fig)
             
-                    
+        elif tipo_teste == "Registro de áudio livre":
+            # app_intensidade_audio.py
+
+            # --- Upload ---
+            uploaded = st.file_uploader(
+                "Escolha um arquivo de áudio",
+                type=["3ga", "aac", "m4a", "mp3", "wav", "ogg", "flac"],
+            )
+            
+            if uploaded is None:
+                st.stop()
+            
+            # --- Decodificação (pydub + ffmpeg) ---
+            # Para 3ga/aac/m4a/mp3 normalmente precisa do FFmpeg instalado no sistema.
+            try:
+                from pydub import AudioSegment
+            except Exception as e:
+                st.error(
+                    "Faltou instalar 'pydub'. Rode: pip install pydub\n"
+                    f"Detalhe: {e}"
+                )
+                st.stop()
+            
+            data = uploaded.read()
+            
+            try:
+                # Pydub detecta pelo conteúdo; mas ajudar com extension também é útil
+                ext = uploaded.name.split(".")[-1].lower()
+                audio = AudioSegment.from_file(io.BytesIO(data), format=ext)
+            except Exception as e:
+                st.error(
+                    "Não consegui decodificar esse áudio.\n\n"
+                    "Se for .3ga/.aac/.m4a/.mp3, você provavelmente precisa instalar o FFmpeg e deixar no PATH.\n"
+                    f"Erro: {e}"
+                )
+                st.stop()
+            
+            # --- Converte para numpy ---
+            # força mono (ou opção do usuário)
+            to_mono = st.checkbox("Converter para mono (média dos canais)", value=True)
+            if to_mono and audio.channels > 1:
+                audio = audio.set_channels(1)
+            
+            samples = np.array(audio.get_array_of_samples()).astype(np.float32)
+            
+            # normaliza amplitude (inteiros -> [-1,1])
+            max_int = float(1 << (8 * audio.sample_width - 1))
+            x = samples / max_int
+            
+            sr = audio.frame_rate
+            duration_s = len(x) / sr
+            
+            # --- Escolha de métrica e janela ---
+            st.subheader("Configurações")
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                metric = st.selectbox("Métrica", ["RMS", "dBFS (relativo ao full scale)"])
+            with col2:
+                win_ms = st.number_input("Janela (ms)", min_value=5, max_value=500, value=50, step=5)
+            with col3:
+                hop_ms = st.number_input("Passo (ms)", min_value=1, max_value=500, value=10, step=1)
+            
+            win = int(sr * (win_ms / 1000.0))
+            hop = int(sr * (hop_ms / 1000.0))
+            win = max(win, 1)
+            hop = max(hop, 1)
+            
+            # --- Envelope por janelas (RMS) ---
+            # (simples, robusto e “cara de intensidade”)
+            n = len(x)
+            if n < win:
+                st.warning("Áudio muito curto para a janela escolhida. Reduza a janela.")
+                st.stop()
+            
+            # calcula RMS por frames
+            rms = []
+            t = []
+            for start in range(0, n - win + 1, hop):
+                frame = x[start : start + win]
+                val = np.sqrt(np.mean(frame * frame))
+                rms.append(val)
+                t.append((start + win / 2) / sr)
+            
+            rms = np.array(rms, dtype=np.float32)
+            t = np.array(t, dtype=np.float32)
+            
+            if metric.startswith("dBFS"):
+                # dBFS: 0 dBFS é máximo possível; valores típicos são negativos
+                eps = 1e-12
+                y = 20.0 * np.log10(np.maximum(rms, eps))
+                y_label = "Intensidade (dBFS)"
+            else:
+                y = rms
+                y_label = "Intensidade (RMS, 0–1)"
+            
+            # --- Plot ---
+            st.subheader("Gráfico")
+            fig, ax = plt.subplots()
+            ax.plot(t, y)
+            ax.set_xlabel("Tempo (s)")
+            ax.set_ylabel(y_label)
+            ax.grid(True)
+            st.pyplot(fig)
+            
+            # --- Resumo simples ---
+            st.subheader("Resumo")
+            st.write(f"Taxa de amostragem: **{sr} Hz**")
+            st.write(f"Duração: **{duration_s:.2f} s**")
+            st.write(f"Canais: **{audio.channels}**")
+            
+            # --- Exportar CSV ---
+            st.subheader("Exportar")
+            csv = "tempo_s,intensidade\n" + "\n".join([f"{ti:.6f},{yi:.8f}" for ti, yi in zip(t, y)])
+            st.download_button(
+                "Baixar CSV (tempo × intensidade)",
+                data=csv.encode("utf-8"),
+                file_name=f"{uploaded.name}_intensidade.csv",
+                mime="text/csv",
+            )
+            
+            
         elif tipo_teste == "Equilíbrio":
             dados = st.session_state["dados"]
             tempo, ml, ap, freqs, psd_ml, psd_ap = balanceProcessing.processar_equilibrio( dados, 0, 0, 0, 0, 8)
@@ -1220,6 +1356,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
