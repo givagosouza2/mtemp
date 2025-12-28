@@ -38,6 +38,55 @@ st.markdown(
 st.markdown("<h1 style='text-align: center; color: #1E90FF;'>Momentum Web</h1>", unsafe_allow_html=True)
 
 @st.cache_data
+def carregar_dados_generico_audio(arquivo_upload, force_mono=True):
+    """
+    Lê arquivos de áudio (3ga/aac/m4a/mp3/wav/ogg/flac) e devolve dict com:
+      x (float32 -1..1), sr, t, duration_s, name, channels_original
+    Requer: pydub + ffmpeg (para aac/3ga/m4a/mp3).
+    """
+    nome = getattr(arquivo_upload, "name", "").lower()
+    ext = nome.rsplit(".", 1)[-1] if "." in nome else ""
+
+    try:
+        from pydub import AudioSegment
+    except Exception as e:
+        st.error("Para ler áudio instale: pip install pydub (e instale o FFmpeg).")
+        return None
+
+    try:
+        arquivo_upload.seek(0)
+    except Exception:
+        pass
+
+    raw = arquivo_upload.read()  # bytes
+
+    # Decodifica: tenta auto-detect e depois fallback pela extensão
+    try:
+        audio = AudioSegment.from_file(io.BytesIO(raw))
+    except Exception:
+        audio = AudioSegment.from_file(io.BytesIO(raw), format=ext)
+
+    channels_original = audio.channels
+
+    if force_mono and audio.channels > 1:
+        audio = audio.set_channels(1)
+
+    samples = np.array(audio.get_array_of_samples()).astype(np.float32)
+    max_int = float(1 << (8 * audio.sample_width - 1))
+    x = samples / max_int
+
+    sr = int(audio.frame_rate)
+    t = np.arange(len(x), dtype=np.float32) / float(sr)
+    duration_s = float(len(x) / sr)
+
+    return {
+        "x": x,
+        "sr": sr,
+        "t": t,
+        "duration_s": duration_s,
+        "name": nome,
+        "channels_original": channels_original,
+    }
 def carregar_dados_generico(arquivo):
     """
     Roteador:
@@ -327,12 +376,12 @@ elif pagina == "📈 Visualização Gráfica":
             # --- Plot ---
             st.subheader("Gráfico")
             fig, ax = plt.subplots()
-            ax.plot(t, dados[x])
+            ax.plot(dados["t"], dados["x"])
             ax.set_xlabel("Tempo (s)")
-            ax.set_ylabel(y_label)
+            ax.set_ylabel("Amplitude (normalizada)")
             ax.grid(True)
             st.pyplot(fig)
-            
+                    
         elif tipo_teste == "Equilíbrio":
             dados = st.session_state["dados"]
             tempo, ml, ap, freqs, psd_ml, psd_ap = balanceProcessing.processar_equilibrio( dados, 0, 0, 0, 0, 8)
@@ -1264,6 +1313,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
