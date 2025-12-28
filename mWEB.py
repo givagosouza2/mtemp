@@ -102,12 +102,30 @@ def carregar_dados_generico(arquivo):
             return carregar_dados_generico_audio(arquivo)
 
         # 2) TEXTO/CSV
+                # 2) TEXTO/CSV (robusto a encoding)
         try:
             arquivo.seek(0)
         except Exception:
             pass
 
-        df = pd.read_csv(arquivo, sep=None, engine="python")
+        raw = arquivo.read()
+        try:
+            arquivo.seek(0)
+        except Exception:
+            pass
+
+        # tenta decodificar em alguns encodings comuns
+        for enc in ("utf-8", "utf-8-sig", "utf-16", "utf-16le", "utf-16be", "latin1", "cp1252"):
+            try:
+                text = raw.decode(enc)
+                df = pd.read_csv(io.StringIO(text), sep=None, engine="python")
+                break
+            except Exception:
+                df = None
+
+        if df is None:
+            st.error("Não consegui ler o arquivo como texto (CSV/TXT). Ele pode estar em formato binário ou com encoding incomum.")
+            return None
 
         if df.shape[1] == 5:
             dados = df.iloc[:, 1:5].copy()
@@ -1313,6 +1331,7 @@ elif pagina == "📖 Referências bibliográficas":
     <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> 
     </p> </div> """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
