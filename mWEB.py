@@ -42,80 +42,30 @@ st.markdown("<h1 style='text-align: center; color: #1E90FF;'>Momentum Web</h1>",
 AUDIO_EXTS = {"3ga", "aac", "m4a", "mp3", "wav", "ogg", "flac"}
 
 def _parece_audio_3gp_mp4(head: bytes) -> bool:
-    """
-    Arquivos .3ga são 3GP (baseado em MP4). Geralmente têm 'ftyp' no offset 4.
-    """
     return len(head) >= 12 and head[4:8] == b"ftyp"
 
-@st.cache_data
-def carregar_dados_generico_audio_bytes(raw: bytes, nome: str, force_mono: bool = True):
+def carregar_dados_generico(arquivo):
     """
-    Lê áudio a partir de BYTES (robusto para uso com Streamlit uploader).
-    Retorna dict com x, sr, t...
-    """
-    ext = nome.rsplit(".", 1)[-1].lower() if "." in nome else ""
-
-    try:
-        from pydub import AudioSegment
-    except Exception:
-        st.error("Para ler áudio instale: pip install pydub (e instale o FFmpeg no servidor).")
-        return None
-
-    # Decodifica: tenta auto-detect e depois fallback pela extensão
-    try:
-        audio = AudioSegment.from_file(io.BytesIO(raw))
-    except Exception:
-        audio = AudioSegment.from_file(io.BytesIO(raw), format=ext)
-
-    channels_original = audio.channels
-
-    if force_mono and audio.channels > 1:
-        audio = audio.set_channels(1)
-
-    samples = np.array(audio.get_array_of_samples()).astype(np.float32)
-    max_int = float(1 << (8 * audio.sample_width - 1))
-    x = samples / max_int
-
-    sr = int(audio.frame_rate)
-    t = np.arange(len(x), dtype=np.float32) / float(sr)
-    duration_s = float(len(x) / sr)
-
-    return {
-        "x": x,
-        "sr": sr,
-        "t": t,
-        "duration_s": duration_s,
-        "name": nome,
-        "channels_original": channels_original,
-    }
-
-@st.cache_data
-def carregar_dados_generico(arquivo_upload):
-    """
-    Roteador robusto:
-    - detecta áudio por extensão OU assinatura (ftyp...)
-    - para texto, tenta múltiplos encodings (utf-8-sig, utf-16, cp1252, latin1)
-    - aceita CSV/TXT com 4 ou 5 colunas e renomeia para Tempo, X, Y, Z
+    - Detecta áudio por extensão ou assinatura e NÃO passa no pandas.
+    - Para CSV/TXT: tenta encodings comuns (utf-8-sig, utf-16, cp1252, latin1).
     """
     try:
-        nome = getattr(arquivo_upload, "name", "arquivo").lower()
+        nome = getattr(arquivo, "name", "arquivo").lower()
         ext = nome.rsplit(".", 1)[-1] if "." in nome else ""
 
-        # lê bytes uma vez
+        # lê bytes 1x
         try:
-            arquivo_upload.seek(0)
+            arquivo.seek(0)
         except Exception:
             pass
-        raw = arquivo_upload.read()
-
+        raw = arquivo.read()
         head = raw[:32]
 
-        # 1) ÁUDIO: extensão OU assinatura MP4/3GP
+        # Se for áudio (ou parecer 3gp/mp4), encaminhe para seu loader de áudio
         if (ext in AUDIO_EXTS) or _parece_audio_3gp_mp4(head):
-            # mesmo se o usuário subir no uploader "errado", cai aqui e não passa no pandas
-            return carregar_dados_generico_audio_bytes(raw, nome, force_mono=True)
+            return carregar_dados_generico_audio_bytes(raw, nome, force_mono=True)  # <- sua função
 
-        # 2) TEXTO/CSV: fallback encoding
+        # tenta encodings
         if head.startswith(b"\xff\xfe") or head.startswith(b"\xfe\xff"):
             encodings = ["utf-16"]
         else:
@@ -125,8 +75,12 @@ def carregar_dados_generico(arquivo_upload):
         df = None
         for enc in encodings:
             try:
-                bio = io.BytesIO(raw)
-                df = pd.read_csv(bio, sep=None, engine="python", encoding=enc)
+                df = pd.read_csv(
+                    io.BytesIO(raw),
+                    sep=None,
+                    engine="python",
+                    encoding=enc,
+                )
                 last_err = None
                 break
             except Exception as e:
@@ -524,3 +478,4 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
