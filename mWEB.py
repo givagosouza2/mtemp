@@ -492,7 +492,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.set_xlim(start_test-5,stop_test+5) 
                 ax1.set_xlabel('Tempo (s)') 
                 ax1.set_ylabel('Aceleração norma (m/s²)') 
-                ax1.legend() st.pyplot(fig1) 
+                ax1.legend() 
+                st.pyplot(fig1) 
                 fig2, ax2 = plt.subplots() 
                 ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black') 
                 ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8) 
@@ -518,7 +519,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax4.set_xlim(start_test-5,stop_test+5) 
                 ax4.set_xlabel('Tempo (s)') 
                 ax4.set_ylabel('Aceleração AP (m/s²)') 
-                ax4.legend() st.pyplot(fig4) 
+                ax4.legend() 
+                st.pyplot(fig4) 
             with col2: 
                 fig5, ax5 = plt.subplots() 
                 ax5.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black') 
@@ -534,7 +536,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax5.set_xlim(start_test-5,stop_test+5)
                 ax5.set_xlabel('Tempo (s)')
                 ax5.set_ylabel('Velocidade angular norma (rad/s)')
-                ax5.legend() st.pyplot(fig5)
+                ax5.legend() 
+                st.pyplot(fig5)
                 fig6, ax6 = plt.subplots()
                 ax6.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
                 ax6.plot(G1_lat,G1_amp,'ro') ax6.plot(G2_lat,G2_amp,'ro')
@@ -623,6 +626,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
