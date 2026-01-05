@@ -542,13 +542,13 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig5)
                 fig6, ax6 = plt.subplots()
                 ax6.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
-                ax6.plot(G1_lat,G1_amp,'ro') ax6.plot(G2_lat,G2_amp,'ro')
-                #ax6.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
-                #ax6.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8) 
+                ax6.plot(G1_lat,G1_amp,'ro')
+                ax6.plot(G2_lat,G2_amp,'ro')
                 ax6.set_xlim(start_test-5,stop_test+5) 
                 ax6.set_xlabel('Tempo (s)')
                 ax6.set_ylabel('Velocidade angular Vertical (rad/s)')
-                ax6.legend() st.pyplot(fig6)
+                ax6.legend() 
+                st.pyplot(fig6)
                 fig7, ax7 = plt.subplots()
                 ax7.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
                 ax7.plot(G0_lat,G0_amp,'ro')
@@ -629,6 +629,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
