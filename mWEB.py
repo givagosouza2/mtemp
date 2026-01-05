@@ -479,7 +479,8 @@ elif pagina == "📈 Visualização Gráfica":
                 A1v_amp = amp2 
                 A2v_lat = lat1 
                 A2v_amp = amp1 
-            else: A1v_lat = lat1 
+            else: 
+                A1v_lat = lat1 
                 A1v_amp = amp1 
                 A2v_lat = lat2 
                 A2v_amp = amp2 
@@ -622,5 +623,6 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
