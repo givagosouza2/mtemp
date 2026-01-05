@@ -498,7 +498,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black') 
                 ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8) 
                 ax2.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8) 
-                ax2.set_xlim(start_test-5,stop_test+5) ax2.set_xlabel('Tempo (s)') 
+                ax2.set_xlim(start_test-5,stop_test+5) 
+                ax2.set_xlabel('Tempo (s)') 
                 ax2.set_ylabel('Aceleração ML (m/s²)') 
                 ax2.legend() 
                 st.pyplot(fig2) 
@@ -506,7 +507,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax3.plot(t_novo_acc, np.sqrt(v_acc**2), linewidth=0.8, color='black') 
                 ax3.plot(A1v_lat,A1v_amp,'ro') 
                 ax3.plot(A2v_lat,A2v_amp,'ro') 
-                ax3.set_xlim(start_test-5,stop_test+5) ax3.set_xlabel('Tempo (s)') 
+                ax3.set_xlim(start_test-5,stop_test+5) 
+                ax3.set_xlabel('Tempo (s)') 
                 ax3.set_ylabel('Aceleração vertical (m/s²)') 
                 ax3.legend() 
                 st.pyplot(fig3) 
@@ -543,7 +545,8 @@ elif pagina == "📈 Visualização Gráfica":
                 ax6.plot(G1_lat,G1_amp,'ro') ax6.plot(G2_lat,G2_amp,'ro')
                 #ax6.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
                 #ax6.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8) 
-                ax6.set_xlim(start_test-5,stop_test+5) ax6.set_xlabel('Tempo (s)')
+                ax6.set_xlim(start_test-5,stop_test+5) 
+                ax6.set_xlabel('Tempo (s)')
                 ax6.set_ylabel('Velocidade angular Vertical (rad/s)')
                 ax6.legend() st.pyplot(fig6)
                 fig7, ax7 = plt.subplots()
@@ -626,6 +629,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
