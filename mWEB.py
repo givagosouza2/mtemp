@@ -416,8 +416,152 @@ elif pagina == "📈 Visualização Gráfica":
             st.pyplot(fig)
 
         elif tipo_teste == "TUG":
-            st.info("TUG: use exatamente seus blocos originais de visualização/exportação. (Se quiser, eu colo aqui o seu bloco completo.)")
-
+            dados_acc = st.session_state["dados_acc"]
+            dados_gyro = st.session_state["dados_gyro"]
+            baseline_onset = st.number_input('Indique o momento inicial da baseline do início do teste (s)', value=0.0)
+            baseline_offset = st.number_input('Indique o momento inicial da baseline do final do teste (s)', value=(np.max(dados_acc["Tempo"])/1000)-2.5)
+            st.session_state["baseline_onset"] = baseline_onset
+            st.session_state["baseline_offset"] = baseline_offset
+            col1, col2 = st.columns(2)
+            t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25,baseline_onset,baseline_offset)
+            vertical_squared = np.sqrt(v_gyro**2)
+            lat1 = idx[1][0]
+            lat2 = idx[1][1]
+            amp1 = vertical_squared[idx[0][0]]
+            amp2 = vertical_squared[idx[0][1]]
+            if lat1 > lat2:
+                G1_lat = lat2
+                G1_amp = amp2
+                G2_lat = lat1
+                G2_amp = amp1
+            else: 
+                G1_lat = lat1
+                G1_amp = amp1
+                G2_lat = lat2
+                G2_amp = amp2
+            ml_squared = np.sqrt(ml_gyro**2)
+            lat1 = idx_ml[1][0]
+            lat2 = idx_ml[1][1]
+            amp1 = ml_squared[idx_ml[0][0]]
+            amp2 = ml_squared[idx_ml[0][1]]
+            if lat1 > lat2:
+                G0_lat = lat2
+                G0_amp = amp2
+                G4_lat = lat1
+                G4_amp = amp1
+            else: 
+                G0_lat = lat1
+                G0_amp = amp1
+                G4_lat = lat2
+                G4_amp = amp2
+            acc_ap_squared = np.sqrt(z_acc_filtrado**2)
+            lat1 = idx_acc_ap[1][0]
+            lat2 = idx_acc_ap[1][1]
+            amp1 = acc_ap_squared[idx_acc_ap[0][0]]
+            amp2 = acc_ap_squared[idx_acc_ap[0][1]]
+            if lat1 > lat2: 
+                A1_lat = lat2 
+                A1_amp = amp2 
+                A2_lat = lat1 
+                A2_amp = amp1 
+            else: 
+                A1_lat = lat1
+                A1_amp = amp1
+                A2_lat = lat2
+                A2_amp = amp2
+            acc_v_squared = np.sqrt(v_acc**2)
+            lat1 = idx_acc_v[1][0]
+            lat2 = idx_acc_v[1][1]
+            amp1 = acc_v_squared[idx_acc_v[0][0]]
+            amp2 = acc_v_squared[idx_acc_v[0][1]]
+            if lat1 > lat2: 
+                A1v_lat = lat2 
+                A1v_amp = amp2 
+                A2v_lat = lat1 
+                A2v_amp = amp1 
+            else: A1v_lat = lat1 
+                A1v_amp = amp1 
+                A2v_lat = lat2 
+                A2v_amp = amp2 
+            with col1: 
+                fig1, ax1 = plt.subplots()
+                ax1.plot(t_novo_acc, norma_acc_filtrado, linewidth=0.8, color='black')
+                ax1.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8) 
+                ax1.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8) 
+                ax1.set_xlim(start_test-5,stop_test+5) 
+                ax1.set_xlabel('Tempo (s)') 
+                ax1.set_ylabel('Aceleração norma (m/s²)') 
+                ax1.legend() st.pyplot(fig1) 
+                fig2, ax2 = plt.subplots() 
+                ax2.plot(t_novo_acc, np.sqrt(ml_acc**2), linewidth=0.8, color='black') 
+                ax2.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8) 
+                ax2.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8) 
+                ax2.set_xlim(start_test-5,stop_test+5) ax2.set_xlabel('Tempo (s)') 
+                ax2.set_ylabel('Aceleração ML (m/s²)') 
+                ax2.legend() 
+                st.pyplot(fig2) 
+                fig3, ax3 = plt.subplots() 
+                ax3.plot(t_novo_acc, np.sqrt(v_acc**2), linewidth=0.8, color='black') 
+                ax3.plot(A1v_lat,A1v_amp,'ro') 
+                ax3.plot(A2v_lat,A2v_amp,'ro') 
+                ax3.set_xlim(start_test-5,stop_test+5) ax3.set_xlabel('Tempo (s)') 
+                ax3.set_ylabel('Aceleração vertical (m/s²)') 
+                ax3.legend() 
+                st.pyplot(fig3) 
+                fig4, ax4 = plt.subplots()
+                ax4.plot(t_novo_acc, np.sqrt(z_acc_filtrado**2), linewidth=0.8, color='black')
+                ax4.plot(A1_lat,A1_amp,'ro')
+                ax4.plot(A2_lat,A2_amp,'ro')
+                #ax4.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                #ax4.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8) 
+                ax4.set_xlim(start_test-5,stop_test+5) 
+                ax4.set_xlabel('Tempo (s)') 
+                ax4.set_ylabel('Aceleração AP (m/s²)') 
+                ax4.legend() st.pyplot(fig4) 
+            with col2: 
+                fig5, ax5 = plt.subplots() 
+                ax5.plot(t_novo_gyro, norma_gyro_filtrado, linewidth=0.8, color='black') 
+                ax5.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8) 
+                #ax5.axvline(A1v_lat, color='blue', linestyle='--', label='A1 v', linewidth=0.8) 
+                #ax5.axvline(A1_lat, color='orange', linestyle='--', label='A1 AP', linewidth=0.8) 
+                #ax5.axvline(G1_lat, color='black', linestyle='--', label='G1', linewidth=0.8) 
+                #ax5.axvline(G2_lat, color='black', linestyle='--', label='G2', linewidth=0.8) 
+                #ax5.axvline(G4_lat, color='cyan', linestyle='--', label='G4', linewidth=0.8) 
+                #ax5.axvline(A2v_lat, color='yellow', linestyle='--', label='A2 v', linewidth=0.8) 
+                #ax5.axvline(A2_lat, color='gray', linestyle='--', label='A2 AP', linewidth=0.8) 
+                ax5.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax5.set_xlim(start_test-5,stop_test+5)
+                ax5.set_xlabel('Tempo (s)')
+                ax5.set_ylabel('Velocidade angular norma (rad/s)')
+                ax5.legend() st.pyplot(fig5)
+                fig6, ax6 = plt.subplots()
+                ax6.plot(t_novo_gyro, np.sqrt(v_gyro**2), linewidth=0.8, color='black')
+                ax6.plot(G1_lat,G1_amp,'ro') ax6.plot(G2_lat,G2_amp,'ro')
+                #ax6.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                #ax6.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8) 
+                ax6.set_xlim(start_test-5,stop_test+5) ax6.set_xlabel('Tempo (s)')
+                ax6.set_ylabel('Velocidade angular Vertical (rad/s)')
+                ax6.legend() st.pyplot(fig6)
+                fig7, ax7 = plt.subplots()
+                ax7.plot(t_novo_gyro, np.sqrt(ml_gyro**2), linewidth=0.8, color='black')
+                ax7.plot(G0_lat,G0_amp,'ro')
+                ax7.plot(G4_lat,G4_amp,'ro')
+                ax7.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax7.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax7.set_xlim(start_test-5,stop_test+5)
+                ax7.set_xlabel('Tempo (s)')
+                ax7.set_ylabel('Velocidade angular ML (rad/s)')
+                ax7.legend()
+                st.pyplot(fig7)
+                fig8, ax8 = plt.subplots()
+                ax8.plot(t_novo_gyro, np.sqrt(z_gyro_filtrado**2), linewidth=0.8, color='black')
+                ax8.axvline(start_test, color='green', linestyle='--', label='Início', linewidth=0.8)
+                ax8.axvline(stop_test, color='red', linestyle='--', label='Final', linewidth=0.8)
+                ax8.set_xlim(start_test-5,stop_test+5)
+                ax8.set_xlabel('Tempo (s)')
+                ax8.set_ylabel('Velocidade angular AP (rad/s)')
+                ax8.legend()
+                st.pyplot(fig8)
         elif tipo_teste == "Y test":
             st.info("Y test: use exatamente seus blocos originais de visualização/exportação. (Se quiser, eu colo aqui o seu bloco completo.)")
 
@@ -478,4 +622,5 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
