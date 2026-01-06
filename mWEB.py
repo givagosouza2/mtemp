@@ -906,10 +906,10 @@ elif pagina == "📤 Exportar Resultados":
                                 break 
                         pos_max = np.max(angulo[t3:t4])
                         for index,valor in enumerate(angulo[t3:t4]): 
-                        if valor == pos_max: 
-                            t3 = t3 + index 
-                            t4 = t4 - index 
-                            break
+                            if valor == pos_max: 
+                                t3 = t3 + index 
+                                t4 = t4 - index 
+                                break
                         Angulacao_referencia = np.mean(angulo[t1:t2]) 
                         Angulacao_posicionamento = np.mean(angulo[t3:t4]) 
                         st.metric(label=r"Ângulo de referências (graus)", value=round(Angulacao_referencia, 4)) 
@@ -934,6 +934,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
