@@ -901,7 +901,8 @@ elif pagina == "📤 Exportar Resultados":
                         ref_max = np.max(angulo[t1:t2])
                         for index,valor in enumerate(angulo[t1:t2]):
                             if valor == ref_max:
-                                t1 = t1 + index t2 = t2 - index
+                                t1 = t1 + index 
+                                t2 = t2 - index
                                 break 
                         pos_max = np.max(angulo[t3:t4])
                         for index,valor in enumerate(angulo[t3:t4]): 
@@ -933,6 +934,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
