@@ -617,8 +617,256 @@ elif pagina == "📤 Exportar Resultados":
                     file_name="resultados_analise_postural.txt",
                     mime="text/plain"
                 )
-        else:
-            st.info("Exportação para este teste: mantenha seu bloco original do projeto (ou me peça que eu integre aqui).")
+        if tipo_teste == "TUG":
+            baseline_onset = st.session_state["baseline_onset"]
+            baseline_offset = st.session_state["baseline_offset"]
+            col1, col2, col3 = st.columns([0.4,0.8,0.6])
+            dados_acc = st.session_state["dados_acc"]
+            dados_gyro = st.session_state["dados_gyro"]
+            t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25,baseline_onset,baseline_offset) 
+            vertical_squared = np.sqrt(v_gyro**2) 
+            lat1 = idx[1][0] 
+            lat2 = idx[1][1] 
+            amp1 = vertical_squared[idx[0][0]] 
+            amp2 = vertical_squared[idx[0][1]] 
+            if lat1 > lat2: 
+                G1_lat = lat2 
+                G1_amp = amp2 
+                G2_lat = lat1 
+                G2_amp = amp1 
+            else: 
+                G1_lat = lat1 
+                G1_amp = amp1 
+                G2_lat = lat2 
+                G2_amp = amp2 
+                ml_squared = np.sqrt(ml_gyro**2) 
+                lat1 = idx_ml[1][0] 
+                lat2 = idx_ml[1][1] 
+                amp1 = ml_squared[idx_ml[0][0]] 
+                amp2 = ml_squared[idx_ml[0][1]] 
+            if lat1 > lat2: 
+                G0_lat = lat2 
+                G0_amp = amp2 
+                G4_lat = lat1 
+                G4_amp = amp1 
+            else: 
+                G0_lat = lat1 
+                G0_amp = amp1 
+                G4_lat = lat2 
+                G4_amp = amp2 
+                acc_ap_squared = np.sqrt(z_acc_filtrado**2) 
+                lat1 = idx_acc_ap[1][0] 
+                lat2 = idx_acc_ap[1][1] 
+                amp1 = acc_ap_squared[idx_acc_ap[0][0]] 
+                amp2 = acc_ap_squared[idx_acc_ap[0][1]] 
+                if lat1 > lat2: 
+                    A1_lat = lat2 
+                    A1_amp = amp2 
+                    A2_lat = lat1 
+                    A2_amp = amp1 
+                else: 
+                    A1_lat = lat1 
+                    A1_amp = amp1 
+                    A2_lat = lat2 
+                    A2_amp = amp2 
+                    acc_v_squared = np.sqrt(v_acc**2) 
+                    lat1 = idx_acc_v[1][0] 
+                    lat2 = idx_acc_v[1][1] 
+                    amp1 = acc_v_squared[idx_acc_v[0][0]] 
+                    amp2 = acc_v_squared[idx_acc_v[0][1]] 
+                if lat1 > lat2: 
+                    A1v_lat = lat2 
+                    A1v_amp = amp2 
+                    A2v_lat = lat1 
+                    A2v_amp = amp1 
+                else: 
+                    A1v_lat = lat1
+                    A1v_amp = amp1 
+                    A2v_lat = lat2 
+                    A2v_amp = amp2 
+                with col1: 
+                    st.metric(label=r"Duração do teste (s)", value=round(stop_test-start_test, 4))
+                    st.metric(label=r"Duração para levantar (s)", value=round(G0_lat-start_test, 4)) 
+                    st.metric(label=r"Duração da caminhada de ida (s)", value=round(G1_lat-G0_lat, 4)) 
+                    st.metric(label=r"Duração da caminhada de volta (s)", value=round(G2_lat-G1_lat, 4)) 
+                    st.metric(label=r"Duração para sentar (s)", value=round(stop_test-G2_lat, 4)) 
+                with col2: 
+                    st.metric(label=r"Tempo para o pico de velocidade angular na transição de sentado para de pé (s)", value=round(G0_lat-start_test, 4)) 
+                    st.metric(label=r"Tempo para o pico de aceleração AP na transição de sentado para de pé (s)", value=round(A1_lat-start_test, 4)) 
+                    st.metric(label=r"Tempo para o pico de aceleração V na transição de sentado para de pé (s)", value=round(A1v_lat-start_test, 4)) 
+                    st.metric(label=r"Tempo para o pico de velocidade angular no giro em 3 m (s)", value=round(G1_lat-start_test, 4)) 
+                    st.metric(label=r"Tempo para o pico de velocidade angular no giro em 6 m (s)", value=round(G2_lat-start_test, 4)) 
+                    st.metric(label=r"Tempo para o pico de velocidade angular na transição de pé para sentado (s)", value=round(G2_lat-start_test, 4)) 
+                    st.metric(label=r"Tempo para o pico de aceleração AP na transição de pé para sentado (s)", value=round(A2_lat-start_test, 4)) 
+                    st.metric(label=r"Tempo para o pico de aceleração V na transição de pé para sentado (s)", value=round(A2v_lat-start_test, 4)) 
+                with col3: 
+                    st.metric(label=r"Velocidade angular máxima na transição de sentado para de pé (rad/s)", value=round(G0_amp, 4)) 
+                    st.metric(label=r"Aceleração máxima AP na transição de sentado para de pé (m/s2)", value=round(A1_amp, 4)) 
+                    st.metric(label=r"Aceleração máxima V na transição de sentado para de pé (m/s2)", value=round(A1v_amp, 4)) 
+                    st.metric(label=r"Velocidade angular máxima no giro em 3 m (s)", value=round(G1_amp, 4)) 
+                    st.metric(label=r"Velocidade angular máxima no giro em 6 m (s)", value=round(G2_amp, 4)) 
+                    st.metric(label=r"Aceleração máxima AP na transição de sentado para pé (s)", value=round(A2_amp, 4)) 
+                    st.metric(label=r"Aceleração máxima V na transição de sentado para pé (s)", value=round(A2v_amp, 4)) 
+                    resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor) 
+                    variaveis = [("Duração do teste (s)", round(stop_test-start_test, 4)), ("Duração para levantar (s)", round(G0_lat-start_test, 4)), ("Duração da caminhada de ida (s)",round(G1_lat-G0_lat, 4)), ("Duração da caminhada de volta (s)",round(G2_lat-G1_lat, 4)), ("Duração para sentar (s)",round(stop_test-G2_lat, 4)), ("Tempo para o pico de velocidade angular na transição de sentado para de pé (s)",round(G0_lat-start_test, 4)), ("Tempo para o pico de aceleração AP na transição de sentado para de pé (s)",round(A1_lat-start_test, 4)), ("Tempo para o pico de aceleração V na transição de sentado para de pé (s)",round(A1v_lat-start_test, 4)), ("Tempo para o pico de velocidade angular no giro em 3 m (s)",round(G1_lat-start_test, 4)), ("Tempo para o pico de velocidade angular no giro em 6 m (s)",round(G2_lat-start_test, 4)), ("Tempo para o pico de velocidade angular na transição de pé para sentado (s)",round(A2_lat-start_test, 4)), ("Tempo para o pico de aceleração AP na transição de pé para sentado (s)",round(A2_lat-start_test, 4)), ("Tempo para o pico de aceleração V na transição de pé para sentado (s)",round(A2v_lat-start_test, 4)), ("Velocidade angular máxima na transição de sentado para de pé (rad/s)",round(G0_amp, 4)), ("Aceleração máxima AP na transição de sentado para de pé (m/s2)",round(A1_amp, 4)), ("Aceleração máxima V na transição de sentado para de pé (m/s2)",round(A1v_amp, 4)), ("Velocidade angular máxima no giro em 3 m (s)",round(G1_amp, 4)), ("Velocidade angular máxima no giro em 6 m (s)",round(G2_amp, 4)), ("Aceleração máxima AP na transição de sentado para pé (s)",round(A2_amp, 4)), ("Aceleração máxima V na transição de sentado para pé (s)",round(A2v_amp, 4))]
+                    # Adiciona linha por linha 
+                for nome, valor in variaveis: 
+                    resultado_txt += f"{nome}\t{valor}\n" 
+                    st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_iTUG.txt", mime="text/plain" ) 
+            if tipo_teste == "Y test": 
+                dados = st.session_state["dados_acc_coluna"] 
+                dados2 = st.session_state["dados_acc_joelho"] 
+                tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados,8) max_val = 5000 
+                col1, col2, col3 = st.columns(3) 
+                with col1: 
+                    startRec = st.number_input( 'Indique o início do registro', value=0, step=1, max_value=max_val) 
+                with col2: 
+                    endRec = st.number_input( 'Indique o final do registro', value=max_val, step=1, max_value=max_val) 
+                with col3: 
+                    filter = st.number_input( 'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0) 
+                    showRec = st.checkbox('Mostrar o dado original', value=True) 
+                tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
+                tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter) 
+                col1, col2 = st.columns(2) 
+                tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1(dados[startRec:endRec], filter) 
+                tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2(dados2[startRec:endRec], filter) 
+                picoSaltoCintura = np.max(v[0:1000]) 
+                for index,valor in enumerate(v): 
+                    if valor == picoSaltoCintura: 
+                        onsetCintura = index
+                        tempo = tempo - tempo[onsetCintura]
+                        break 
+                picoSaltoJoelho = np.max(v_2[0:1000])
+                for index,valor in enumerate(v_2):
+                    if valor == picoSaltoJoelho: 
+                        onsetJoelho = index 
+                        tempo_2 = tempo_2 - tempo_2[onsetJoelho] 
+                        break
+                picoSaltoCintura_sel = np.max(v_sel[0:1000]) 
+                for index,valor in enumerate(v_sel): 
+                    if valor == picoSaltoCintura_sel: 
+                        onsetCintura_sel = index 
+                        tempo_sel = tempo_sel - tempo_sel[onsetCintura_sel] 
+                        break
+                picoSaltoJoelho_sel = np.max(v_2_sel[0:1000])
+                for index,valor in enumerate(v_2_sel): 
+                    if valor == picoSaltoJoelho_sel: 
+                        onsetJoelho_sel = index 
+                        tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel] 
+                        break 
+                ap_sel_media = uniform_filter1d(ap_sel, size=30)
+                ml_sel_media = uniform_filter1d(ml_sel, size=30)
+                v_sel_media = uniform_filter1d(v_sel, size=30) 
+                ap_2_sel_media = uniform_filter1d(ap_2_sel, size=30) 
+                ml_2_sel_media = uniform_filter1d(ml_2_sel, size=30) 
+                v_2_sel_media = uniform_filter1d(v_2_sel, size=30) 
+                n1 = np.max(tempo_sel) 
+                n2 = np.max(tempo_sel_2) 
+                if n1 > n2: 
+                    limite_tempo = n1 
+                else: 
+                    limite_tempo = n2
+                min_c1 = np.min(ap_sel_media[startRec:startRec+1000])
+                for index,valor in enumerate(ap_sel_media):
+                    if valor == min_c1: 
+                        t_min_c1 = tempo_sel[index]
+                        break 
+                for index2,valor in enumerate(tempo_sel_2):
+                    if valor > t_min_c1: 
+                        break 
+                dados = ap_2_sel_media[index2-50:index2] 
+                ampC1_ap_pre = np.sqrt(np.mean(np.square(dados))) 
+                dados = ap_2_sel_media[index2:index2+50] 
+                ampC1_ap_pos = np.sqrt(np.mean(np.square(dados))) 
+                dados = ml_2_sel_media[index2-50:index2] 
+                ampC1_ml_pre = np.sqrt(np.mean(np.square(dados))) 
+                dados = ml_2_sel_media[index2:index2+50] 
+                ampC1_ml_pos = np.sqrt(np.mean(np.square(dados))) 
+                max_c1 = np.max(ap_sel_media[index:index+1000]) 
+                for index,valor in enumerate(ap_sel_media): 
+                    if valor == max_c1: 
+                        t_max_c1 = tempo_sel[index] 
+                        break 
+                for index3,valor in enumerate(tempo_sel_2):
+                    if valor > t_max_c1:
+                        break 
+                dados = ap_2_sel_media[index3-50:index3]
+                ampC2_ap_pre = np.sqrt(np.mean(np.square(dados)))
+                dados = ap_2_sel_media[index3:index3+50]
+                ampC2_ap_pos = np.sqrt(np.mean(np.square(dados)))
+                dados = ml_2_sel_media[index3-50:index3]
+                ampC2_ml_pre = np.sqrt(np.mean(np.square(dados)))
+                dados = ml_2_sel_media[index3:index3+50]
+                ampC2_ml_pos = np.sqrt(np.mean(np.square(dados)))
+                min_c2 = np.min(ap_sel_media[index:index+1000]) 
+                for index,valor in enumerate(ap_sel_media):
+                    if valor == min_c2: t_min_c2 = tempo_sel[index] 
+                        break 
+                for index4,valor in enumerate(tempo_sel_2): 
+                    if valor > t_min_c2:
+                        break 
+                dados = ap_2_sel_media[index4-50:index4]
+                ampC3_ap_pre = np.sqrt(np.mean(np.square(dados)))
+                dados = ap_2_sel_media[index4:index4+50]
+                ampC3_ap_pos = np.sqrt(np.mean(np.square(dados)))
+                dados = ml_2_sel_media[index4-50:index4]
+                ampC3_ml_pre = np.sqrt(np.mean(np.square(dados)))
+                dados = ml_2_sel_media[index4:index4+50]
+                ampC3_ml_pos = np.sqrt(np.mean(np.square(dados)))
+                max_c2 = np.max(ap_sel_media[index:index+1000]) 
+                for index,valor in enumerate(ap_sel_media): 
+                    if valor == max_c2: 
+                        t_max_c2 = tempo_sel[index] 
+                        break 
+                for index5,valor in enumerate(tempo_sel_2):
+                    if valor > t_max_c2: 
+                        break 
+                dados = ap_2_sel_media[index5-50:index5] 
+                ampC4_ap_pre = np.sqrt(np.mean(np.square(dados))) 
+                dados = ap_2_sel_media[index5:index5+50] 
+                ampC4_ap_pos = np.sqrt(np.mean(np.square(dados))) 
+                dados = ml_2_sel_media[index5-50:index5] 
+                ampC4_ml_pre = np.sqrt(np.mean(np.square(dados))) 
+                dados = ml_2_sel_media[index5:index5+50] 
+                ampC4_ml_pos = np.sqrt(np.mean(np.square(dados))) 
+                col1,col2,col3,col4 = st.columns(4) 
+                with col1: 
+                    st.metric(label=r"Amplitude de C1 (m/s2)", value=round(min_c1, 4)) 
+                    st.metric(label=r"Tempo de C1 (s)", value=round(t_min_c1, 4)) 
+                    st.metric(label=r"Amplitude pré-C1 Joelho AP (m/s2)", value=round(ampC1_ap_pre, 4)) 
+                    st.metric(label=r"Amplitude pós-C1 Joelho AP (m/s2)", value=round(ampC1_ap_pos, 4)) 
+                    st.metric(label=r"Amplitude pré-C1 Joelho ML (m/s2)", value=round(ampC1_ml_pre, 4)) 
+                    st.metric(label=r"Amplitude pós-C1 Joelho ML (m/s2)", value=round(ampC1_ml_pos, 4)) 
+                with col2: 
+                    st.metric(label=r"Amplitude de C2 (m/s2)", value=round(max_c1, 4)) 
+                    st.metric(label=r"Tempo de C2 (s)", value=round(t_max_c1, 4)) 
+                    st.metric(label=r"Amplitude pré-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pre, 4)) 
+                    st.metric(label=r"Amplitude pós-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pos, 4)) 
+                    st.metric(label=r"Amplitude pré-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pre, 4)) 
+                    st.metric(label=r"Amplitude pós-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pos, 4)) 
+                with col3: 
+                    st.metric(label=r"Amplitude de C3 (m/s2)", value=round(min_c2, 4)) 
+                    st.metric(label=r"Tempo de C3 (s)", value=round(t_min_c2, 4)) 
+                    st.metric(label=r"Amplitude pré-C3 Joelho AP (m/s2)", value=round(ampC3_ap_pre, 4)) 
+                    st.metric(label=r"Amplitude pós-C3 Joelho AP (m/s2)", value=round(ampC3_ap_pos, 4)) 
+                    st.metric(label=r"Amplitude pré-C3 Joelho ML (m/s2)", value=round(ampC3_ml_pre, 4)) 
+                    st.metric(label=r"Amplitude pós-C3 Joelho ML (m/s2)", value=round(ampC3_ml_pos, 4)) 
+                with col4: 
+                    st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4)) 
+                    st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4)) 
+                    st.metric(label=r"Amplitude pré-C4 Joelho AP (m/s2)", value=round(ampC4_ap_pre, 4)) 
+                    st.metric(label=r"Amplitude pós-C4 Joelho AP (m/s2)", value=round(ampC4_ap_pos, 4)) 
+                    st.metric(label=r"Amplitude pré-C4 Joelho ML (m/s2)", value=round(ampC4_ml_pre, 4)) 
+                    st.metric(label=r"Amplitude pós-C4 Joelho ML (m/s2)", value=round(ampC4_ml_pos, 4)) 
+                    resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor) 
+                    variaveis = [("Amplitude de C1 (m/s2)", round(min_c1, 4)), ("Tempo de C1 (s)", round(t_min_c1, 4)), ("Amplitude de C2 (m/s2)", round(max_c1, 4)), ("Tempo de C2 (s)", round(t_max_c1, 4)), ("Amplitude de C3 (m/s2)", round(min_c2, 4)), ("Tempo de C3 (s)", round(t_min_c2, 4)), ("Amplitude de C4 (m/s2)", round(max_c2, 4)), ("Tempo de C4 (s)", round(t_max_c2, 4)), ("Amplitude pré-C1 Joelho AP (m/s2)",round(ampC1_ap_pre, 4)), ("Amplitude pós-C1 Joelho AP (m/s2)",round(ampC1_ap_pos, 4)), ("Amplitude pré-C2 Joelho AP (m/s2)",round(ampC2_ap_pre, 4)), ("Amplitude pós-C2 Joelho AP (m/s2)",round(ampC2_ap_pos, 4)), ("Amplitude pré-C3 Joelho AP (m/s2)",round(ampC3_ap_pre, 4)), ("Amplitude pós-C3 Joelho AP (m/s2)",round(ampC3_ap_pos, 4)), ("Amplitude pré-C4 Joelho AP (m/s2)",round(ampC4_ap_pre, 4)), ("Amplitude pós-C4 Joelho AP (m/s2)",round(ampC4_ap_pos, 4)), ("Amplitude pré-C1 Joelho ML (m/s2)",round(ampC1_ml_pre, 4)), ("Amplitude pós-C1 Joelho ML (m/s2)",round(ampC1_ml_pos, 4)), ("Amplitude pré-C2 Joelho ML (m/s2)",round(ampC2_ml_pre, 4)), ("Amplitude pós-C2 Joelho ML (m/s2)",round(ampC2_ml_pos, 4)), ("Amplitude pré-C3 Joelho ML (m/s2)",round(ampC3_ml_pre, 4)), ("Amplitude pós-C3 Joelho ML (m/s2)",round(ampC3_ml_pos, 4)), ("Amplitude pré-C4 Joelho ML (m/s2)",round(ampC4_ml_pre, 4)), ("Amplitude pós-C4 Joelho ML (m/s2)",round(ampC4_ml_pos, 4)),] 
+                    # Adiciona linha por linha for nome, valor in variaveis: 
+                    resultado_txt += f"{nome}\t{valor}\n" 
+                    st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" ) 
+                    if tipo_teste == "Propriocepção": 
+                        calibracao = st.session_state["calibracao"] 
+                        dados = st.session_state["dados"] 
+                        #tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8) max_val = len(tempo) # Cálculo dos ângulos accelAngleX = np.arctan(y_vf / np.sqrt(x_vf**2 + z_vf**2)) * 180 / math.pi angulo = accelAngleX + 90 # Calibração def objetivo(x): media_ajustada = np.mean(angulo[100:500] + x) return abs(media_ajustada - calibracao) media_baseline = np.mean(angulo[100:500]) if media_baseline != calibracao: resultado = minimize_scalar(objetivo) angulo = angulo + resultado.x else: resultado = type('obj', (object,), {'x': 0})() for index,valor in enumerate(angulo[100:-1]): if valor > 10+calibracao: t1 = index+100 break for index2,valor in enumerate(angulo[t1:-1]): if valor < 10+calibracao: t2 = index2+t1 break for index3,valor in enumerate(angulo[t2:-1]): if valor > 10+calibracao: t3 = index3+t2 break for index4,valor in enumerate(angulo[t3:-1]): if valor < 10+calibracao: t4 = index4+t3 break ref_max = np.max(angulo[t1:t2]) for index,valor in enumerate(angulo[t1:t2]): if valor == ref_max: t1 = t1 + index t2 = t2 - index break pos_max = np.max(angulo[t3:t4]) for index,valor in enumerate(angulo[t3:t4]): if valor == pos_max: t3 = t3 + index t4 = t4 - index break Angulacao_referencia = np.mean(angulo[t1:t2]) Angulacao_posicionamento = np.mean(angulo[t3:t4]) st.metric(label=r"Ângulo de referências (graus)", value=round(Angulacao_referencia, 4)) st.metric(label=r"Ângulo de posicionamento (graus)", value=round(Angulacao_posicionamento, 4)) resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação variaveis = [ ("Angulo médio de referência (graus)", round(Angulacao_referencia, 4)), ("Angulo médio de posicionamento (graus)", round(Angulacao_posicionamento, 4)) ] for nome, valor in variaveis: resultado_txt += f"{nome}\t{valor}\n" st.download_button( label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_propriocepcao.txt", mime="text/plain" ) elif pagina == "📖 Referências bibliográficas": html = dedent(""" <div style="text-align: justify; font-size: 1.1rem; line-height: 1.6; color: #333333; max-width: 900px; margin: auto; background-color: rgba(255,200,255,0.6); padding: 20px; border-radius: 8px;"> <p> Artigos que utilizaram aplicativos desenvolvidos no projeto Momentum: </p> <a href="https://www.mdpi.com/1424-8220/24/9/2918" target="_blank" style="color:#1E90FF; text-decoration:none;">1. SANTOS, P. S. A. ; SANTOS, E. G. R. ; MONTEIRO, L. C. P. ; SANTOS-LOBATO, B. L. ; PINTO, G. H. L. ; BELGAMO, A. ; ANDRÉ DOS SANTOS, CABRAL ; COSTA E SILVA, A. A ; CALLEGARI, B. ; SOUZA, Givago da Silva . The hand tremor spectrum is modified by the inertial sensor mass during lightweight wearable and smartphone-based assessment in healthy young subjects. Scientific Reports, v. 12, p. 01, 2022.</a></p>. <a href="https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2023.1277408/full" target="_blank" style="color:#1E90FF; text-decoration:none;">2. RODRIGUES, L. A. ; SANTOS, E. G. R. ; SANTOS, P. S. A. ; IGARASHI, Y. ; OLIVEIRA, L. K. R. ; PINTO, G. H. L. ; SANTOS-LOBATO, B. L. ; CABRAL, A. S. ; BELGAMO, A. ; COSTA E SILVA, A. A ; CALLEGARI, B. ; Souza, G. S. . Wearable Devices and Smartphone Inertial Sensors for Static Balance Assessment: A Concurrent Validity Study in Young Adult Population. Journal Of Personalized Medicine, v. 1, p. 1-1, 2022.</a></p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">3. CORREA, B. D. C. ; SANTOS, E. G. R. ; BELGAMO, A. ; PINTO, G. H. L. ; XAVIER, S. S. ; DIAS, A. R. N. ; PARANHOS, A. C. M. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; COSTA E SILVA, A. A. ; QUARESMA, J. A. S. ; FALCAO, L. F. M. ; SOUZA, GIVAGO S. . SMARTPHONE-BASED EVALUATION OF STATIC BALANCE AND MOBILITY IN LONG LASTING COVID-19 PATIENTS. Frontiers in Neurology, v. 1, p. 1, 2023.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">4. FURTADO, E. C. S. ; AZEVEDO, Y. S. ; GALHARDO, D. R. ; MIRANDA, I. P. C. ; OLIVEIRA, M. E. C. ; NEVES, P. F. M. ; MONTE, L. B. ; NUNES, E. F. C. ; FERREIRA, E. A. G. ; CALLEGARI, B. ; SOUZA, G.S. ; MELO NETO, J. S. . The weeks of gestation age influence the myoelectric activity of the pelvic floor muscles, plantar contact and functional mobility in high-risk pregnant women? a cross-sectional study. SENSORS, v. 1, p. 1, 2024.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">5. SANTOS, T. T. S. ; MARQUES, A. P. ; MONTEIRO, L. C. P. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; BELGAMO, A. ; COSTA E SILVA, A. A. ; CABRAL, A. S. ; KULIŚ ; GAJEWSKI, J. ; Souza, G. S. ; SILVA, T. J. ; COSTA, W. T. A. ; SALOMAO, R. C. ; CALLEGARI, B. . Intra and Inter-Device Reliabilities of the Instrumented Timed-Up and Go Test Using Smartphones in Young Adult Population. SENSORS, v. 24, p. 2918, 2024.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">6. FERNANDES, T. F. ; CÔRTES, M. I. T. ; PENA, F. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; BELGAMO, A. ; COSTA E SILVA, A. A. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; Souza, G. S. . Smartphone-based evaluation of static balance and mobility in type 2 Diabetes. ANAIS DA ACADEMIA BRASILEIRA DE CIÊNCIAS, v. 96, p. 1-1, 2024.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">7. NASCIMENTO, A. Q. ; NAGATA, L. A. R. ; ALMEIDA, M. T. ; COSTA, V. L. S. ; MARIN, A. B. R. ; TAVARES, V. B. ; ISHAK, G. ; CALLEGARI, B. ; SANTOS, E. G. R. ; SOUZA, GIVAGO SILVA ; MELO NETO, J. S. . Smartphone-based inertial measurements during Chester step test as a predictor of length of hospital stay in abdominopelvic cancer postoperative period: a prospective cohort study. World Journal of Surgical Oncology, v. 22, p. 71-1, 2024.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">8. FERREIRA, E. C. V. ; MARQUES, A. P. ; KULIS, S. ; GAJEWSKI, J. ; MORAES, A. A. C. ; DUARTE, M. B. ; ALMEIDA, G. C. S. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; ANDRÉ DOS SANTOS, CABRAL ; Souza, Gilvago Silva ; COSTA E SILVA, A. A ; CALLEGARI, B. . Validity And Reliability of a Mobile Device Application for Assessing Motor Performance in the 30-Second Sit-To-Stand Test. IEEE Access, p. 1-1, 2025.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">9. AZEVEDO, L. S. ; FEITOSA JR, N. Q. ; SANTOS, E. G. R. ; ALVAREZ, M. A. M. ; NORAT, L. A. X. ; BOTELHO, G. I. S. ; BELGAMO, A. ; PINTO, G. H. L. ; SANTANA DE CASTRO, KETLIN JAQUELLINE ; CALLEGARI, B. ; SILVA, A. A. C. E. ; SALOMAO, R. C. ; ANDRÉ DOS SANTOS, CABRAL ; ROSA, A. A. M. ; Silva Souza, Givago . Assessing static balance control improvement following cataract surgery using a smartphone. Digital Health, v. 11, p. 1-1, 2025.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">10. DUARTE, M. B. ; MORAES, A. A. C. ; FERREIRA, E. V. ; ALMEIDA, G. C. S. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; OLIVEIRA, P. R. ; AMORIM, C. F. ; ANDRÉ DOS SANTOS, CABRAL ; SAUNIER, G. J. A. ; COSTA E SILVA, A. A. ; SOUZA, GIVAGO S. ; CALLEGARI, B. . Validity and reliability of a smartphone-based assessment for anticipatory and compensatory postural adjustments during predictable perturbations. GAIT & POSTURE, v. 96, p. 9-17, 2022.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">11. MORAES, A. A. C. ; DUARTE, M. B. ; FERREIRA, E. V. ; ALMEIDA, G. C. S. ; SANTOS, E. G. R. ; PINTO, G. H. L. ; OLIVEIRA, P. R. ; AMORIM, C. F. ; ANDRÉ DOS SANTOS, CABRAL ; COSTA E SILVA, A. A. ; Souza, G. S. ; CALLEGARI, B. . Validity and reliability of smartphone app for evaluating postural adjustments during step initiation. SENSORS, v. 1, p. 1, 2022.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">12. MORAES, A. A. C. ; DUARTE, M. B. ; SANTOS, E. J. M. ; ALMEIDA, G. C. S. ; ANDRÉ DOS SANTOS, CABRAL ; COSTA E SILVA, A. A. ; GARCEZ, D. R. ; GIVAGO DA SILVA, SOUZA ; CALLEGARI, B. . Comparison of inertial records during anticipatory postural adjustments obtained with devices of different masses. PeerJ, v. 11, p. e15627, 2023.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">13. BRITO, F. A. C. ; MONTEIRO, L. C. P. ; SANTOS, E. G. R. ; LIMA, R. C. ; SANTOS-LOBATO, B. L. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; SILVA, A. A. C. E. ; GIVAGO DA SILVA, SOUZA . The role of sex and handedness in the performance of the smartphone-based Finger-Tapping Test. PLOS Digital Health, v. 2, p. e0000304, 2023.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">14. LIMA, R. C. ; BRITO, F. A. C. ; NASCIMENTO, R. L. ; MARTINS, S. N. E. S. ; MONTEIRO, L. C. P. ; SEABRA, J. P. ; FARIA, H. L. C. ; SILVA, L. M. C. ; MIRANDA, V. M. S. ; BELGAMO, A. ; ANDRÉ DOS SANTOS, CABRAL ; CALLEGARI, B. ; COSTA E SILVA, A. A ; CRISP, A. ; ALVES, CÂNDIDA HELENA LOPES ; LACERDA, E. M. C. B. ; SOUZA, G.S. . DATASET OF SMARTPHONE-BASED FINGER TAPPING TEST. Scientific Data, v. 1, p. 1, 2024.</a>.</p> <a href="https://www.scielo.br/j/aabc/a/7z5HDVZKYVMxfWm8HxcJqZG/?lang=en&format=pdf" target="_blank" style="color:#1E90FF; text-decoration:none;">15. ALMEIDA, J. R. ; MONTEIRO, L. C. P. ; SOUZA, P. H. C. ; ANDRÉ DOS SANTOS, CABRAL ; BELGAMO, A. ; COSTA E SILVA, A. A ; CRISP, A. ; CALLEGARI, B. ; AVILA, P. E. S. ; SILVA, J. A. ; BASTOS, G. N. T. ; SOUZA, G.S. . Comparison of joint position sense measured by inertial sensors embedded in portable digital devices with different masses. Frontiers in Neuroscience, v. 19, p. 1-1, 2025.</a>.</p> </p> </div> """) st.markdown(html, unsafe_allow_html=True)
 
 # === Referências ===
 elif pagina == "📖 Referências bibliográficas":
@@ -629,6 +877,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
