@@ -801,7 +801,8 @@ elif pagina == "📤 Exportar Resultados":
                 ampC2_ml_pos = np.sqrt(np.mean(np.square(dados)))
                 min_c2 = np.min(ap_sel_media[index:index+1000]) 
                 for index,valor in enumerate(ap_sel_media):
-                    if valor == min_c2: t_min_c2 = tempo_sel[index] 
+                    if valor == min_c2: 
+                        t_min_c2 = tempo_sel[index] 
                         break 
                 for index4,valor in enumerate(tempo_sel_2): 
                     if valor > t_min_c2:
@@ -931,6 +932,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
