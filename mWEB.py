@@ -883,7 +883,8 @@ elif pagina == "📤 Exportar Resultados":
                         else: 
                             resultado = type('obj', (object,), {'x': 0})() 
                         for index,valor in enumerate(angulo[100:-1]): 
-                            if valor > 10+calibracao: t1 = index+100 
+                            if valor > 10+calibracao: 
+                                t1 = index+100 
                                 break 
                         for index2,valor in enumerate(angulo[t1:-1]): 
                             if valor < 10+calibracao: 
@@ -932,6 +933,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
