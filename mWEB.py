@@ -569,7 +569,7 @@ elif pagina == "📈 Visualização Gráfica":
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
             tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados,8)
-            max_val = 5000
+            max_val = 20000
             col1, col2, col3 = st.columns(3)
             with col1:
                 startRec = st.number_input( 'Indique o início do registro', value=0, step=1, max_value=max_val)
@@ -1095,6 +1095,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
