@@ -647,7 +647,8 @@ elif pagina == "📈 Visualização Gráfica":
                 gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6) 
                 limite = 5 
                 ax1 = fig.add_subplot(gs[0, 0])
-                ax1.plot( tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8) 
+                if showRec:
+                    ax1.plot( tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8) 
                 ax1.plot( tempo_sel[startRec:endRec], ap_sel_media[startRec:endRec], color='red', linewidth=0.8)
                 ax1.plot([t_min_c1,t_min_c1],[-4,4],"--r")
                 ax1.plot([t_max_c1,t_max_c1],[-4,4],"--r")
@@ -655,12 +656,13 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                 ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                ax1.set_xlim(-5, limite_tempo)
+                ax1.set_xlim(tempo_sel[startRec], tempo_sel[endRec])
                 ax1.set_ylim(-limite, limite)
                 ax1.tick_params(axis='both', labelsize=8)
                 # Gráfico 2: ocupa linha superior direita (metade superior)
                 ax2 = fig.add_subplot(gs[1, 0])
-                ax2.plot( tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
+                if showRec:
+                    ax2.plot( tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
                 ax2.plot(tempo_sel[startRec:endRec], ml_sel_media[startRec:endRec], color='red', linewidth=0.8)
                 ax2.plot([t_min_c1,t_min_c1],[-4,4],"--r")
                 ax2.plot([t_max_c1,t_max_c1],[-4,4],"--r")
@@ -668,12 +670,13 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax2.set_xlabel('Tempo (s)', fontsize=8)
                 ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                ax2.set_xlim(-5, limite_tempo)
+                ax2.set_xlim(tempo_sel[startRec], tempo_sel[endRec])
                 ax2.set_ylim(-limite, limite)
                 ax2.tick_params(axis='both', labelsize=8)
                 # Gráfico 2: ocupa linha superior direita (metade superior) 
                 axv = fig.add_subplot(gs[2, 0])
-                axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
+                if showRec:
+                    axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
                 axv.plot(tempo_sel[startRec:endRec], v_sel_media[startRec:endRec], color='red', linewidth=0.8)
                 axv.plot([t_min_c1,t_min_c1],[-4,4],"--r")
                 axv.plot([t_max_c1,t_max_c1],[-4,4],"--r")
@@ -681,7 +684,7 @@ elif pagina == "📈 Visualização Gráfica":
                 axv.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 axv.set_xlabel('Tempo (s)', fontsize=8)
                 axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                axv.set_xlim(-5, limite_tempo)
+                axv.set_xlim(tempo_sel[startRec], tempo_sel[endRec])
                 axv.set_ylim(-limite, limite)
                 axv.tick_params(axis='both', labelsize=8) 
                 # Exibe no Streamlit 
@@ -693,7 +696,8 @@ elif pagina == "📈 Visualização Gráfica":
                 fig_2 = plt.figure(figsize=(12, 10))
                 gs_2 = gridspec.GridSpec(3, 2, figure=fig_2, wspace=0.3, hspace=0.6)
                 ax1_2 = fig_2.add_subplot(gs_2[0, 0])
-                ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                if showRec:
+                    ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
                 ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
                 ax1_2.plot([t_min_c1,t_min_c1],[-4,4],"--r")
                 ax1_2.plot([t_max_c1,t_max_c1],[-4,4],"--r")
@@ -701,12 +705,13 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
                 ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                ax1_2.set_xlim(-5, limite_tempo)
+                ax1_2.set_xlim(tempo_sel2[startRec], tempo_sel2[endRec])
                 ax1_2.set_ylim(-limite, limite)
                 ax1_2.tick_params(axis='both', labelsize=8) 
                 # Gráfico 2: ocupa linha superior direita (metade superior) 
                 ax2_2 = fig_2.add_subplot(gs_2[1, 0])
-                ax2_2.plot( tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                if showRec:
+                    ax2_2.plot( tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
                 ax2_2.plot(tempo_sel_2[startRec:endRec], ml_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
                 ax2_2.plot([t_min_c1,t_min_c1],[-4,4],"--r")
                 ax2_2.plot([t_max_c1,t_max_c1],[-4,4],"--r")
@@ -714,12 +719,13 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax2_2.set_xlabel('Tempo (s)', fontsize=8)
                 ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                ax2_2.set_xlim(-5, limite_tempo)
+                ax2_2.set_xlim(tempo_sel2[startRec], tempo_sel2[endRec])
                 ax2_2.set_ylim(-limite, limite)
                 ax2_2.tick_params(axis='both', labelsize=8)
                 # Gráfico 2: ocupa linha superior direita (metade superior)
                 axv_2 = fig_2.add_subplot(gs_2[2, 0])
-                axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                if showRec:
+                    axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
                 axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
                 axv_2.plot([t_min_c1,t_min_c1],[-4,4],"--r")
                 axv_2.plot([t_max_c1,t_max_c1],[-4,4],"--r")
@@ -727,7 +733,7 @@ elif pagina == "📈 Visualização Gráfica":
                 axv_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 axv_2.set_xlabel('Tempo (s)', fontsize=8)
                 axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                axv_2.set_xlim(-5, limite_tempo)
+                axv_2.set_xlim(tempo_sel2[startRec], tempo_sel2[endRec])
                 axv_2.set_ylim(-limite, limite)
                 axv_2.tick_params(axis='both', labelsize=8) 
                 # Exibe no Streamlit 
@@ -1095,6 +1101,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
