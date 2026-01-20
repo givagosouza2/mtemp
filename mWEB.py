@@ -1007,8 +1007,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Amplitude pré-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pre, 4)) 
                 st.metric(label=r"Amplitude pós-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pos, 4)) 
                 st.metric(label=r"Amplitude pré-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pre, 4)) 
-                st.metric(label=r"Amplitude pós-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pos, 4)) 
-            with col3: 
+                st.metric(label=r"Amplitude pós-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pos, 4))  
                 
             with col4: 
                 st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4)) 
@@ -1092,6 +1091,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
