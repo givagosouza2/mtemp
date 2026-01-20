@@ -1019,7 +1019,7 @@ elif pagina == "📤 Exportar Resultados":
                 st.metric(label=r"Amplitude pré-C3 Joelho ML (m/s2)", value=round(ampC4_ml_pre, 4)) 
                 st.metric(label=r"Amplitude pós-C3 Joelho ML (m/s2)", value=round(ampC4_ml_pos, 4)) 
 
-            variaveis = [("Amplitude de C1 (m/s2)", round(min_c1, 4)), ("Tempo de C1 (s)", round(t_min_c1, 4)), ("Amplitude de C2 (m/s2)", round(max_c1, 4)), ("Tempo de C2 (s)", round(t_max_c1, 4)), ("Amplitude de C3 (m/s2)", round(max_c2, 4)), ("Tempo de C3 (s)", round(t_max_c2, 4)), ("Amplitude pré-C1 Joelho AP (m/s2)",round(ampC1_ap_pre, 4)), ("Amplitude pós-C1 Joelho AP (m/s2)",round(ampC1_ap_pos, 4)), ("Amplitude pré-C2 Joelho AP (m/s2)",round(ampC2_ap_pre, 4)), ("Amplitude pós-C2 Joelho AP (m/s2)",round(ampC2_ap_pos, 4)), ("Amplitude pré-C4 Joelho AP (m/s2)",round(ampC4_ap_pre, 4)), ("Amplitude pós-C4 Joelho AP (m/s2)",round(ampC4_ap_pos, 4)), ("Amplitude pré-C1 Joelho ML (m/s2)",round(ampC1_ml_pre, 4)), ("Amplitude pós-C1 Joelho ML (m/s2)",round(ampC1_ml_pos, 4)), ("Amplitude pré-C2 Joelho ML (m/s2)",round(ampC2_ml_pre, 4)), ("Amplitude pós-C2 Joelho ML (m/s2)",round(ampC2_ml_pos, 4)), ("Amplitude pré-C4 Joelho ML (m/s2)",round(ampC4_ml_pre, 4)), ("Amplitude pós-C4 Joelho ML (m/s2)",round(ampC4_ml_pos, 4)),] 
+            variaveis = [("Amplitude de C1 (m/s2)", round(min_c1, 4)), ("Tempo de C1 (s)", round(t_min_c1, 4)), ("Amplitude de C2 (m/s2)", round(max_c1, 4)), ("Tempo de C2 (s)", round(t_max_c1, 4)), ("Amplitude de C3 (m/s2)", round(max_c2, 4)), ("Tempo de C3 (s)", round(t_max_c2, 4)), ("Amplitude pré-C1 Joelho AP (m/s2)",round(ampC1_ap_pre, 4)), ("Amplitude pós-C1 Joelho AP (m/s2)",round(ampC1_ap_pos, 4)), ("Amplitude pré-C2 Joelho AP (m/s2)",round(ampC2_ap_pre, 4)), ("Amplitude pós-C2 Joelho AP (m/s2)",round(ampC2_ap_pos, 4)), ("Amplitude pré-C3 Joelho AP (m/s2)",round(ampC4_ap_pre, 4)), ("Amplitude pós-C3 Joelho AP (m/s2)",round(ampC4_ap_pos, 4)), ("Amplitude pré-C1 Joelho ML (m/s2)",round(ampC1_ml_pre, 4)), ("Amplitude pós-C1 Joelho ML (m/s2)",round(ampC1_ml_pos, 4)), ("Amplitude pré-C2 Joelho ML (m/s2)",round(ampC2_ml_pre, 4)), ("Amplitude pós-C2 Joelho ML (m/s2)",round(ampC2_ml_pos, 4)), ("Amplitude pré-C3 Joelho ML (m/s2)",round(ampC4_ml_pre, 4)), ("Amplitude pós-C3 Joelho ML (m/s2)",round(ampC4_ml_pos, 4)),] 
             resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação 
             for nome, valor in variaveis: 
                 resultado_txt += f"{nome}\t{valor}\n" 
@@ -1093,6 +1093,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
