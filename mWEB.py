@@ -978,6 +978,7 @@ elif pagina == "📤 Exportar Resultados":
             dados = ml_2_sel_media[index3:index3+50]
             ampC2_ml_pos = np.sqrt(np.mean(np.square(dados)))
 
+            max_c2 = np.max(ap_sel_media[index+c3_index:index+(500+c3_index)])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c2:
                     t_max_c2 = tempo_sel[index]
@@ -1091,6 +1092,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
