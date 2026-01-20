@@ -656,7 +656,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                 ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                ax1.set_xlim(tempo_sel[startRec], tempo_sel[endRec])
+                ax1.set_xlim(tempo_sel[startRec], tempo_sel[-1])
                 ax1.set_ylim(-limite, limite)
                 ax1.tick_params(axis='both', labelsize=8)
                 # Gráfico 2: ocupa linha superior direita (metade superior)
@@ -670,7 +670,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax2.set_xlabel('Tempo (s)', fontsize=8)
                 ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                ax2.set_xlim(tempo_sel[startRec], tempo_sel[endRec])
+                ax2.set_xlim(tempo_sel[startRec], tempo_sel[-1])
                 ax2.set_ylim(-limite, limite)
                 ax2.tick_params(axis='both', labelsize=8)
                 # Gráfico 2: ocupa linha superior direita (metade superior) 
@@ -684,7 +684,7 @@ elif pagina == "📈 Visualização Gráfica":
                 axv.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 axv.set_xlabel('Tempo (s)', fontsize=8)
                 axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                axv.set_xlim(tempo_sel[startRec], tempo_sel[endRec])
+                axv.set_xlim(tempo_sel[startRec], tempo_sel[-1])
                 axv.set_ylim(-limite, limite)
                 axv.tick_params(axis='both', labelsize=8) 
                 # Exibe no Streamlit 
@@ -705,7 +705,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
                 ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
-                ax1_2.set_xlim(tempo_sel2[startRec], tempo_sel2[endRec])
+                ax1_2.set_xlim(tempo_sel2[startRec], tempo_sel2[-1])
                 ax1_2.set_ylim(-limite, limite)
                 ax1_2.tick_params(axis='both', labelsize=8) 
                 # Gráfico 2: ocupa linha superior direita (metade superior) 
@@ -719,7 +719,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax2_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 ax2_2.set_xlabel('Tempo (s)', fontsize=8)
                 ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
-                ax2_2.set_xlim(tempo_sel2[startRec], tempo_sel2[endRec])
+                ax2_2.set_xlim(tempo_sel2[startRec], tempo_sel2[-1])
                 ax2_2.set_ylim(-limite, limite)
                 ax2_2.tick_params(axis='both', labelsize=8)
                 # Gráfico 2: ocupa linha superior direita (metade superior)
@@ -1101,6 +1101,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
