@@ -733,7 +733,7 @@ elif pagina == "📈 Visualização Gráfica":
                 axv_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
                 axv_2.set_xlabel('Tempo (s)', fontsize=8)
                 axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
-                axv_2.set_xlim(tempo_sel_2[startRec], tempo_sel_2[endRec])
+                axv_2.set_xlim(tempo_sel_2[startRec], tempo_sel_2[-1])
                 axv_2.set_ylim(-limite, limite)
                 axv_2.tick_params(axis='both', labelsize=8) 
                 # Exibe no Streamlit 
@@ -1101,6 +1101,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
