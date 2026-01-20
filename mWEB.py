@@ -619,6 +619,7 @@ elif pagina == "📈 Visualização Gráfica":
                 limite_tempo = n1
             else: 
                 limite_tempo = n2
+            
             min_c1 = np.min(ap_sel_media[startRec:startRec+1000])
             for index,valor in enumerate(ap_sel_media):
                 if valor == min_c1: 
@@ -651,9 +652,9 @@ elif pagina == "📈 Visualização Gráfica":
                     ax1.plot( tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8) 
                 ax1.plot( tempo_sel[startRec:endRec], ap_sel_media[startRec:endRec], color='red', linewidth=0.8)
                 ax1.plot([t_min_c1,t_min_c1],[-4,4],"--r")
-                ax1.plot([t_max_c1,t_max_c1],[-4,4],"--r")
-                ax1.plot([t_min_c2,t_min_c2],[-4,4],"--r")
-                ax1.plot([t_max_c2,t_max_c2],[-4,4],"--r")
+                ax1.plot([t_max_c1,t_max_c1],[-4,4],"--b")
+                ax1.plot([t_min_c2,t_min_c2],[-4,4],"--g")
+                ax1.plot([t_max_c2,t_max_c2],[-4,4],"--k")
                 ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                 ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                 ax1.set_xlim(tempo_sel[startRec], tempo_sel[-1])
@@ -1101,6 +1102,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
