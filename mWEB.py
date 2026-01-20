@@ -983,7 +983,7 @@ elif pagina == "📤 Exportar Resultados":
                             break 
                     for index5,valor in enumerate(tempo_sel_2):
                         if valor > t_max_c2: 
-                        break 
+                            break 
                     dados = ap_2_sel_media[index5-50:index5] 
                     ampC4_ap_pre = np.sqrt(np.mean(np.square(dados))) 
                     dados = ap_2_sel_media[index5:index5+50] 
@@ -1095,6 +1095,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
