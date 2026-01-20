@@ -397,10 +397,6 @@ elif pagina == "📈 Visualização Gráfica":
 
                 st.pyplot(fig)
 
-        # -------- Salto / TUG / Y test / Propriocepção --------
-        # Mantive a lógica “como está no seu projeto” para não quebrar suas rotinas do módulo `processamento`.
-        # (Se você quiser, eu também posso colar aqui exatamente os seus blocos completos desses testes.)
-
         elif tipo_teste == "Salto":
             dados = st.session_state["dados"]
             tempo, salto, startJump, endJump, altura, tempo_voo, m1, m2, veloc, desloc, istart, iend = jumpProcessing.processar_salto(dados, 8)
@@ -570,7 +566,172 @@ elif pagina == "📈 Visualização Gráfica":
                 ax8.legend()
                 st.pyplot(fig8)
         elif tipo_teste == "Y test":
-            st.info("Y test: use exatamente seus blocos originais de visualização/exportação. (Se quiser, eu colo aqui o seu bloco completo.)")
+            dados = st.session_state["dados_acc_coluna"]
+            dados2 = st.session_state["dados_acc_joelho"]
+            tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados,8)
+            max_val = 5000
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                startRec = st.number_input( 'Indique o início do registro', value=0, step=1, max_value=max_val)
+            with col2: 
+                endRec = st.number_input( 'Indique o final do registro', value=max_val, step=1, max_value=max_val)
+            with col3:
+                filter = st.number_input( 'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
+            showRec = st.checkbox('Mostrar o dado original', value=True)
+            tempo, ml, ap, v = ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
+            tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter)
+            col1, col2 = st.columns(2)
+            tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1( dados[startRec:endRec], filter)
+            tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2( dados2[startRec:endRec], filter)
+            picoSaltoCintura = np.max(v[0:1000])
+            for index,valor in enumerate(v):
+                if valor == picoSaltoCintura:
+                    onsetCintura = index
+                    tempo = tempo - tempo[onsetCintura]
+                    break
+            picoSaltoJoelho = np.max(v_2[0:1000])
+            for index,valor in enumerate(v_2):
+                if valor == picoSaltoJoelho:
+                    onsetJoelho = index
+                    tempo_2 = tempo_2 - tempo_2[onsetJoelho]
+                    break
+            picoSaltoCintura_sel = np.max(v_sel[0:1000])
+            for index,valor in enumerate(v_sel):
+                if valor == picoSaltoCintura_sel:
+                    onsetCintura_sel = index
+                    tempo_sel = tempo_sel - tempo_sel[onsetCintura_sel]
+                    break
+            picoSaltoJoelho_sel = np.max(v_2_sel[0:1000])
+            for index,valor in enumerate(v_2_sel):
+                if valor == picoSaltoJoelho_sel:
+                    onsetJoelho_sel = index
+                    tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel]
+                    break
+            ap_sel_media = uniform_filter1d(ap_sel, size=30)
+            ml_sel_media = uniform_filter1d(ml_sel, size=30)
+            v_sel_media = uniform_filter1d(v_sel, size=30)
+            ap_2_sel_media = uniform_filter1d(ap_2_sel, size=30)
+            ml_2_sel_media = uniform_filter1d(ml_2_sel, size=30)
+            v_2_sel_media = uniform_filter1d(v_2_sel, size=30)
+            n1 = np.max(tempo_sel)
+            n2 = np.max(tempo_sel_2)
+            if n1 > n2:
+                limite_tempo = n1
+            else: 
+                limite_tempo = n2
+            min_c1 = np.min(ap_sel_media[startRec:startRec+1000])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == min_c1: 
+                    t_min_c1 = tempo_sel[index]
+                    break
+            max_c1 = np.max(ap_sel_media[index:index+1000])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == max_c1:
+                    t_max_c1 = tempo_sel[index]
+                    break
+            min_c2 = np.min(ap_sel_media[index:index+1000])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == min_c2:
+                    t_min_c2 = tempo_sel[index]
+                    break
+            max_c2 = np.max(ap_sel_media[index:index+1000])
+            for index,valor in enumerate(ap_sel_media):
+                if valor == max_c2:
+                    t_max_c2 = tempo_sel[index]
+                    break
+            with col1:
+                st.title("Coluna vertebral") 
+                # Cria figura com GridSpec personalizado
+                # Cria uma figura com 3 subplots verticais 
+                fig = plt.figure(figsize=(12, 10))
+                gs = gridspec.GridSpec(3, 2, figure=fig, wspace=0.3, hspace=0.6) 
+                limite = 5 
+                ax1 = fig.add_subplot(gs[0, 0])
+                ax1.plot( tempo_sel[startRec:endRec], ap_sel[startRec:endRec], color='black', linewidth=0.8) 
+                ax1.plot( tempo_sel[startRec:endRec], ap_sel_media[startRec:endRec], color='red', linewidth=0.8)
+                ax1.plot([t_min_c1,t_min_c1],[-4,4],"--r")
+                ax1.plot([t_max_c1,t_max_c1],[-4,4],"--r")
+                ax1.plot([t_min_c2,t_min_c2],[-4,4],"--r")
+                ax1.plot([t_max_c2,t_max_c2],[-4,4],"--r")
+                ax1.set_xlabel(r'Tempo (s)', fontsize=8)
+                ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                ax1.set_xlim(-5, limite_tempo)
+                ax1.set_ylim(-limite, limite)
+                ax1.tick_params(axis='both', labelsize=8)
+                # Gráfico 2: ocupa linha superior direita (metade superior)
+                ax2 = fig.add_subplot(gs[1, 0])
+                ax2.plot( tempo_sel[startRec:endRec], ml_sel[startRec:endRec], color='black', linewidth=0.8)
+                ax2.plot(tempo_sel[startRec:endRec], ml_sel_media[startRec:endRec], color='red', linewidth=0.8)
+                ax2.plot([t_min_c1,t_min_c1],[-4,4],"--r")
+                ax2.plot([t_max_c1,t_max_c1],[-4,4],"--r")
+                ax2.plot([t_min_c2,t_min_c2],[-4,4],"--r")
+                ax2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
+                ax2.set_xlabel('Tempo (s)', fontsize=8)
+                ax2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                ax2.set_xlim(-5, limite_tempo)
+                ax2.set_ylim(-limite, limite)
+                ax2.tick_params(axis='both', labelsize=8)
+                # Gráfico 2: ocupa linha superior direita (metade superior) 
+                axv = fig.add_subplot(gs[2, 0])
+                axv.plot(tempo_sel[startRec:endRec], v_sel[startRec:endRec], color='black', linewidth=0.8)
+                axv.plot(tempo_sel[startRec:endRec], v_sel_media[startRec:endRec], color='red', linewidth=0.8)
+                axv.plot([t_min_c1,t_min_c1],[-4,4],"--r")
+                axv.plot([t_max_c1,t_max_c1],[-4,4],"--r")
+                axv.plot([t_min_c2,t_min_c2],[-4,4],"--r")
+                axv.plot([t_max_c2,t_max_c2],[-4,4],"--r")
+                axv.set_xlabel('Tempo (s)', fontsize=8)
+                axv.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                axv.set_xlim(-5, limite_tempo)
+                axv.set_ylim(-limite, limite)
+                axv.tick_params(axis='both', labelsize=8) 
+                # Exibe no Streamlit 
+                st.pyplot(fig)
+            with col2: 
+                st.title("Joelho")
+                # Cria figura com GridSpec personalizado
+                # Cria uma figura com 3 subplots verticais
+                fig_2 = plt.figure(figsize=(12, 10))
+                gs_2 = gridspec.GridSpec(3, 2, figure=fig_2, wspace=0.3, hspace=0.6)
+                ax1_2 = fig_2.add_subplot(gs_2[0, 0])
+                ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                ax1_2.plot( tempo_sel_2[startRec:endRec], ap_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
+                ax1_2.plot([t_min_c1,t_min_c1],[-4,4],"--r")
+                ax1_2.plot([t_max_c1,t_max_c1],[-4,4],"--r")
+                ax1_2.plot([t_min_c2,t_min_c2],[-4,4],"--r")
+                ax1_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
+                ax1_2.set_xlabel(r'Tempo (s)', fontsize=8)
+                ax1_2.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
+                ax1_2.set_xlim(-5, limite_tempo)
+                ax1_2.set_ylim(-limite, limite)
+                ax1_2.tick_params(axis='both', labelsize=8) 
+                # Gráfico 2: ocupa linha superior direita (metade superior) 
+                ax2_2 = fig_2.add_subplot(gs_2[1, 0])
+                ax2_2.plot( tempo_sel_2[startRec:endRec], ml_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                ax2_2.plot(tempo_sel_2[startRec:endRec], ml_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
+                ax2_2.plot([t_min_c1,t_min_c1],[-4,4],"--r")
+                ax2_2.plot([t_max_c1,t_max_c1],[-4,4],"--r")
+                ax2_2.plot([t_min_c2,t_min_c2],[-4,4],"--r")
+                ax2_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
+                ax2_2.set_xlabel('Tempo (s)', fontsize=8)
+                ax2_2.set_ylabel(r'Aceleração ML (m/s$^2$)', fontsize=8)
+                ax2_2.set_xlim(-5, limite_tempo)
+                ax2_2.set_ylim(-limite, limite)
+                ax2_2.tick_params(axis='both', labelsize=8)
+                # Gráfico 2: ocupa linha superior direita (metade superior)
+                axv_2 = fig_2.add_subplot(gs_2[2, 0])
+                axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel[startRec:endRec], color='black', linewidth=0.8)
+                axv_2.plot(tempo_sel_2[startRec:endRec], v_2_sel_media[startRec:endRec], color='blue', linewidth=0.8)
+                axv_2.plot([t_min_c1,t_min_c1],[-4,4],"--r")
+                axv_2.plot([t_max_c1,t_max_c1],[-4,4],"--r")
+                axv_2.plot([t_min_c2,t_min_c2],[-4,4],"--r")
+                axv_2.plot([t_max_c2,t_max_c2],[-4,4],"--r")
+                axv_2.set_xlabel('Tempo (s)', fontsize=8)
+                axv_2.set_ylabel(r'Aceleração V (m/s$^2$)', fontsize=8)
+                axv_2.set_xlim(-5, limite_tempo)
+                axv_2.set_ylim(-limite, limite)
+                axv_2.tick_params(axis='both', labelsize=8) 
+                # Exibe no Streamlit 
+                st.pyplot(fig_2)
 
         elif tipo_teste == "Propriocepção":
             st.info("Propriocepção: use exatamente seus blocos originais de visualização/exportação. (Se quiser, eu colo aqui o seu bloco completo.)")
@@ -934,6 +1095,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
