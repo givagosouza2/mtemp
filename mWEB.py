@@ -573,11 +573,15 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2, col3 = st.columns(3)
             with col1:
                 startRec = st.number_input( 'Indique o início do registro', value=0, step=1, max_value=max_val)
+                c1_index = st.number_input( 'Índice C1 ', value=1000, step=1, max_value=2000)
             with col2: 
                 endRec = st.number_input( 'Indique o final do registro', value=max_val, step=1, max_value=max_val)
+                c2_index = st.number_input( 'Índice C2', value=1000, step=1, max_value=2000)
             with col3:
                 filter = st.number_input( 'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0)
+                c3_index = st.number_input( 'Índice C3', value=1000, step=1, max_value=2000)
             showRec = st.checkbox('Mostrar o dado original', value=True)
+            
             tempo, ml, ap, v = ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
             tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter)
             col1, col2 = st.columns(2)
@@ -620,22 +624,22 @@ elif pagina == "📈 Visualização Gráfica":
             else: 
                 limite_tempo = n2
             
-            min_c1 = np.min(ap_sel_media[startRec:startRec+1000])
+            min_c1 = np.min(ap_sel_media[startRec:startRec+c1_index])
             for index,valor in enumerate(ap_sel_media):
                 if valor == min_c1: 
                     t_min_c1 = tempo_sel[index]
                     break
-            max_c1 = np.max(ap_sel_media[index:index+1000])
+            max_c1 = np.max(ap_sel_media[index:index+c2_index])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c1:
                     t_max_c1 = tempo_sel[index]
                     break
-            min_c2 = np.min(ap_sel_media[index:index+500])
+            min_c2 = np.min(ap_sel_media[index:index+c3_index])
             for index,valor in enumerate(ap_sel_media):
                 if valor == min_c2:
                     t_min_c2 = tempo_sel[index]
                     break
-            max_c2 = np.max(ap_sel_media[index:index+1000])
+            max_c2 = np.max(ap_sel_media[index:index+c3_index])
             for index,valor in enumerate(ap_sel_media):
                 if valor == max_c2:
                     t_max_c2 = tempo_sel[index]
@@ -1102,6 +1106,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
