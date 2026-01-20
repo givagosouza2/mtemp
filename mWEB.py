@@ -887,145 +887,145 @@ elif pagina == "📤 Exportar Resultados":
                 with col3: 
                     filter = st.number_input( 'Indique o filtro passa-baixa', value=8.0, step=0.1, max_value=40.0) 
                     showRec = st.checkbox('Mostrar o dado original', value=True) 
-                tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
-                tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter) 
-                col1, col2 = st.columns(2) 
-                tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1(dados[startRec:endRec], filter) 
-                tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2(dados2[startRec:endRec], filter) 
-                picoSaltoCintura = np.max(v[0:1000]) 
-                for index,valor in enumerate(v): 
-                    if valor == picoSaltoCintura: 
-                        onsetCintura = index
-                        tempo = tempo - tempo[onsetCintura]
+                    tempo, ml, ap, v= ytestProcessing.processar_ytest1(dados[0:len(dados)-10],filter)
+                    tempo_2, ml_2, ap_2, v_2= ytestProcessing.processar_ytest2(dados2[0:len(dados2)-10],filter) 
+                    col1, col2 = st.columns(2) 
+                    tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1(dados[startRec:endRec], filter) 
+                    tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2(dados2[startRec:endRec], filter) 
+                    picoSaltoCintura = np.max(v[0:1000]) 
+                    for index,valor in enumerate(v): 
+                        if valor == picoSaltoCintura: 
+                            onsetCintura = index
+                            tempo = tempo - tempo[onsetCintura]
+                            break 
+                    picoSaltoJoelho = np.max(v_2[0:1000])
+                    for index,valor in enumerate(v_2):
+                        if valor == picoSaltoJoelho: 
+                            onsetJoelho = index 
+                            tempo_2 = tempo_2 - tempo_2[onsetJoelho] 
+                            break
+                    picoSaltoCintura_sel = np.max(v_sel[0:1000]) 
+                    for index,valor in enumerate(v_sel): 
+                        if valor == picoSaltoCintura_sel: 
+                            onsetCintura_sel = index 
+                            tempo_sel = tempo_sel - tempo_sel[onsetCintura_sel] 
+                            break
+                    picoSaltoJoelho_sel = np.max(v_2_sel[0:1000])
+                    for index,valor in enumerate(v_2_sel): 
+                        if valor == picoSaltoJoelho_sel: 
+                            onsetJoelho_sel = index 
+                            tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel] 
+                            break 
+                    ap_sel_media = uniform_filter1d(ap_sel, size=30)
+                    ml_sel_media = uniform_filter1d(ml_sel, size=30)
+                    v_sel_media = uniform_filter1d(v_sel, size=30) 
+                    ap_2_sel_media = uniform_filter1d(ap_2_sel, size=30) 
+                    ml_2_sel_media = uniform_filter1d(ml_2_sel, size=30) 
+                    v_2_sel_media = uniform_filter1d(v_2_sel, size=30) 
+                    n1 = np.max(tempo_sel) 
+                    n2 = np.max(tempo_sel_2) 
+                    if n1 > n2: 
+                        limite_tempo = n1 
+                    else: 
+                        limite_tempo = n2
+                    min_c1 = np.min(ap_sel_media[startRec:startRec+1000])
+                    for index,valor in enumerate(ap_sel_media):
+                        if valor == min_c1: 
+                            t_min_c1 = tempo_sel[index]
+                            break 
+                    for index2,valor in enumerate(tempo_sel_2):
+                        if valor > t_min_c1: 
+                            break 
+                    dados = ap_2_sel_media[index2-50:index2] 
+                    ampC1_ap_pre = np.sqrt(np.mean(np.square(dados))) 
+                    dados = ap_2_sel_media[index2:index2+50] 
+                    ampC1_ap_pos = np.sqrt(np.mean(np.square(dados))) 
+                    dados = ml_2_sel_media[index2-50:index2] 
+                    ampC1_ml_pre = np.sqrt(np.mean(np.square(dados))) 
+                    dados = ml_2_sel_media[index2:index2+50] 
+                    ampC1_ml_pos = np.sqrt(np.mean(np.square(dados))) 
+                    max_c1 = np.max(ap_sel_media[index:index+1000]) 
+                    for index,valor in enumerate(ap_sel_media): 
+                        if valor == max_c1: 
+                            t_max_c1 = tempo_sel[index] 
+                            break 
+                    for index3,valor in enumerate(tempo_sel_2):
+                        if valor > t_max_c1:
+                            break 
+                    dados = ap_2_sel_media[index3-50:index3]
+                    ampC2_ap_pre = np.sqrt(np.mean(np.square(dados)))
+                    dados = ap_2_sel_media[index3:index3+50]
+                    ampC2_ap_pos = np.sqrt(np.mean(np.square(dados)))
+                    dados = ml_2_sel_media[index3-50:index3]
+                    ampC2_ml_pre = np.sqrt(np.mean(np.square(dados)))
+                    dados = ml_2_sel_media[index3:index3+50]
+                    ampC2_ml_pos = np.sqrt(np.mean(np.square(dados)))
+                    min_c2 = np.min(ap_sel_media[index:index+1000]) 
+                    for index,valor in enumerate(ap_sel_media):
+                        if valor == min_c2: 
+                            t_min_c2 = tempo_sel[index] 
+                            break 
+                    for index4,valor in enumerate(tempo_sel_2): 
+                        if valor > t_min_c2:
+                            break 
+                    dados = ap_2_sel_media[index4-50:index4]
+                    ampC3_ap_pre = np.sqrt(np.mean(np.square(dados)))
+                    dados = ap_2_sel_media[index4:index4+50]
+                    ampC3_ap_pos = np.sqrt(np.mean(np.square(dados)))
+                    dados = ml_2_sel_media[index4-50:index4]
+                    ampC3_ml_pre = np.sqrt(np.mean(np.square(dados)))
+                    dados = ml_2_sel_media[index4:index4+50]
+                    ampC3_ml_pos = np.sqrt(np.mean(np.square(dados)))
+                    max_c2 = np.max(ap_sel_media[index:index+1000]) 
+                    for index,valor in enumerate(ap_sel_media): 
+                        if valor == max_c2: 
+                            t_max_c2 = tempo_sel[index] 
+                            break 
+                    for index5,valor in enumerate(tempo_sel_2):
+                        if valor > t_max_c2: 
                         break 
-                picoSaltoJoelho = np.max(v_2[0:1000])
-                for index,valor in enumerate(v_2):
-                    if valor == picoSaltoJoelho: 
-                        onsetJoelho = index 
-                        tempo_2 = tempo_2 - tempo_2[onsetJoelho] 
-                        break
-                picoSaltoCintura_sel = np.max(v_sel[0:1000]) 
-                for index,valor in enumerate(v_sel): 
-                    if valor == picoSaltoCintura_sel: 
-                        onsetCintura_sel = index 
-                        tempo_sel = tempo_sel - tempo_sel[onsetCintura_sel] 
-                        break
-                picoSaltoJoelho_sel = np.max(v_2_sel[0:1000])
-                for index,valor in enumerate(v_2_sel): 
-                    if valor == picoSaltoJoelho_sel: 
-                        onsetJoelho_sel = index 
-                        tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel] 
-                        break 
-                ap_sel_media = uniform_filter1d(ap_sel, size=30)
-                ml_sel_media = uniform_filter1d(ml_sel, size=30)
-                v_sel_media = uniform_filter1d(v_sel, size=30) 
-                ap_2_sel_media = uniform_filter1d(ap_2_sel, size=30) 
-                ml_2_sel_media = uniform_filter1d(ml_2_sel, size=30) 
-                v_2_sel_media = uniform_filter1d(v_2_sel, size=30) 
-                n1 = np.max(tempo_sel) 
-                n2 = np.max(tempo_sel_2) 
-                if n1 > n2: 
-                    limite_tempo = n1 
-                else: 
-                    limite_tempo = n2
-                min_c1 = np.min(ap_sel_media[startRec:startRec+1000])
-                for index,valor in enumerate(ap_sel_media):
-                    if valor == min_c1: 
-                        t_min_c1 = tempo_sel[index]
-                        break 
-                for index2,valor in enumerate(tempo_sel_2):
-                    if valor > t_min_c1: 
-                        break 
-                dados = ap_2_sel_media[index2-50:index2] 
-                ampC1_ap_pre = np.sqrt(np.mean(np.square(dados))) 
-                dados = ap_2_sel_media[index2:index2+50] 
-                ampC1_ap_pos = np.sqrt(np.mean(np.square(dados))) 
-                dados = ml_2_sel_media[index2-50:index2] 
-                ampC1_ml_pre = np.sqrt(np.mean(np.square(dados))) 
-                dados = ml_2_sel_media[index2:index2+50] 
-                ampC1_ml_pos = np.sqrt(np.mean(np.square(dados))) 
-                max_c1 = np.max(ap_sel_media[index:index+1000]) 
-                for index,valor in enumerate(ap_sel_media): 
-                    if valor == max_c1: 
-                        t_max_c1 = tempo_sel[index] 
-                        break 
-                for index3,valor in enumerate(tempo_sel_2):
-                    if valor > t_max_c1:
-                        break 
-                dados = ap_2_sel_media[index3-50:index3]
-                ampC2_ap_pre = np.sqrt(np.mean(np.square(dados)))
-                dados = ap_2_sel_media[index3:index3+50]
-                ampC2_ap_pos = np.sqrt(np.mean(np.square(dados)))
-                dados = ml_2_sel_media[index3-50:index3]
-                ampC2_ml_pre = np.sqrt(np.mean(np.square(dados)))
-                dados = ml_2_sel_media[index3:index3+50]
-                ampC2_ml_pos = np.sqrt(np.mean(np.square(dados)))
-                min_c2 = np.min(ap_sel_media[index:index+1000]) 
-                for index,valor in enumerate(ap_sel_media):
-                    if valor == min_c2: 
-                        t_min_c2 = tempo_sel[index] 
-                        break 
-                for index4,valor in enumerate(tempo_sel_2): 
-                    if valor > t_min_c2:
-                        break 
-                dados = ap_2_sel_media[index4-50:index4]
-                ampC3_ap_pre = np.sqrt(np.mean(np.square(dados)))
-                dados = ap_2_sel_media[index4:index4+50]
-                ampC3_ap_pos = np.sqrt(np.mean(np.square(dados)))
-                dados = ml_2_sel_media[index4-50:index4]
-                ampC3_ml_pre = np.sqrt(np.mean(np.square(dados)))
-                dados = ml_2_sel_media[index4:index4+50]
-                ampC3_ml_pos = np.sqrt(np.mean(np.square(dados)))
-                max_c2 = np.max(ap_sel_media[index:index+1000]) 
-                for index,valor in enumerate(ap_sel_media): 
-                    if valor == max_c2: 
-                        t_max_c2 = tempo_sel[index] 
-                        break 
-                for index5,valor in enumerate(tempo_sel_2):
-                    if valor > t_max_c2: 
-                        break 
-                dados = ap_2_sel_media[index5-50:index5] 
-                ampC4_ap_pre = np.sqrt(np.mean(np.square(dados))) 
-                dados = ap_2_sel_media[index5:index5+50] 
-                ampC4_ap_pos = np.sqrt(np.mean(np.square(dados))) 
-                dados = ml_2_sel_media[index5-50:index5] 
-                ampC4_ml_pre = np.sqrt(np.mean(np.square(dados))) 
-                dados = ml_2_sel_media[index5:index5+50] 
-                ampC4_ml_pos = np.sqrt(np.mean(np.square(dados))) 
-                col1,col2,col3,col4 = st.columns(4) 
-                with col1: 
-                    st.metric(label=r"Amplitude de C1 (m/s2)", value=round(min_c1, 4)) 
-                    st.metric(label=r"Tempo de C1 (s)", value=round(t_min_c1, 4)) 
-                    st.metric(label=r"Amplitude pré-C1 Joelho AP (m/s2)", value=round(ampC1_ap_pre, 4)) 
-                    st.metric(label=r"Amplitude pós-C1 Joelho AP (m/s2)", value=round(ampC1_ap_pos, 4)) 
-                    st.metric(label=r"Amplitude pré-C1 Joelho ML (m/s2)", value=round(ampC1_ml_pre, 4)) 
-                    st.metric(label=r"Amplitude pós-C1 Joelho ML (m/s2)", value=round(ampC1_ml_pos, 4)) 
-                with col2: 
-                    st.metric(label=r"Amplitude de C2 (m/s2)", value=round(max_c1, 4)) 
-                    st.metric(label=r"Tempo de C2 (s)", value=round(t_max_c1, 4)) 
-                    st.metric(label=r"Amplitude pré-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pre, 4)) 
-                    st.metric(label=r"Amplitude pós-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pos, 4)) 
-                    st.metric(label=r"Amplitude pré-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pre, 4)) 
-                    st.metric(label=r"Amplitude pós-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pos, 4)) 
-                with col3: 
-                    st.metric(label=r"Amplitude de C3 (m/s2)", value=round(min_c2, 4)) 
-                    st.metric(label=r"Tempo de C3 (s)", value=round(t_min_c2, 4)) 
-                    st.metric(label=r"Amplitude pré-C3 Joelho AP (m/s2)", value=round(ampC3_ap_pre, 4)) 
-                    st.metric(label=r"Amplitude pós-C3 Joelho AP (m/s2)", value=round(ampC3_ap_pos, 4)) 
-                    st.metric(label=r"Amplitude pré-C3 Joelho ML (m/s2)", value=round(ampC3_ml_pre, 4)) 
-                    st.metric(label=r"Amplitude pós-C3 Joelho ML (m/s2)", value=round(ampC3_ml_pos, 4)) 
-                with col4: 
-                    st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4)) 
-                    st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4)) 
-                    st.metric(label=r"Amplitude pré-C4 Joelho AP (m/s2)", value=round(ampC4_ap_pre, 4)) 
-                    st.metric(label=r"Amplitude pós-C4 Joelho AP (m/s2)", value=round(ampC4_ap_pos, 4)) 
-                    st.metric(label=r"Amplitude pré-C4 Joelho ML (m/s2)", value=round(ampC4_ml_pre, 4)) 
-                    st.metric(label=r"Amplitude pós-C4 Joelho ML (m/s2)", value=round(ampC4_ml_pos, 4)) 
-                    resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor) 
-                    variaveis = [("Amplitude de C1 (m/s2)", round(min_c1, 4)), ("Tempo de C1 (s)", round(t_min_c1, 4)), ("Amplitude de C2 (m/s2)", round(max_c1, 4)), ("Tempo de C2 (s)", round(t_max_c1, 4)), ("Amplitude de C3 (m/s2)", round(min_c2, 4)), ("Tempo de C3 (s)", round(t_min_c2, 4)), ("Amplitude de C4 (m/s2)", round(max_c2, 4)), ("Tempo de C4 (s)", round(t_max_c2, 4)), ("Amplitude pré-C1 Joelho AP (m/s2)",round(ampC1_ap_pre, 4)), ("Amplitude pós-C1 Joelho AP (m/s2)",round(ampC1_ap_pos, 4)), ("Amplitude pré-C2 Joelho AP (m/s2)",round(ampC2_ap_pre, 4)), ("Amplitude pós-C2 Joelho AP (m/s2)",round(ampC2_ap_pos, 4)), ("Amplitude pré-C3 Joelho AP (m/s2)",round(ampC3_ap_pre, 4)), ("Amplitude pós-C3 Joelho AP (m/s2)",round(ampC3_ap_pos, 4)), ("Amplitude pré-C4 Joelho AP (m/s2)",round(ampC4_ap_pre, 4)), ("Amplitude pós-C4 Joelho AP (m/s2)",round(ampC4_ap_pos, 4)), ("Amplitude pré-C1 Joelho ML (m/s2)",round(ampC1_ml_pre, 4)), ("Amplitude pós-C1 Joelho ML (m/s2)",round(ampC1_ml_pos, 4)), ("Amplitude pré-C2 Joelho ML (m/s2)",round(ampC2_ml_pre, 4)), ("Amplitude pós-C2 Joelho ML (m/s2)",round(ampC2_ml_pos, 4)), ("Amplitude pré-C3 Joelho ML (m/s2)",round(ampC3_ml_pre, 4)), ("Amplitude pós-C3 Joelho ML (m/s2)",round(ampC3_ml_pos, 4)), ("Amplitude pré-C4 Joelho ML (m/s2)",round(ampC4_ml_pre, 4)), ("Amplitude pós-C4 Joelho ML (m/s2)",round(ampC4_ml_pos, 4)),] 
-                    # Adiciona linha por linha for nome, valor in variaveis: 
-                    resultado_txt += f"{nome}\t{valor}\n" 
-                    st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" ) 
+                    dados = ap_2_sel_media[index5-50:index5] 
+                    ampC4_ap_pre = np.sqrt(np.mean(np.square(dados))) 
+                    dados = ap_2_sel_media[index5:index5+50] 
+                    ampC4_ap_pos = np.sqrt(np.mean(np.square(dados))) 
+                    dados = ml_2_sel_media[index5-50:index5] 
+                    ampC4_ml_pre = np.sqrt(np.mean(np.square(dados))) 
+                    dados = ml_2_sel_media[index5:index5+50] 
+                    ampC4_ml_pos = np.sqrt(np.mean(np.square(dados))) 
+                    col1,col2,col3,col4 = st.columns(4) 
+                    with col1: 
+                        st.metric(label=r"Amplitude de C1 (m/s2)", value=round(min_c1, 4)) 
+                        st.metric(label=r"Tempo de C1 (s)", value=round(t_min_c1, 4)) 
+                        st.metric(label=r"Amplitude pré-C1 Joelho AP (m/s2)", value=round(ampC1_ap_pre, 4)) 
+                        st.metric(label=r"Amplitude pós-C1 Joelho AP (m/s2)", value=round(ampC1_ap_pos, 4)) 
+                        st.metric(label=r"Amplitude pré-C1 Joelho ML (m/s2)", value=round(ampC1_ml_pre, 4)) 
+                        st.metric(label=r"Amplitude pós-C1 Joelho ML (m/s2)", value=round(ampC1_ml_pos, 4)) 
+                    with col2: 
+                        st.metric(label=r"Amplitude de C2 (m/s2)", value=round(max_c1, 4)) 
+                        st.metric(label=r"Tempo de C2 (s)", value=round(t_max_c1, 4)) 
+                        st.metric(label=r"Amplitude pré-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pre, 4)) 
+                        st.metric(label=r"Amplitude pós-C2 Joelho AP (m/s2)", value=round(ampC2_ap_pos, 4)) 
+                        st.metric(label=r"Amplitude pré-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pre, 4)) 
+                        st.metric(label=r"Amplitude pós-C2 Joelho ML (m/s2)", value=round(ampC2_ml_pos, 4)) 
+                    with col3: 
+                        st.metric(label=r"Amplitude de C3 (m/s2)", value=round(min_c2, 4)) 
+                        st.metric(label=r"Tempo de C3 (s)", value=round(t_min_c2, 4)) 
+                        st.metric(label=r"Amplitude pré-C3 Joelho AP (m/s2)", value=round(ampC3_ap_pre, 4)) 
+                        st.metric(label=r"Amplitude pós-C3 Joelho AP (m/s2)", value=round(ampC3_ap_pos, 4)) 
+                        st.metric(label=r"Amplitude pré-C3 Joelho ML (m/s2)", value=round(ampC3_ml_pre, 4)) 
+                        st.metric(label=r"Amplitude pós-C3 Joelho ML (m/s2)", value=round(ampC3_ml_pos, 4)) 
+                    with col4: 
+                        st.metric(label=r"Amplitude de C4 (m/s2)", value=round(max_c2, 4)) 
+                        st.metric(label=r"Tempo de C4 (s)", value=round(t_max_c2, 4)) 
+                        st.metric(label=r"Amplitude pré-C4 Joelho AP (m/s2)", value=round(ampC4_ap_pre, 4)) 
+                        st.metric(label=r"Amplitude pós-C4 Joelho AP (m/s2)", value=round(ampC4_ap_pos, 4)) 
+                        st.metric(label=r"Amplitude pré-C4 Joelho ML (m/s2)", value=round(ampC4_ml_pre, 4)) 
+                        st.metric(label=r"Amplitude pós-C4 Joelho ML (m/s2)", value=round(ampC4_ml_pos, 4)) 
+                        resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor) 
+                        variaveis = [("Amplitude de C1 (m/s2)", round(min_c1, 4)), ("Tempo de C1 (s)", round(t_min_c1, 4)), ("Amplitude de C2 (m/s2)", round(max_c1, 4)), ("Tempo de C2 (s)", round(t_max_c1, 4)), ("Amplitude de C3 (m/s2)", round(min_c2, 4)), ("Tempo de C3 (s)", round(t_min_c2, 4)), ("Amplitude de C4 (m/s2)", round(max_c2, 4)), ("Tempo de C4 (s)", round(t_max_c2, 4)), ("Amplitude pré-C1 Joelho AP (m/s2)",round(ampC1_ap_pre, 4)), ("Amplitude pós-C1 Joelho AP (m/s2)",round(ampC1_ap_pos, 4)), ("Amplitude pré-C2 Joelho AP (m/s2)",round(ampC2_ap_pre, 4)), ("Amplitude pós-C2 Joelho AP (m/s2)",round(ampC2_ap_pos, 4)), ("Amplitude pré-C3 Joelho AP (m/s2)",round(ampC3_ap_pre, 4)), ("Amplitude pós-C3 Joelho AP (m/s2)",round(ampC3_ap_pos, 4)), ("Amplitude pré-C4 Joelho AP (m/s2)",round(ampC4_ap_pre, 4)), ("Amplitude pós-C4 Joelho AP (m/s2)",round(ampC4_ap_pos, 4)), ("Amplitude pré-C1 Joelho ML (m/s2)",round(ampC1_ml_pre, 4)), ("Amplitude pós-C1 Joelho ML (m/s2)",round(ampC1_ml_pos, 4)), ("Amplitude pré-C2 Joelho ML (m/s2)",round(ampC2_ml_pre, 4)), ("Amplitude pós-C2 Joelho ML (m/s2)",round(ampC2_ml_pos, 4)), ("Amplitude pré-C3 Joelho ML (m/s2)",round(ampC3_ml_pre, 4)), ("Amplitude pós-C3 Joelho ML (m/s2)",round(ampC3_ml_pos, 4)), ("Amplitude pré-C4 Joelho ML (m/s2)",round(ampC4_ml_pre, 4)), ("Amplitude pós-C4 Joelho ML (m/s2)",round(ampC4_ml_pos, 4)),] 
+                        # Adiciona linha por linha for nome, valor in variaveis: 
+                        resultado_txt += f"{nome}\t{valor}\n" 
+                        st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_postural.txt", mime="text/plain" ) 
                     if tipo_teste == "Propriocepção": 
                         calibracao = st.session_state["calibracao"] 
                         dados = st.session_state["dados"] 
@@ -1095,6 +1095,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
