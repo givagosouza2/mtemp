@@ -630,7 +630,7 @@ elif pagina == "📈 Visualização Gráfica":
                 if valor == max_c1:
                     t_max_c1 = tempo_sel[index]
                     break
-            min_c2 = np.min(ap_sel_media[index:index+1000])
+            min_c2 = np.min(ap_sel_media[index:index+500])
             for index,valor in enumerate(ap_sel_media):
                 if valor == min_c2:
                     t_min_c2 = tempo_sel[index]
@@ -1102,6 +1102,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
