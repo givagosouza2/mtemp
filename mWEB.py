@@ -662,7 +662,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax1.set_xlabel(r'Tempo (s)', fontsize=8)
                 ax1.set_ylabel(r'Aceleração AP (m/s$^2$)', fontsize=8)
                 ax1.set_xlim(tempo_sel[startRec], tempo_sel[-1])
-                ax1.set_ylim(-limite, limite)
+                #ax1.set_ylim(-limite, limite)
                 ax1.tick_params(axis='both', labelsize=8)
                 # Gráfico 2: ocupa linha superior direita (metade superior)
                 ax2 = fig.add_subplot(gs[1, 0])
@@ -1093,6 +1093,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
