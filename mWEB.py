@@ -790,6 +790,8 @@ elif pagina == "📤 Exportar Resultados":
                     mime="text/plain"
                 )
         if tipo_teste == "TUG":
+            baseline_onset = st.number_input('Indique o momento inicial da baseline do início do teste (s)', value=0.0)
+            baseline_offset = st.number_input('Indique o momento inicial da baseline do final do teste (s)', value=(np.max(dados_acc["Tempo"])/1000)-2.5)
             baseline_onset = st.session_state["baseline_onset"]
             baseline_offset = st.session_state["baseline_offset"]
             col1, col2, col3 = st.columns([0.4,0.8,0.6])
@@ -1094,6 +1096,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
