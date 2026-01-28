@@ -1031,7 +1031,8 @@ elif pagina == "📤 Exportar Resultados":
             resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação 
             for nome, valor in variaveis: 
                 resultado_txt += f"{nome}\t{valor}\n" 
-            st.download_button( label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_propriocepcao.txt", mime="text/plain" )
+            st.download_button( label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_testY.txt", mime="text/plain" )
+            st.download_button( label="📄 Exportar forma de onda Z da cintura (.txt)", data=[tempo_sel[startRec:endRec], ap_sel], file_name="formadeondaZcintura.txt", mime="text/plain" )
         if tipo_teste == "Propriocepção": 
             calibracao = st.session_state["calibracao"] 
             dados = st.session_state["dados"] 
@@ -1101,6 +1102,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
