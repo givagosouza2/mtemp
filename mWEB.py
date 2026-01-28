@@ -790,13 +790,14 @@ elif pagina == "📤 Exportar Resultados":
                     mime="text/plain"
                 )
         if tipo_teste == "TUG":
-            baseline_onset = st.number_input('Indique o momento inicial da baseline do início do teste (s)', value=0.0)
-            baseline_offset = st.number_input('Indique o momento inicial da baseline do final do teste (s)', value=(np.max(dados_acc["Tempo"])/1000)-2.5)
+            
             baseline_onset = st.session_state["baseline_onset"]
             baseline_offset = st.session_state["baseline_offset"]
             col1, col2, col3 = st.columns([0.4,0.8,0.6])
             dados_acc = st.session_state["dados_acc"]
             dados_gyro = st.session_state["dados_gyro"]
+            baseline_onset = st.number_input('Indique o momento inicial da baseline do início do teste (s)', value=0.0)
+            baseline_offset = st.number_input('Indique o momento inicial da baseline do final do teste (s)', value=(np.max(dados_acc["Tempo"])/1000)-2.5)
             t_novo_acc, v_acc, ml_acc, z_acc_filtrado, norma_acc_filtrado, t_novo_gyro, v_gyro, ml_gyro, z_gyro_filtrado, norma_gyro_filtrado,start_test,stop_test,idx,idx_ml,idx_acc_ap,idx_acc_v,duration = tugProcessing.processar_tug(dados_acc,dados_gyro,2,1.25,baseline_onset,baseline_offset) 
             vertical_squared = np.sqrt(v_gyro**2) 
             lat1 = idx[1][0] 
@@ -1096,6 +1097,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
