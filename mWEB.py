@@ -811,11 +811,11 @@ elif pagina == "📤 Exportar Resultados":
                 G1_amp = amp1 
                 G2_lat = lat2 
                 G2_amp = amp2 
-                ml_squared = np.sqrt(ml_gyro**2) 
-                lat1 = idx_ml[1][0] 
-                lat2 = idx_ml[1][1] 
-                amp1 = ml_squared[idx_ml[0][0]] 
-                amp2 = ml_squared[idx_ml[0][1]] 
+            ml_squared = np.sqrt(ml_gyro**2) 
+            lat1 = idx_ml[1][0] 
+            lat2 = idx_ml[1][1] 
+            amp1 = ml_squared[idx_ml[0][0]] 
+            amp2 = ml_squared[idx_ml[0][1]] 
             if lat1 > lat2: 
                 G0_lat = lat2 
                 G0_amp = amp2 
@@ -826,7 +826,7 @@ elif pagina == "📤 Exportar Resultados":
                 G0_amp = amp1 
                 G4_lat = lat2 
                 G4_amp = amp2 
-                acc_ap_squared = np.sqrt(z_acc_filtrado**2) 
+            acc_ap_squared = np.sqrt(z_acc_filtrado**2) 
             lat1 = idx_acc_ap[1][0] 
             lat2 = idx_acc_ap[1][1] 
             amp1 = acc_ap_squared[idx_acc_ap[0][0]] 
@@ -841,7 +841,7 @@ elif pagina == "📤 Exportar Resultados":
                 A1_amp = amp1 
                 A2_lat = lat2 
                 A2_amp = amp2 
-                acc_v_squared = np.sqrt(v_acc**2) 
+            acc_v_squared = np.sqrt(v_acc**2) 
             lat1 = idx_acc_v[1][0] 
             lat2 = idx_acc_v[1][1] 
             amp1 = acc_v_squared[idx_acc_v[0][0]] 
@@ -1093,6 +1093,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
