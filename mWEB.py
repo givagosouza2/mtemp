@@ -587,18 +587,21 @@ elif pagina == "📈 Visualização Gráfica":
             col1, col2 = st.columns(2)
             tempo_sel, ml_sel, ap_sel, v_sel = ytestProcessing.processar_ytest1( dados[startRec:endRec], filter)
             tempo_sel_2, ml_2_sel, ap_2_sel, v_2_sel = ytestProcessing.processar_ytest2( dados2[startRec:endRec], filter)
+            
             picoSaltoCintura = np.max(v[0:1000])
             for index,valor in enumerate(v):
                 if valor == picoSaltoCintura:
                     onsetCintura = index
                     tempo = tempo - tempo[onsetCintura]
                     break
+            
             picoSaltoJoelho = np.max(v_2[0:1000])
             for index,valor in enumerate(v_2):
                 if valor == picoSaltoJoelho:
                     onsetJoelho = index
                     tempo_2 = tempo_2 - tempo_2[onsetJoelho]
                     break
+            
             picoSaltoCintura_sel = np.max(v_sel[0:1000])
             for index,valor in enumerate(v_sel):
                 if valor == picoSaltoCintura_sel:
@@ -611,6 +614,7 @@ elif pagina == "📈 Visualização Gráfica":
                     onsetJoelho_sel = index
                     tempo_sel_2 = tempo_sel_2 - tempo_sel_2[onsetJoelho_sel]
                     break
+            
             ap_sel_media = uniform_filter1d(ap_sel, size=30)
             ml_sel_media = uniform_filter1d(ml_sel, size=30)
             v_sel_media = uniform_filter1d(v_sel, size=30)
@@ -1097,6 +1101,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
