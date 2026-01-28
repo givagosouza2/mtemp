@@ -883,9 +883,10 @@ elif pagina == "📤 Exportar Resultados":
             resultado_txt = "Variável\tValor\n" # Cabeçalho com tabulação # Lista de pares (nome, valor) 
             variaveis = [("Duração do teste (s)", round(stop_test-start_test, 4)), ("Duração para levantar (s)", round(G0_lat-start_test, 4)), ("Duração da caminhada de ida (s)",round(G1_lat-G0_lat, 4)), ("Duração da caminhada de volta (s)",round(G2_lat-G1_lat, 4)), ("Duração para sentar (s)",round(stop_test-G2_lat, 4)), ("Tempo para o pico de velocidade angular na transição de sentado para de pé (s)",round(G0_lat-start_test, 4)), ("Tempo para o pico de aceleração AP na transição de sentado para de pé (s)",round(A1_lat-start_test, 4)), ("Tempo para o pico de aceleração V na transição de sentado para de pé (s)",round(A1v_lat-start_test, 4)), ("Tempo para o pico de velocidade angular no giro em 3 m (s)",round(G1_lat-start_test, 4)), ("Tempo para o pico de velocidade angular no giro em 6 m (s)",round(G2_lat-start_test, 4)), ("Tempo para o pico de velocidade angular na transição de pé para sentado (s)",round(A2_lat-start_test, 4)), ("Tempo para o pico de aceleração AP na transição de pé para sentado (s)",round(A2_lat-start_test, 4)), ("Tempo para o pico de aceleração V na transição de pé para sentado (s)",round(A2v_lat-start_test, 4)), ("Velocidade angular máxima na transição de sentado para de pé (rad/s)",round(G0_amp, 4)), ("Aceleração máxima AP na transição de sentado para de pé (m/s2)",round(A1_amp, 4)), ("Aceleração máxima V na transição de sentado para de pé (m/s2)",round(A1v_amp, 4)), ("Velocidade angular máxima no giro em 3 m (s)",round(G1_amp, 4)), ("Velocidade angular máxima no giro em 6 m (s)",round(G2_amp, 4)), ("Aceleração máxima AP na transição de sentado para pé (s)",round(A2_amp, 4)), ("Aceleração máxima V na transição de sentado para pé (s)",round(A2v_amp, 4))]
             # Adiciona linha por linha 
+            
             for nome, valor in variaveis: 
                 resultado_txt += f"{nome}\t{valor}\n" 
-                st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_iTUG.txt", mime="text/plain" ) 
+            st.download_button(label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_analise_iTUG.txt", mime="text/plain" ) 
         if tipo_teste == "Y test": 
             dados = st.session_state["dados_acc_coluna"]
             dados2 = st.session_state["dados_acc_joelho"]
@@ -1093,6 +1094,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
