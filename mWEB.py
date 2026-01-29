@@ -1083,7 +1083,7 @@ elif pagina == "📤 Exportar Resultados":
             )
             
             st.download_button(
-                label="📄 Exportar Tempo + Aceleração AP (Joelho) (.txt)",
+                label="📄 Exportar Tempo + Aceleração ML (Joelho) (.txt)",
                 data=txt_ap_cintura,
                 file_name="ytest_joelho_ml_tempo_ap.txt",
                 mime="text/plain"
@@ -1173,6 +1173,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
