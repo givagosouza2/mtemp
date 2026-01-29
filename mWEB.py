@@ -1032,7 +1032,47 @@ elif pagina == "📤 Exportar Resultados":
             for nome, valor in variaveis: 
                 resultado_txt += f"{nome}\t{valor}\n" 
             st.download_button( label="📄 Exportar resultados (.txt)", data=resultado_txt, file_name="resultados_testY.txt", mime="text/plain" )
-            st.download_button( label="📄 Exportar forma de onda Z da cintura (.txt)", data=[tempo_sel[startRec:endRec], ap_sel[startRec:endRec]], file_name="formadeondaZcintura.txt", mime="text/plain" )
+
+            def _serie_para_txt(t, y, col_t="Tempo_s", col_y="Acc_AP_m_s2", sep="\t"):
+                df_out = pd.DataFrame({
+                    col_t: np.asarray(t, dtype=float),
+                    col_y: np.asarray(y, dtype=float),
+                })
+                buf = io.StringIO()
+                df_out.to_csv(buf, sep=sep, index=False, float_format="%.6f")
+                return buf.getvalue()
+            
+            # 1) Série bruta/filtrada (ap_sel)
+            txt_ap_cintura = _serie_para_txt(
+                tempo_sel[startRec:endRec],
+                ap_sel[startRec:endRec],
+                col_t="Tempo_s",
+                col_y="Acc_AP_Cintura_m_s2",
+                sep="\t"
+            )
+            
+            st.download_button(
+                label="📄 Exportar Tempo + Aceleração AP (cintura) (.txt)",
+                data=txt_ap_cintura,
+                file_name="ytest_cintura_tempo_ap.txt",
+                mime="text/plain"
+            )
+
+# (Opcional) 2) Série suavizada (ap_sel_media), se você quiser também
+txt_ap_cintura_suave = _serie_para_txt(
+    tempo_sel[startRec:endRec],
+    ap_sel_media[startRec:endRec],
+    col_t="Tempo_s",
+    col_y="Acc_AP_Cintura_suavizada_m_s2",
+    sep="\t"
+)
+
+st.download_button(
+    label="📄 Exportar Tempo + AP suavizada (cintura) (.txt)",
+    data=txt_ap_cintura_suave,
+    file_name="ytest_cintura_tempo_ap_suavizada.txt",
+    mime="text/plain"
+)
         if tipo_teste == "Propriocepção": 
             calibracao = st.session_state["calibracao"] 
             dados = st.session_state["dados"] 
@@ -1102,6 +1142,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
