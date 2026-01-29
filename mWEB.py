@@ -1059,20 +1059,20 @@ elif pagina == "📤 Exportar Resultados":
             )
 
 # (Opcional) 2) Série suavizada (ap_sel_media), se você quiser também
-txt_ap_cintura_suave = _serie_para_txt(
-    tempo_sel[startRec:endRec],
-    ap_sel_media[startRec:endRec],
-    col_t="Tempo_s",
-    col_y="Acc_AP_Cintura_suavizada_m_s2",
-    sep="\t"
-)
+#txt_ap_cintura_suave = _serie_para_txt(
+#    tempo_sel[startRec:endRec],
+#    ap_sel_media[startRec:endRec],
+#    col_t="Tempo_s",
+#    col_y="Acc_AP_Cintura_suavizada_m_s2",
+#    sep="\t"
+#)
 
-st.download_button(
-    label="📄 Exportar Tempo + AP suavizada (cintura) (.txt)",
-    data=txt_ap_cintura_suave,
-    file_name="ytest_cintura_tempo_ap_suavizada.txt",
-    mime="text/plain"
-)
+#st.download_button(
+#    label="📄 Exportar Tempo + AP suavizada (cintura) (.txt)",
+#    data=txt_ap_cintura_suave,
+#    file_name="ytest_cintura_tempo_ap_suavizada.txt",
+#    mime="text/plain"
+#)
         if tipo_teste == "Propriocepção": 
             calibracao = st.session_state["calibracao"] 
             dados = st.session_state["dados"] 
@@ -1142,6 +1142,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
