@@ -1059,7 +1059,7 @@ elif pagina == "📤 Exportar Resultados":
             )
             # 1) Série bruta/filtrada (ap_sel)
             txt_ap_joelho = _serie_para_txt(
-                tempo_sel[startRec:endRec],
+                tempo_sel_2[startRec:endRec],
                 ap_2_sel_media[startRec:endRec],
                 col_t="Tempo_s",
                 col_y="Acc_AP_Joelho_m_s2",
@@ -1075,7 +1075,7 @@ elif pagina == "📤 Exportar Resultados":
 
             # 1) Série bruta/filtrada (ap_sel)
             txt_ml_joelho = _serie_para_txt(
-                tempo_sel[startRec:endRec],
+                tempo_sel_2[startRec:endRec],
                 ap_2_sel_media[startRec:endRec],
                 col_t="Tempo_s",
                 col_y="Acc_ML_Joelho_m_s2",
@@ -1173,6 +1173,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
