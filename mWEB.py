@@ -1057,6 +1057,37 @@ elif pagina == "📤 Exportar Resultados":
                 file_name="ytest_cintura_tempo_ap.txt",
                 mime="text/plain"
             )
+            # 1) Série bruta/filtrada (ap_sel)
+            txt_ap_joelho = _serie_para_txt(
+                tempo_sel[startRec:endRec],
+                ap_2_sel_media[startRec:endRec],
+                col_t="Tempo_s",
+                col_y="Acc_AP_Joelho_m_s2",
+                sep="\t"
+            )
+            
+            st.download_button(
+                label="📄 Exportar Tempo + Aceleração AP (Joelho) (.txt)",
+                data=txt_ap_cintura,
+                file_name="ytest_joelho_ap_tempo.txt",
+                mime="text/plain"
+            )
+
+            # 1) Série bruta/filtrada (ap_sel)
+            txt_ml_joelho = _serie_para_txt(
+                tempo_sel[startRec:endRec],
+                ap_2_sel_media[startRec:endRec],
+                col_t="Tempo_s",
+                col_y="Acc_ML_Joelho_m_s2",
+                sep="\t"
+            )
+            
+            st.download_button(
+                label="📄 Exportar Tempo + Aceleração AP (Joelho) (.txt)",
+                data=txt_ap_cintura,
+                file_name="ytest_joelho_ml_tempo_ap.txt",
+                mime="text/plain"
+            )
 
 # (Opcional) 2) Série suavizada (ap_sel_media), se você quiser também
 #txt_ap_cintura_suave = _serie_para_txt(
@@ -1142,6 +1173,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
