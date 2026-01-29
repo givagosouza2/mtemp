@@ -1045,7 +1045,7 @@ elif pagina == "📤 Exportar Resultados":
             # 1) Série bruta/filtrada (ap_sel)
             txt_ap_cintura = _serie_para_txt(
                 tempo_sel[startRec:endRec],
-                ap_sel[startRec:endRec],
+                ap_sel_media[startRec:endRec],
                 col_t="Tempo_s",
                 col_y="Acc_AP_Cintura_m_s2",
                 sep="\t"
@@ -1142,6 +1142,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
