@@ -749,7 +749,63 @@ elif pagina == "📈 Visualização Gráfica":
                 st.pyplot(fig_2)
 
         elif tipo_teste == "Propriocepção":
-            st.info("Propriocepção: use exatamente seus blocos originais de visualização/exportação. (Se quiser, eu colo aqui o seu bloco completo.)")
+            calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
+            dados = st.session_state["dados"]
+            st.session_state["calibracao"] = calibracao
+            tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
+            max_val = len(tempo) # Cálculo dos ângulos
+            accelAngleX = np.arctan(y_vf / np.sqrt(x_vf**2 + z_vf**2)) * 180 / math.pi
+            angulo = accelAngleX + 90 # Calibração 
+            def objetivo(x): 
+                media_ajustada = np.mean(angulo[100:500] + x) 
+                return abs(media_ajustada - calibracao) 
+            media_baseline = np.mean(angulo[100:500])
+            if media_baseline != calibracao:
+                resultado = minimize_scalar(objetivo)
+                angulo = angulo + resultado.x 
+            else: 
+                resultado = type('obj', (object,), {'x': 0})() 
+            for index,valor in enumerate(angulo[100:-1]): 
+                if valor > 10+calibracao: 
+                    t1 = index+100 
+                    break
+            for index2,valor in enumerate(angulo[t1:-1]): 
+                if valor < 10+calibracao: 
+                    t2 = index2+t1
+                    break
+            for index3,valor in enumerate(angulo[t2:-1]):
+                if valor > 10+calibracao: 
+                    t3 = index3+t2
+                    break
+            for index4,valor in enumerate(angulo[t3:-1]):
+                if valor < 10+calibracao:
+                    t4 = index4+t3
+                    break
+            ref_max = np.max(angulo[t1:t2]) 
+            for index,valor in enumerate(angulo[t1:t2]):
+                if valor == ref_max:
+                    t1 = t1 + index
+                    t2 = t2 - index
+                    break 
+            pos_max = np.max(angulo[t3:t4])
+            for index,valor in enumerate(angulo[t3:t4]):
+                if valor == pos_max:
+                    t3 = t3 + index
+                    t4 = t4 - index
+                    break
+            col1,col2,col3 = st.columns([0.2,0.8,0.2])# Cria figura com GridSpec personalizado 
+            with col2:
+                fig = plt.figure(figsize=(8, 10))
+                gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
+                ax1 = fig.add_subplot(gs[0:2, 0:2])
+                ax1.plot(tempo, angulo, color='tomato', linewidth=0.5)
+                ax1.plot([tempo[t1],tempo[t1]],[0,120],'k--')
+                ax1.plot([tempo[t2],tempo[t2]],[0,120],'k--')
+                ax1.plot([tempo[t3],tempo[t3]],[0,120],'k--')
+                ax1.plot([tempo[t4],tempo[t4]],[0,120],'k--')
+                st.pyplot(fig)
+        else:
+            st.info("Dados ou tipo de teste não definidos. Vá até a aba 'Importar Dados'.")
 
 # === Página de Exportação ===
 elif pagina == "📤 Exportar Resultados":
@@ -1173,6 +1229,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
