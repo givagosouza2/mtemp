@@ -751,7 +751,7 @@ elif pagina == "📈 Visualização Gráfica":
         elif tipo_teste == "Propriocepção":
             calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
             t1 = st.number_input('Indique o limite inferior da janela temporal de análise (s)', value=0.0)
-            t2 = st.number_input('Indique o limite superior da janela temporal de análise (s)', value=10.0)
+            t2 = st.number_input('Indique o limite superior da janela temporal de análise (s)', value=t1+10.0)
             dados = st.session_state["dados"]
             st.session_state["calibracao"] = calibracao
             tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
@@ -1211,6 +1211,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
