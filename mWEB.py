@@ -750,6 +750,8 @@ elif pagina == "📈 Visualização Gráfica":
 
         elif tipo_teste == "Propriocepção":
             calibracao = st.number_input('Indique o valor angular da extensão do cotovelo (em graus)', value=0.0)
+            t1 = st.number_input('Indique o limite inferior da janela temporal de análise (s)', value=0.0)
+            t2 = st.number_input('Indique o limite superior da janela temporal de análise (s)', value=10.0)
             dados = st.session_state["dados"]
             st.session_state["calibracao"] = calibracao
             tempo, x_vf, y_vf, z_vf = jointSenseProcessing.processar_jps(dados, 8)
@@ -765,44 +767,24 @@ elif pagina == "📈 Visualização Gráfica":
                 angulo = angulo + resultado.x 
             else: 
                 resultado = type('obj', (object,), {'x': 0})() 
-            for index,valor in enumerate(angulo[100:-1]): 
-                if valor > 10+calibracao: 
-                    t1 = index+100 
+            for index,valor in enumerate(tempo): 
+                if valor > t1: 
+                    index_t1 = index
                     break
-            for index2,valor in enumerate(angulo[t1:-1]): 
-                if valor < 10+calibracao: 
-                    t2 = index2+t1
+            for index,valor in enumerate(tempo): 
+                if valor > t2: 
+                    index_t2 = index
                     break
-            for index3,valor in enumerate(angulo[t2:-1]):
-                if valor > 10+calibracao: 
-                    t3 = index3+t2
-                    break
-            for index4,valor in enumerate(angulo[t3:-1]):
-                if valor < 10+calibracao:
-                    t4 = index4+t3
-                    break
-            ref_max = np.max(angulo[t1:t2]) 
-            for index,valor in enumerate(angulo[t1:t2]):
-                if valor == ref_max:
-                    t1 = t1 + index
-                    t2 = t2 - index
-                    break 
-            pos_max = np.max(angulo[t3:t4])
-            for index,valor in enumerate(angulo[t3:t4]):
-                if valor == pos_max:
-                    t3 = t3 + index
-                    t4 = t4 - index
-                    break
+            ref_max = np.max(angulo[index_t1:index_t2]) 
+           
             col1,col2,col3 = st.columns([0.2,0.8,0.2])# Cria figura com GridSpec personalizado 
             with col2:
                 fig = plt.figure(figsize=(8, 10))
                 gs = gridspec.GridSpec(5, 4, figure=fig, hspace=0.8, wspace=0.6)
                 ax1 = fig.add_subplot(gs[0:2, 0:2])
                 ax1.plot(tempo, angulo, color='tomato', linewidth=0.5)
-                ax1.plot([tempo[t1],tempo[t1]],[0,120],'k--')
-                ax1.plot([tempo[t2],tempo[t2]],[0,120],'k--')
-                ax1.plot([tempo[t3],tempo[t3]],[0,120],'k--')
-                ax1.plot([tempo[t4],tempo[t4]],[0,120],'k--')
+                ax1.plot([tempo[index_t1],tempo[index_t1]],[0,120],'k--')
+                ax1.plot([tempo[index_t2],tempo[index_t2]],[0,120],'k--')
                 st.pyplot(fig)
         else:
             st.info("Dados ou tipo de teste não definidos. Vá até a aba 'Importar Dados'.")
@@ -1229,6 +1211,7 @@ elif pagina == "📖 Referências bibliográficas":
     </div>
     """)
     st.markdown(html, unsafe_allow_html=True)
+
 
 
 
