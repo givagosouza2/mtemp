@@ -1106,7 +1106,7 @@ elif pagina == "📤 Exportar Resultados":
             
             st.download_button(
                 label="📄 Exportar Tempo + Aceleração AP (Joelho) (.txt)",
-                data=txt_ap_cintura,
+                data=txt_ap_joelho,
                 file_name="ytest_joelho_ap_tempo.txt",
                 mime="text/plain"
             )
@@ -1122,7 +1122,7 @@ elif pagina == "📤 Exportar Resultados":
             
             st.download_button(
                 label="📄 Exportar Tempo + Aceleração ML (Joelho) (.txt)",
-                data=txt_ap_cintura,
+                data=txt_ml_joelho,
                 file_name="ytest_joelho_ml_tempo_ap.txt",
                 mime="text/plain"
             )
