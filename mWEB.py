@@ -385,6 +385,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax4.plot(freqs_sel, psd_ml_sel, linewidth=0.8)
                 ax4.set_xlabel("Frequência (Hz)", fontsize=8)
                 ax4.set_ylabel("PSD ML", fontsize=8)
+                ax4.set_xlim([0,8])
                 ax4.set_ylim([0,0.005])
                 ax4.grid(True)
 
@@ -394,6 +395,7 @@ elif pagina == "📈 Visualização Gráfica":
                 ax5.plot(freqs_sel, psd_ap_sel, linewidth=0.8)
                 ax5.set_xlabel("Frequência (Hz)", fontsize=8)
                 ax5.set_ylabel("PSD AP", fontsize=8)
+                ax5.set_xlim([0,8])
                 ax5.set_ylim([0,0.005])
                 ax5.grid(True)
 
