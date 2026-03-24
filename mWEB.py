@@ -809,7 +809,7 @@ elif pagina == "📤 Exportar Resultados":
 
                 tempo_sel, ml_sel, ap_sel, freqs_sel, psd_ml_sel, psd_ap_sel = \
                     balanceProcessing.processar_equilibrio(dados, startRec, endRec, 1, 0, fc)
-
+                st.text(freqs_sel)
                 total_power_ml = trapezoid(psd_ml_sel, freqs_sel)
                 total_power_ap = trapezoid(psd_ap_sel, freqs_sel)
 
